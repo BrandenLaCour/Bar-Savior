@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import NavBar from "./NavBar";
+import { BrowserRouter } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router";
+import Sidebar from "./Sidebar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      drawerOpen: false
+    };
+  }
+
+  toggleDrawer = () => {
+    console.log("ran");
+    this.setState({ drawerOpen: !this.state.drawerOpen });
+  };
+  render() {
+    return (
+      <div className="App">
+        <NavBar toggleDrawer={this.toggleDrawer} />
+        <Sidebar
+          toggleDrawer={this.toggleDrawer}
+          drawerOpen={this.state.drawerOpen}
+        />
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" render={props => <h3>Landing Page</h3>} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;
