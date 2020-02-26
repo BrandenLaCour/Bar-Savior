@@ -3,13 +3,15 @@ import "./App.css";
 import NavBar from "./NavBar";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Switch, Redirect } from "react-router";
+import CompanyForm from "./FormsContainer/CompanyForm";
 import Sidebar from "./Sidebar";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      drawerOpen: false
+      drawerOpen: false,
+      loggedIn: false
     };
   }
 
@@ -20,14 +22,19 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <NavBar toggleDrawer={this.toggleDrawer} />
-        <Sidebar
-          toggleDrawer={this.toggleDrawer}
-          drawerOpen={this.state.drawerOpen}
-        />
         <BrowserRouter>
+          <NavBar toggleDrawer={this.toggleDrawer} />
+          <Sidebar
+            toggleDrawer={this.toggleDrawer}
+            drawerOpen={this.state.drawerOpen}
+          />
+
           <Switch>
-            <Route path="/" render={props => <h3>Landing Page</h3>} />
+            <Route exact path="/" render={props => <h3>Landing Page</h3>} />
+            <Route
+              path="/login"
+              render={props => <CompanyForm></CompanyForm>}
+            />
           </Switch>
         </BrowserRouter>
       </div>
