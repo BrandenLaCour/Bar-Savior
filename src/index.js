@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import { modals, forms } from "./reducer";
+import { modals, authForms } from "./reducer";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-const rootReducer = combineReducers({ modals, forms });
+const rootReducer = combineReducers({ modals, authForms });
 const store = createStore(rootReducer);
 
 ReactDOM.render(

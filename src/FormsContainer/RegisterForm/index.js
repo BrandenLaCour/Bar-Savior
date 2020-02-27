@@ -10,17 +10,34 @@ import { connect } from "react-redux";
 
 const mapStateToProps = state => {
   return {
-    companyName: state.authForms.companyName,
-    address: state.authForms.address
+    username: state.authForms.username,
+    password: state.authForms.password,
+    position: state.authForms.position,
+    admin: state.authForms.admin,
+    master: state.authForms.master,
+    email: state.authForms.email
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addName: event =>
-      dispatch({ type: "ADD_COMPANY_NAME", payload: event.target.value }),
-    addAddress: event => {
-      dispatch({ type: "ADD_ADDRESS", payload: event.target.value });
+    addCompanyId: id => dispatch({ type: "ADD_COMPANY_ID", payload: id }),
+    addUsername: event =>
+      dispatch({ type: "ADD_USERNAME", payload: event.target.value }),
+    addPassword: event => {
+      dispatch({ type: "ADD_PASSWORD", payload: event.target.value });
+    },
+    addEmail: event => {
+      dispatch({ type: "ADD_EMAIL", payload: event.target.value });
+    },
+    addPosition: event => {
+      dispatch({ type: "ADD_POSITION", payload: event.target.value });
+    },
+    isAdmin: event => {
+      dispatch({ type: "IS_ADMIN", payload: event.target.value });
+    },
+    isMASTER: event => {
+      dispatch({ type: "IS_MASTER", payload: event.target.value });
     }
   };
 };
@@ -43,12 +60,12 @@ const CompanyForm = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-
+    props.addCompanyId(props.companyId);
     if (props.form === "create") {
-      props.createCompany({ name: props.name, address: props.address });
+      console.log(props);
     }
   };
-
+  console.log(props);
   return (
     <Card className={classes.root}>
       <form noValidate onSubmit={handleSubmit}>
@@ -58,17 +75,27 @@ const CompanyForm = props => {
             color="textPrimary"
             gutterBottom
           >
-            Create Company
+            Create Master User
           </Typography>
           <TextField
-            onChange={props.addName}
+            onChange={props.addUsername}
             id="standard-basic"
-            label="Company Name"
+            label="Username"
           />
           <TextField
             id="standard-basic"
-            onChange={props.addAddress}
-            label="Company Address"
+            onChange={props.addPassword}
+            label="Password"
+          />
+          <TextField
+            id="standard-basic"
+            onChange={props.addEmail}
+            label="Email"
+          />
+          <TextField
+            id="standard-basic"
+            onChange={props.addPosition}
+            label="Position"
           />
         </CardContent>
 

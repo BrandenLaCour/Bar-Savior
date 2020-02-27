@@ -1,24 +1,19 @@
 import React from "react";
 import CompanyForm from "./CompanyForm";
+import { Redirect } from "react-router";
+import RegisterForm from "./RegisterForm";
 
 class FormsContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      form: "company",
-      type: "create"
+      form: "register",
+      type: "create",
+      redirect: "false",
+      companyId: ""
     };
   }
-
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   switch (this.state.form) {
-  //     case "company":
-  //       this.createCompany();
-  //     default:
-  //       console.log("defaulted");
-  //   }
-  // };
+  //refactor into redux
 
   createCompany = async companyInfo => {
     const createdResponse = await fetch(
@@ -31,17 +26,32 @@ class FormsContainer extends React.Component {
         }
       }
     );
-    const createdJson = await createdResponse.json();
-    console.log(createdJson);
+    const { data } = await createdResponse.json();
+    this.setState({ form: "register", companyId: data.id });
   };
 
+  createUser = () => {};
+
   render() {
+    if (this.state.redirect === true) {
+      return <Redirect to="/register" />;
+    }
+
     return (
       <>
-        <CompanyForm
-          form={this.state.form}
-          createCompany={this.createCompany}
-        />
+        {this.state.form === "company" ? (
+          <CompanyForm
+            form={this.state.form}
+            createCompany={this.createCompany}
+          />
+        ) : (
+          ""
+        )}
+        {this.state.form === "register" ? (
+          <RegisterForm companyId={this.state.companyId} />
+        ) : (
+          ""
+        )}
       </>
     );
   }

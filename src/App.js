@@ -27,10 +27,6 @@ class App extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    console.log(process.env.REACT_APP_API_URL);
-  }
-
   render() {
     return (
       <div className="App">
@@ -44,6 +40,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" render={props => <h3>Landing Page</h3>} />
             <Route path="/login" render={props => <FormsContainer />} />
+            <Route path="/register" render={props => <FormsContainer />} />
           </Switch>
         </BrowserRouter>
       </div>
