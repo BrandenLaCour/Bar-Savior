@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
     addName: event =>
       dispatch({ type: "ADD_NAME", payload: event.target.value }),
     addAddress: event => {
-      dispatch({ type: "ADD_ADDRESS", payload: event.target.value })
+      dispatch({ type: "ADD_ADDRESS", payload: event.target.value });
     }
   };
 };
@@ -41,9 +41,20 @@ const useStyles = makeStyles({
 const CompanyForm = props => {
   const classes = useStyles();
 
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    switch (props.form) {
+      case "company":
+        props.createCompany({ name: props.name, address: props.address });
+      default:
+        console.log("switch defaulted");
+    }
+  };
+
   return (
     <Card className={classes.root}>
-      <form>
+      <form noValidate onSubmit={handleSubmit}>
         <CardContent>
           <Typography
             className={classes.title}
@@ -64,7 +75,7 @@ const CompanyForm = props => {
           />
         </CardContent>
 
-        <Button variant="contained" color="primary">
+        <Button type="submit" variant="contained" color="primary">
           Submit
         </Button>
       </form>

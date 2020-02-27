@@ -3,10 +3,9 @@ import "./App.css";
 import NavBar from "./NavBar";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Switch, Redirect } from "react-router";
-import CompanyForm from "./FormsContainer/CompanyForm";
+import FormsContainer from "./FormsContainer";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
-
 
 const mapStateToProps = state => {
   return {
@@ -28,6 +27,10 @@ class App extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    console.log(process.env.REACT_APP_API_URL);
+  }
+
   render() {
     return (
       <div className="App">
@@ -40,10 +43,7 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/" render={props => <h3>Landing Page</h3>} />
-            <Route
-              path="/login"
-              render={props => <CompanyForm></CompanyForm>}
-            />
+            <Route path="/login" render={props => <FormsContainer />} />
           </Switch>
         </BrowserRouter>
       </div>
