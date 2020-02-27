@@ -1,12 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
+import Select from "@material-ui/core/Select";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
 import { connect } from "react-redux";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import { Input } from "@material-ui/core";
 
 const mapStateToProps = state => {
   return {
@@ -21,7 +25,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addCompanyId: id => dispatch({ type: "ADD_COMPANY_ID", payload: id }),
     addUsername: event =>
       dispatch({ type: "ADD_USERNAME", payload: event.target.value }),
     addPassword: event => {
@@ -45,13 +48,19 @@ const mapDispatchToProps = dispatch => {
 const useStyles = makeStyles({
   root: {
     width: 400,
-    height: 400
+    height: 600
   },
   title: {
     fontSize: 20
   },
   pos: {
     marginBottom: 12
+  },
+  button: {
+    width: "100px"
+  },
+  helper: {
+    textAlign: "center"
   }
 });
 
@@ -59,10 +68,18 @@ const CompanyForm = props => {
   const classes = useStyles();
 
   const handleSubmit = event => {
+    const newUser = {
+      username: props.username,
+      password: props.password,
+      email: props.email,
+      postion: props.position,
+      companyId: props.companyId,
+      admin: props.admin,
+      master: props.master
+    };
     event.preventDefault();
-    props.addCompanyId(props.companyId);
-    if (props.form === "create") {
-      console.log(props);
+    if (props.type === "create") {
+      props.createUser(newUser);
     }
   };
   console.log(props);
@@ -97,6 +114,41 @@ const CompanyForm = props => {
             onChange={props.addPosition}
             label="Position"
           />
+        </CardContent>
+        <CardContent>
+          <InputLabel>Admin?</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="admin"
+            value={props.admin}
+            onChange={props.isAdmin}
+            className={classes.button}
+          >
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
+          <FormHelperText className={classes.helper}>
+            Admins can create, edit, delete users, rooms and tasks
+          </FormHelperText>
+        </CardContent>
+        <CardContent>
+          <InputLabel>Master?</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="admin"
+            value={props.master}
+            onChange={props.isMaster}
+            className={classes.button}
+          >
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
+          <FormHelperText className={classes.helper}>
+            Master users have the ability to delete the company, this destroys
+            all data
+          </FormHelperText>
         </CardContent>
 
         <Button type="submit" variant="contained" color="primary">
