@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import reducer from "./reducer";
+import { modals, forms } from "./reducer";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({ modals, forms });
+const store = createStore(rootReducer);
 
 ReactDOM.render(
   <Provider store={store}>

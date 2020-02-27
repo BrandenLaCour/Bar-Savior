@@ -6,12 +6,12 @@ import { Route, Switch, Redirect } from "react-router";
 import CompanyForm from "./FormsContainer/CompanyForm";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
-import reducer from "./reducer";
+
 
 const mapStateToProps = state => {
   return {
-    drawerOpen: state.drawerOpen,
-    loggedIn: state.loggedIn
+    drawerOpen: state.modals.drawerOpen,
+    loggedIn: state.modals.loggedIn
   };
 };
 
