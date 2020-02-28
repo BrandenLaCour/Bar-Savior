@@ -56,9 +56,14 @@ export default function Sidebar(props) {
 
   return (
     <div>
-      <Drawer open={props.drawerOpen} onClose={props.toggleDrawer}>
-        {sideList("left")}
-      </Drawer>
+      {/* render sidebar only if admin */}
+      {props.loggedIn ? (
+        props.user.admin || props.user.master ? (
+          <Drawer open={props.drawerOpen} onClose={props.toggleDrawer}>
+            {sideList("left")}
+          </Drawer>
+        ) : null
+      ) : null}
     </div>
   );
 }

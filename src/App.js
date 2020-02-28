@@ -10,7 +10,8 @@ import { connect } from "react-redux";
 const mapStateToProps = state => {
   return {
     drawerOpen: state.modals.drawerOpen,
-    loggedIn: state.modals.loggedIn
+    loggedIn: state.modals.loggedIn,
+    user: state.modals.user
   };
 };
 
@@ -31,22 +32,71 @@ class App extends React.Component {
     return (
       <div className="App">
         <BrowserRouter>
-          <NavBar toggleDrawer={this.props.toggleDrawer} />
-          <Sidebar
-            toggleDrawer={this.props.toggleDrawer}
-            drawerOpen={this.props.drawerOpen}
-          />
-
           <Switch>
-            <Route exact path="/" render={props => <h3>Landing Page</h3>} />
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <>
+                  {this.props.loggedIn ? (
+                    <Sidebar
+                      toggleDrawer={this.props.toggleDrawer}
+                      drawerOpen={this.props.drawerOpen}
+                      user={this.props.user}
+                      loggedIn={this.props.loggedIn}
+                    />
+                  ) : null}
+
+                  <NavBar
+                    loggedIn={this.props.loggedIn}
+                    toggleDrawer={this.props.toggleDrawer}
+                  />
+                  <h3>Landing Page</h3>
+                </>
+              )}
+            />
+
+            {/* need to figure out a more dry way to route with nav and sidebar to have them render changes */}
             <Route
               path="/login"
-              render={props => <FormsContainer type="login" />}
+              render={props => (
+                <>
+                  {this.props.loggedIn ? (
+                    <Sidebar
+                      toggleDrawer={this.props.toggleDrawer}
+                      drawerOpen={this.props.drawerOpen}
+                      user={this.props.user}
+                      loggedIn={this.props.loggedIn}
+                    />
+                  ) : null}
+
+                  <NavBar
+                    loggedIn={this.props.loggedIn}
+                    toggleDrawer={this.props.toggleDrawer}
+                  />
+                  <FormsContainer type="login" />
+                </>
+              )}
             />
             <Route
               path="/register"
               render={props => (
-                <FormsContainer type="register" loggedIn={props.loggedIn} />
+                <>
+                  {this.props.loggedIn ? (
+                    <Sidebar
+                      toggleDrawer={this.props.toggleDrawer}
+                      drawerOpen={this.props.drawerOpen}
+                      user={this.props.user}
+                      loggedIn={this.props.loggedIn}
+                    />
+                  ) : null}
+
+                  <NavBar
+                    loggedIn={this.props.loggedIn}
+                    toggleDrawer={this.props.toggleDrawer}
+                  />
+                  <FormsContainer type="register" loggedIn={props.loggedIn} />
+                </>
               )}
             />
           </Switch>

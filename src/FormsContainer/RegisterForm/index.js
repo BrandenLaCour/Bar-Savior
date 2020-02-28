@@ -105,19 +105,20 @@ const CompanyForm = props => {
             Create {props.form !== "register" ? "Master" : null} User
           </Typography>
           <TextField
-            onChange={props.addUsername}
             id="standard-basic"
-            label="Username"
+            onChange={props.addEmail}
+            label="Email"
           />
+
           <TextField
             id="standard-basic"
             onChange={props.addPassword}
             label="Password"
           />
           <TextField
+            onChange={props.addUsername}
             id="standard-basic"
-            onChange={props.addEmail}
-            label="Email"
+            label="Username"
           />
           <TextField
             id="standard-basic"
