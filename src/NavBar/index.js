@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +21,12 @@ const useStyles = makeStyles(theme => ({
     marginLeft: "100px"
   }
 }));
+
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.modals.loggedIn
+  };
+};
 
 const NavBar = props => {
   const classes = useStyles();
@@ -51,13 +58,24 @@ const NavBar = props => {
               <Button color="inherit">Sign Up</Button>
             </Link>
           ) : null}
-          <Link style={{ textDecoration: "none", color: "white" }} to="/login">
-            <Button color="inherit">Login</Button>
-          </Link>
+          {!props.loggedIn ? (
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/login"
+            >
+              <Button color="inherit">Login</Button>
+            </Link>
+          ) : (
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              <Button onClick={props.logout} color="inherit">
+                Logout
+              </Button>
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
     </div>
   );
 };
 
-export default NavBar;
+export default connect(mapStateToProps)(NavBar);

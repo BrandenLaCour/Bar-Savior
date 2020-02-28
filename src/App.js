@@ -19,6 +19,9 @@ const mapDispatchToProps = dispatch => {
   return {
     toggleDrawer: () => {
       dispatch({ type: "TOGGLE_DRAWER" });
+    },
+    logout: () => {
+      dispatch({ type: "TOGGLE_LOGIN", action: false });
     }
   };
 };
@@ -27,6 +30,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  handleLogout = async () => {
+    try {
+      const logoutResponse = await fetch(
+        process.env.REACT_APP_API_URL + "/api/v1/users/logout",
+        {
+          credentials: "include"
+        }
+      );
+      const logoutJson = await logoutResponse.json();
+      this.props.logout();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   render() {
     return (
@@ -48,7 +66,7 @@ class App extends React.Component {
                   ) : null}
 
                   <NavBar
-                    loggedIn={this.props.loggedIn}
+                    logout={this.handleLogout}
                     toggleDrawer={this.props.toggleDrawer}
                   />
                   <h3>Landing Page</h3>
@@ -71,7 +89,7 @@ class App extends React.Component {
                   ) : null}
 
                   <NavBar
-                    loggedIn={this.props.loggedIn}
+                    logout={this.handleLogout}
                     toggleDrawer={this.props.toggleDrawer}
                   />
                   <FormsContainer type="login" />
@@ -92,7 +110,7 @@ class App extends React.Component {
                   ) : null}
 
                   <NavBar
-                    loggedIn={this.props.loggedIn}
+                    logout={this.handleLogout}
                     toggleDrawer={this.props.toggleDrawer}
                   />
                   <FormsContainer type="register" loggedIn={props.loggedIn} />

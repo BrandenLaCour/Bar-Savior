@@ -51,6 +51,7 @@ class FormsContainer extends React.Component {
       const companyResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/companys/",
         {
+          credentials: "include",
           method: "POST",
           body: JSON.stringify(companyInfo),
           headers: {
@@ -71,6 +72,7 @@ class FormsContainer extends React.Component {
       const createResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/users/register",
         {
+          credentials: "include",
           method: "POST",
           body: JSON.stringify(userInfo),
           headers: {
@@ -96,6 +98,7 @@ class FormsContainer extends React.Component {
       const loginResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/users/login",
         {
+          credentials: "include",
           method: "POST",
           body: JSON.stringify(userInfo),
           headers: {
@@ -104,6 +107,7 @@ class FormsContainer extends React.Component {
         }
       );
       const loginJson = await loginResponse.json();
+
       if (loginJson.status !== 401) {
         this.props.loginUser(true);
         this.props.addUserInfo(loginJson.data);
