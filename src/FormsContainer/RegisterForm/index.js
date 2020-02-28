@@ -72,8 +72,8 @@ const CompanyForm = props => {
       username: props.username,
       password: props.password,
       email: props.email,
-      postion: props.position,
-      companyId: props.companyId,
+      position: props.position,
+      company: props.companyId,
       admin: props.admin,
       master: props.master
     };

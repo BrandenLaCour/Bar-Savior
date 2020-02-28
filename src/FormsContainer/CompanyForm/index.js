@@ -44,8 +44,8 @@ const CompanyForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (props.form === "create") {
-      props.createCompany({ name: props.name, address: props.address });
+    if (props.type === "create") {
+      props.createCompany({ name: props.companyName, address: props.address });
     }
   };
 

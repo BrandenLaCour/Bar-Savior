@@ -7,10 +7,10 @@ class FormsContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      form: "register",
+      form: "company",
       type: "create",
       redirect: "false",
-      companyId: "1"
+      companyId: ""
     };
   }
   //refactor into redux
@@ -31,7 +31,6 @@ class FormsContainer extends React.Component {
   };
 
   createUser = async userInfo => {
-    console.log(userInfo);
     const userResponse = await fetch(
       process.env.REACT_APP_API_URL + "/api/v1/users/register",
       {
@@ -56,7 +55,7 @@ class FormsContainer extends React.Component {
       <>
         {this.state.form === "company" ? (
           <CompanyForm
-            form={this.state.form}
+            type={this.state.type}
             createCompany={this.createCompany}
           />
         ) : (
