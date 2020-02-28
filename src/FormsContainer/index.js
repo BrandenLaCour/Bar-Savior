@@ -3,6 +3,23 @@ import CompanyForm from "./CompanyForm";
 import { Redirect } from "react-router";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+  return {
+    status: state.modals.status,
+    user: state.modals.user
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loginUser: bool => dispatch({ type: "TOGGLE_LOGIN", payload: bool }),
+    addStatus: message => dispatch({ type: "ADD_STATUS", payload: message }),
+    addUserInfo: userInfo =>
+      dispatch({ type: "ADD_USER_INFO", payload: userInfo })
+  };
+};
 
 class FormsContainer extends React.Component {
   constructor() {
@@ -14,7 +31,10 @@ class FormsContainer extends React.Component {
       companyId: ""
     };
   }
-  //refactor into redux
+
+  componentDidMount() {
+    this.props.addStatus("");
+  }
 
   //will change whether this is an intial account setup, or just registering new users to your company
   //call this on login
@@ -48,7 +68,7 @@ class FormsContainer extends React.Component {
 
   createUser = async userInfo => {
     try {
-      const userResponse = await fetch(
+      const createResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/users/register",
         {
           method: "POST",
@@ -58,8 +78,14 @@ class FormsContainer extends React.Component {
           }
         }
       );
-      const { data } = await userResponse.json();
-      this.setState({ redirect: true });
+      const createJson = await createResponse.json();
+      if (createJson.status !== 401) {
+        this.props.loginUser(true);
+        this.props.addUserInfo(createJson.data);
+        this.setState({ redirect: true });
+      } else {
+        this.props.addStatus(createJson.message);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -78,7 +104,13 @@ class FormsContainer extends React.Component {
         }
       );
       const loginJson = await loginResponse.json();
-      console.log(loginJson);
+      if (loginJson.status !== 401) {
+        this.props.loginUser(true);
+        this.props.addUserInfo(loginJson.data);
+        this.setState({ redirect: true });
+      } else {
+        this.props.addStatus(loginJson.message);
+      }
       //need to add redux and changed to logged in.
     } catch (err) {
       console.error(err);
@@ -102,9 +134,10 @@ class FormsContainer extends React.Component {
         )}
         {this.state.form === "register" ||
         (this.state.form === "initRegister" &&
-          this.props.type === "register ") ? (
+          this.props.type === "register") ? (
           <RegisterForm
             createUser={this.createUser}
+            status={this.props.status}
             companyId={this.state.companyId}
             type={this.state.type}
             form={this.state.form}
@@ -112,10 +145,12 @@ class FormsContainer extends React.Component {
         ) : (
           ""
         )}
-        {this.props.type === "login" ? <LoginForm login={this.login} /> : null}
+        {this.props.type === "login" ? (
+          <LoginForm status={this.props.status} login={this.login} />
+        ) : null}
       </>
     );
   }
 }
 
-export default FormsContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(FormsContainer);

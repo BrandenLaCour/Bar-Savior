@@ -36,6 +36,10 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12
+  },
+  status: {
+    marginTop: 10,
+    color: "red"
   }
 });
 
@@ -78,6 +82,9 @@ const LoginForm = props => {
         <Button type="submit" variant="contained" color="primary">
           Submit
         </Button>
+        {props.status !== "" ? (
+          <div className={classes.status}>{props.status}</div>
+        ) : null}
       </form>
     </Card>
   );

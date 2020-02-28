@@ -1,7 +1,9 @@
 const defaultState = {
   loggedIn: false,
   drawerOpen: false,
-  redirect: true
+  redirect: true,
+  status: "",
+  user: {}
 };
 
 export const modals = (state = defaultState, action) => {
@@ -10,6 +12,12 @@ export const modals = (state = defaultState, action) => {
       return { ...state, drawerOpen: !state.drawerOpen };
     case "REDIRECT":
       return { ...state, redirect: !state.redirect };
+    case "TOGGLE_LOGIN":
+      return { ...state, loggedIn: action.payload };
+    case "ADD_STATUS":
+      return { ...state, status: action.payload };
+    case "ADD_USER_INFO":
+      return { ...state, user: action.payload };
     default:
       return state;
   }

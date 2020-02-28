@@ -19,7 +19,8 @@ const mapStateToProps = state => {
     position: state.authForms.position,
     admin: state.authForms.admin,
     master: state.authForms.master,
-    email: state.authForms.email
+    email: state.authForms.email,
+    status: state.modals.status
   };
 };
 
@@ -39,8 +40,11 @@ const mapDispatchToProps = dispatch => {
     isAdmin: event => {
       dispatch({ type: "IS_ADMIN", payload: event.target.value });
     },
-    isMASTER: event => {
+    isMaster: event => {
       dispatch({ type: "IS_MASTER", payload: event.target.value });
+    },
+    autoSetMaster: () => {
+      dispatch({ type: "IS_MASTER", payload: true });
     }
   };
 };
@@ -63,6 +67,10 @@ const useStyles = makeStyles({
   },
   helper: {
     textAlign: "center"
+  },
+  status: {
+    marginTop: 10,
+    color: "red"
   }
 });
 
@@ -151,10 +159,12 @@ const CompanyForm = props => {
             </Select>
             <FormHelperText className={classes.helper}>
               Master users have the ability to delete the company, this destroys
-              all data
+              all data. Highly recommended to keep this as No.
             </FormHelperText>
           </CardContent>
-        ) : null}
+        ) : (
+          props.autoSetMaster()
+        )}
 
         <Button
           className={classes.button}
@@ -164,6 +174,9 @@ const CompanyForm = props => {
         >
           Submit
         </Button>
+        {props.status !== "" ? (
+          <div className={classes.status}>{props.status}</div>
+        ) : null}
         {
           <FormHelperText className={classes.helper}>
             This account will be the 'master' account. It is the only account
