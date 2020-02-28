@@ -38,10 +38,17 @@ const NavBar = props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Bar Savior
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              <Button color="inherit">Bar Hero</Button>
+            </Link>
           </Typography>
           <Button color="inherit">About</Button>
-          <Button color="inherit">Sign Up</Button>
+          <Link
+            style={{ textDecoration: "none", color: "white" }}
+            to="/register"
+          >
+            <Button color="inherit">Sign Up</Button>
+          </Link>
           <Link style={{ textDecoration: "none", color: "white" }} to="/login">
             <Button color="inherit">Login</Button>
           </Link>

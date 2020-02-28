@@ -39,8 +39,16 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/" render={props => <h3>Landing Page</h3>} />
-            <Route path="/login" render={props => <FormsContainer />} />
-            <Route path="/register" render={props => <FormsContainer />} />
+            <Route
+              path="/login"
+              render={props => <FormsContainer type="login" />}
+            />
+            <Route
+              path="/register"
+              render={props => (
+                <FormsContainer type="register" loggedIn={props.loggedIn} />
+              )}
+            />
           </Switch>
         </BrowserRouter>
       </div>

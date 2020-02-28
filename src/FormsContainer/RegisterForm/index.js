@@ -48,7 +48,8 @@ const mapDispatchToProps = dispatch => {
 const useStyles = makeStyles({
   root: {
     width: 400,
-    height: 600
+    height: "100%",
+    padding: 10
   },
   title: {
     fontSize: 20
@@ -57,7 +58,8 @@ const useStyles = makeStyles({
     marginBottom: 12
   },
   button: {
-    width: "100px"
+    width: 100,
+    margin: 20
   },
   helper: {
     textAlign: "center"
@@ -82,7 +84,7 @@ const CompanyForm = props => {
       props.createUser(newUser);
     }
   };
-  console.log(props);
+
   return (
     <Card className={classes.root}>
       <form noValidate onSubmit={handleSubmit}>
@@ -92,7 +94,7 @@ const CompanyForm = props => {
             color="textPrimary"
             gutterBottom
           >
-            Create Master User
+            Create {props.form !== "register" ? "Master" : null} User
           </Typography>
           <TextField
             onChange={props.addUsername}
@@ -132,28 +134,42 @@ const CompanyForm = props => {
             Admins can create, edit, delete users, rooms and tasks
           </FormHelperText>
         </CardContent>
-        <CardContent>
-          <InputLabel>Master?</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="admin"
-            value={props.master}
-            onChange={props.isMaster}
-            className={classes.button}
-          >
-            <MenuItem value={true}>Yes</MenuItem>
-            <MenuItem value={false}>No</MenuItem>
-          </Select>
-          <FormHelperText className={classes.helper}>
-            Master users have the ability to delete the company, this destroys
-            all data
-          </FormHelperText>
-        </CardContent>
+        {props.form === "register" ? (
+          <CardContent>
+            <InputLabel>Master?</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="admin"
+              value={props.master}
+              onChange={props.isMaster}
+              className={classes.button}
+            >
+              <MenuItem value={true}>Yes</MenuItem>
 
-        <Button type="submit" variant="contained" color="primary">
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+            <FormHelperText className={classes.helper}>
+              Master users have the ability to delete the company, this destroys
+              all data
+            </FormHelperText>
+          </CardContent>
+        ) : null}
+
+        <Button
+          className={classes.button}
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
           Submit
         </Button>
+        {
+          <FormHelperText className={classes.helper}>
+            This account will be the 'master' account. It is the only account
+            that can delete this company, deleting all data inside.
+          </FormHelperText>
+        }
       </form>
     </Card>
   );
