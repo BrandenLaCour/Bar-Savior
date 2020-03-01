@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from "react-router";
 import FormsContainer from "./FormsContainer";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
+import UserContainer from "./UsersContainer";
 
 const mapStateToProps = state => {
   return {
@@ -114,6 +115,27 @@ class App extends React.Component {
                     toggleDrawer={this.props.toggleDrawer}
                   />
                   <FormsContainer type="register" loggedIn={props.loggedIn} />
+                </>
+              )}
+            />
+            <Route
+              path="/users"
+              render={props => (
+                <>
+                  {this.props.loggedIn ? (
+                    <Sidebar
+                      toggleDrawer={this.props.toggleDrawer}
+                      drawerOpen={this.props.drawerOpen}
+                      user={this.props.user}
+                      loggedIn={this.props.loggedIn}
+                    />
+                  ) : null}
+
+                  <NavBar
+                    logout={this.handleLogout}
+                    toggleDrawer={this.props.toggleDrawer}
+                  />
+                  <UserContainer />
                 </>
               )}
             />

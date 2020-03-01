@@ -6,7 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import { Link } from "react-router-dom";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
@@ -18,6 +18,10 @@ const useStyles = makeStyles({
   },
   fullList: {
     width: "auto"
+  },
+  sidebarText: {
+    color: "black",
+    textDecoration: "none"
   }
 });
 
@@ -32,23 +36,37 @@ export default function Sidebar(props) {
     >
       <List>
         {["Users", "Logs"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <SupervisorAccountIcon /> : <AssessmentIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+          <Link className={classes.sidebarText} to={text.toLowerCase()}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index % 2 === 0 ? (
+                  <SupervisorAccountIcon />
+                ) : (
+                  <AssessmentIcon />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Divider />
       <List>
         {["Add Room", "Add Task", "Add User"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index < 2 ? <AssignmentIcon /> : <AssignmentIndIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+          <Link
+            className={classes.sidebarText}
+            to={text
+              .split(" ")
+              .join("")
+              .toLowerCase()}
+          >
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index < 2 ? <AssignmentIcon /> : <AssignmentIndIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
         ))}
       </List>
     </div>
