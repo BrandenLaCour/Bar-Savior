@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => {
       dispatch({ type: "TOGGLE_DRAWER" });
     },
     logout: () => {
-      dispatch({ type: "TOGGLE_LOGIN", action: false });
+      dispatch({ type: "TOGGLE_LOGIN", payload: false });
     }
   };
 };

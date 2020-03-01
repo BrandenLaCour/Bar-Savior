@@ -1,10 +1,16 @@
 import React from "react";
 import UserCard from "./UserCard";
+import { connect } from "react-redux";
 
-class UsersContainer extends React.Component {
-  render() {
-    return <UserCard />;
-  }
-}
+const mapStateToProps = state => {
+  return {
+    users: state.companyData.users
+  };
+};
+const mapDispatchToProps = dispatch => {};
 
-export default UsersContainer;
+const UsersContainer = () => {
+  return <UserCard />;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);

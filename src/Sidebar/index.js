@@ -36,8 +36,12 @@ export default function Sidebar(props) {
     >
       <List>
         {["Users", "Logs"].map((text, index) => (
-          <Link className={classes.sidebarText} to={text.toLowerCase()}>
-            <ListItem button key={text}>
+          <Link
+            key={text}
+            className={classes.sidebarText}
+            to={text.toLowerCase()}
+          >
+            <ListItem button>
               <ListItemIcon>
                 {index % 2 === 0 ? (
                   <SupervisorAccountIcon />
@@ -54,13 +58,18 @@ export default function Sidebar(props) {
       <List>
         {["Add Room", "Add Task", "Add User"].map((text, index) => (
           <Link
+            key={text}
             className={classes.sidebarText}
-            to={text
-              .split(" ")
-              .join("")
-              .toLowerCase()}
+            to={
+              text === "Add User"
+                ? "register"
+                : text
+                    .split(" ")
+                    .join("")
+                    .toLowerCase()
+            }
           >
-            <ListItem button key={text}>
+            <ListItem button>
               <ListItemIcon>
                 {index < 2 ? <AssignmentIcon /> : <AssignmentIndIcon />}
               </ListItemIcon>

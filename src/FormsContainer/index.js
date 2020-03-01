@@ -8,7 +8,9 @@ import { connect } from "react-redux";
 const mapStateToProps = state => {
   return {
     status: state.modals.status,
-    user: state.modals.user
+    user: state.modals.user,
+    users: state.companyData.users,
+    loggedIn: state.modals.loggedIn
   };
 };
 
@@ -17,7 +19,8 @@ const mapDispatchToProps = dispatch => {
     loginUser: bool => dispatch({ type: "TOGGLE_LOGIN", payload: bool }),
     addStatus: message => dispatch({ type: "ADD_STATUS", payload: message }),
     addUserInfo: userInfo =>
-      dispatch({ type: "ADD_USER_INFO", payload: userInfo })
+      dispatch({ type: "ADD_USER_INFO", payload: userInfo }),
+    addUsers: users => dispatch({ type: "ADD_USERS", payload: users })
   };
 };
 
@@ -34,11 +37,13 @@ class FormsContainer extends React.Component {
 
   componentDidMount() {
     this.props.addStatus("");
+    this.handleFormType();
   }
 
   //will change whether this is an intial account setup, or just registering new users to your company
   //call this on login
   handleFormType = () => {
+    console.log(this.props);
     if (this.props.loggedIn === false) {
       this.setState({ form: "company" });
     } else {
@@ -93,6 +98,23 @@ class FormsContainer extends React.Component {
     }
   };
 
+  getUsers = async companyId => {
+    //get users by company id, see if i have a way to do that in backend.
+
+    try {
+      const usersResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/users/all/${companyId}`,
+        {
+          credentials: "include"
+        }
+      );
+      const { data } = await usersResponse.json();
+      this.props.addUsers(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   login = async userInfo => {
     try {
       const loginResponse = await fetch(
@@ -111,6 +133,8 @@ class FormsContainer extends React.Component {
       if (loginJson.status !== 401) {
         this.props.loginUser(true);
         this.props.addUserInfo(loginJson.data);
+        this.getUsers(loginJson.data.company.id);
+        this.handleFormType();
         this.setState({ redirect: true });
       } else {
         this.props.addStatus(loginJson.message);

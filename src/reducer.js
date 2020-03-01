@@ -61,18 +61,15 @@ export const authForms = (state = formState, action) => {
   }
 };
 
-// const sessionState = {
-//   companyId: "",
-//   address: ""
-// };
+const companyState = {
+  users: []
+};
 
-// export const forms = (state = defaultState, action) => {
-//   switch (action.type) {
-//     case "ADD_NAME":
-//       return { ...state, name: action.payload };
-//     case "ADD_ADDRESS":
-//       return { ...state, address: action.payload };
-//     default:
-//       return state;
-//   }
-// };
+export const companyData = (state = companyState, action) => {
+  switch (action.type) {
+    case "ADD_USERS":
+      return { ...state, users: action.payload };
+    default:
+      return state;
+  }
+};
