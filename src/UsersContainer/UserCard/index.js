@@ -33,7 +33,9 @@ const UserCard = props => {
           <Button variant="contained" color="secondary">
             Edit
           </Button>{" "}
-          <Button variant="contained">Delete</Button>
+          <Button onClick={() => props.delete(props.id)} variant="contained">
+            Delete
+          </Button>
         </CardContent>
       </Card>
     </>

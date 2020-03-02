@@ -87,8 +87,11 @@ class FormsContainer extends React.Component {
       );
       const createJson = await createResponse.json();
       if (createJson.status !== 401) {
-        this.props.loginUser(true);
-        this.props.addUserInfo(createJson.data);
+        if (this.state.form === "initRegister") {
+          this.props.loginUser(true);
+          this.props.addUserInfo(createJson.data);
+        }
+
         this.setState({ redirect: true });
       } else {
         this.props.addStatus(createJson.message);
