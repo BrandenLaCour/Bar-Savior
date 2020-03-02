@@ -83,11 +83,13 @@ const CompanyForm = props => {
           </Typography>
           <TextField
             id="standard-basic"
-            onChange={props.addEmail}
+            onChange={props.addRoomName}
+            value={props.roomName}
             label="Room Name"
           />
           <TextField
-            onChange={props.addUsername}
+            onChange={props.addTaskName}
+            value={props.taskName}
             id="standard-basic"
             label="Task Description"
           />
@@ -106,20 +108,6 @@ const CompanyForm = props => {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="Shift"
-            value={props.shift}
-            onChange={props.addShift}
-            className={classes.button}
-          >
-            <MenuItem value="day">Morning</MenuItem>
-            <MenuItem value="night">Night</MenuItem>
-          </Select>
-        </CardContent>
-        <CardContent>
-          <InputLabel>Admin?</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Image Required?"
             value={props.imgReq}
             onChange={props.setImgReq}
             className={classes.button}
@@ -127,33 +115,7 @@ const CompanyForm = props => {
             <MenuItem value={true}>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
-          <FormHelperText className={classes.helper}>
-            Admins can create, edit, delete users, rooms and tasks
-          </FormHelperText>
         </CardContent>
-        {props.form === "register" ? (
-          <CardContent>
-            <InputLabel>Master?</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="admin"
-              value={props.master}
-              onChange={props.isMaster}
-              className={classes.button}
-            >
-              <MenuItem value={true}>Yes</MenuItem>
-
-              <MenuItem value={false}>No</MenuItem>
-            </Select>
-            <FormHelperText className={classes.helper}>
-              Master users have the ability to delete the company, this destroys
-              all data. Highly recommended to keep this as No.
-            </FormHelperText>
-          </CardContent>
-        ) : (
-          props.autoSetMaster()
-        )}
 
         <Button
           className={classes.button}
@@ -163,15 +125,6 @@ const CompanyForm = props => {
         >
           Submit
         </Button>
-        {props.status !== "" ? (
-          <div className={classes.status}>{props.status}</div>
-        ) : null}
-        {
-          <FormHelperText className={classes.helper}>
-            This account will be the 'master' account. It is the only account
-            that can delete this company, deleting all data inside.
-          </FormHelperText>
-        }
       </form>
     </Card>
   );

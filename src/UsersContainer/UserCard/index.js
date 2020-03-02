@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 
 const UserCard = props => {
   const classes = useStyles();
+  console.log(props);
   return (
     <>
       <Card className={classes.root}>
@@ -25,6 +26,7 @@ const UserCard = props => {
           <ul>
             <li className={classes.list}>Username: {props.username}</li>
             <li className={classes.list}>Email: {props.email}</li>
+            <li className={classes.list}>Position: {props.position}</li>
             <li className={classes.list}>Admin: {props.admin}</li>
             <li className={classes.list}>Master: {props.master}</li>
           </ul>

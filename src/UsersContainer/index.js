@@ -52,6 +52,7 @@ class UsersContainer extends React.Component {
               admin={user.admin ? "Yes" : "No"}
               master={user.master ? "Yes" : "No"}
               id={user.id}
+              position={user.position}
               delete={this.deleteUser}
             />
           );

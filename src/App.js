@@ -57,6 +57,7 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <NavBar
+            user={this.props.user}
             logout={this.handleLogout}
             toggleDrawer={this.props.toggleDrawer}
           />
@@ -104,11 +105,11 @@ class App extends React.Component {
                 </>
               )}
             />
-              <Route
-              path="/users"
+            <Route
+              path="/addroom"
               render={props => (
                 <>
-                  <UserContainer />
+                  <RoomForm />
                 </>
               )}
             />

@@ -46,7 +46,7 @@ const NavBar = props => {
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             <Link style={{ textDecoration: "none", color: "white" }} to="/">
-              <Button color="inherit">Bar Hero</Button>
+              <Button color="inherit">Bar Hero (company name)</Button>
             </Link>
           </Typography>
           <Button color="inherit">About</Button>
