@@ -20,7 +20,8 @@ const mapStateToProps = state => {
     admin: state.authForms.admin,
     master: state.authForms.master,
     email: state.authForms.email,
-    status: state.modals.status
+    status: state.modals.status,
+    user: state.modals.user
   };
 };
 
@@ -83,7 +84,7 @@ const CompanyForm = props => {
       password: props.password,
       email: props.email,
       position: props.position,
-      company: props.companyId,
+      company: props.user.company.id,
       admin: props.admin,
       master: props.master
     };

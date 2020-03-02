@@ -7,10 +7,26 @@ const mapStateToProps = state => {
     users: state.companyData.users
   };
 };
-const mapDispatchToProps = dispatch => {};
+const mapDispatchToProps = dispatch => {
+  return {};
+};
 
-const UsersContainer = () => {
-  return <UserCard />;
+const UsersContainer = props => {
+  return (
+    <>
+      {props.users.map(user => {
+        return (
+          <UserCard
+            key={user.id}
+            email={user.email}
+            username={user.username}
+            admin={user.admin ? "Yes" : "No"}
+            master={user.master ? "Yes" : "No"}
+          />
+        );
+      })}
+    </>
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
