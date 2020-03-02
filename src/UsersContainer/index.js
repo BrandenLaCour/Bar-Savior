@@ -1,11 +1,11 @@
 import React from "react";
 import UserCard from "./UserCard";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 const mapStateToProps = state => {
   return {
-    users: state.companyData.users
+    users: state.companyData.users,
+    user: state.modals.user
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -19,11 +19,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 class UsersContainer extends React.Component {
-  constructor() {
-    super();
-  }
-
   deleteUser = async userId => {
+    console.log(this.props.user);
     try {
       const deleteResponse = await fetch(
         process.env.REACT_APP_API_URL + `/api/v1/users/${userId}`,
@@ -44,7 +41,6 @@ class UsersContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.users);
     return (
       <>
         {this.props.users.map(user => {

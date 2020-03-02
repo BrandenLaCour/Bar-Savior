@@ -3,7 +3,8 @@ const defaultState = {
   drawerOpen: false,
   redirect: true,
   status: "",
-  user: {}
+  user: {},
+  formType: ""
 };
 
 export const modals = (state = defaultState, action) => {
@@ -17,6 +18,8 @@ export const modals = (state = defaultState, action) => {
     case "ADD_STATUS":
       return { ...state, status: action.payload };
     case "ADD_USER_INFO":
+      return { ...state, user: action.payload };
+    case "ADD_FORM_TYPE":
       return { ...state, user: action.payload };
     default:
       return state;

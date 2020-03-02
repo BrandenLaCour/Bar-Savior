@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import NavBar from "./NavBar";
 import { BrowserRouter } from "react-router-dom";
-import { Route, Switch, Redirect } from "react-router";
+import { Route, Switch } from "react-router";
 import FormsContainer from "./FormsContainer";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
@@ -23,15 +23,14 @@ const mapDispatchToProps = dispatch => {
     },
     logout: () => {
       dispatch({ type: "TOGGLE_LOGIN", payload: false });
+    },
+    addFormType: formType => {
+      dispatch({ type: "ADD_FORM_TYPE", payload: formType });
     }
   };
 };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleLogout = async () => {
     try {
       const logoutResponse = await fetch(
@@ -42,57 +41,49 @@ class App extends React.Component {
       );
       const logoutJson = await logoutResponse.json();
       this.props.logout();
+      console.log(logoutJson);
     } catch (err) {
       console.error(err);
     }
+  };
+
+  changeFormType = formType => {
+    console.log("changeformtype");
+    this.props.addFormType(formType);
   };
 
   render() {
     return (
       <div className="App">
         <BrowserRouter>
+          <NavBar
+            logout={this.handleLogout}
+            toggleDrawer={this.props.toggleDrawer}
+          />
+          {this.props.loggedIn ? (
+            <Sidebar
+              changeFormType={this.changeFormType}
+              toggleDrawer={this.props.toggleDrawer}
+              drawerOpen={this.props.drawerOpen}
+              user={this.props.user}
+              loggedIn={this.props.loggedIn}
+            />
+          ) : null}
           <Switch>
             <Route
               exact
               path="/"
               render={props => (
                 <>
-                  {this.props.loggedIn ? (
-                    <Sidebar
-                      toggleDrawer={this.props.toggleDrawer}
-                      drawerOpen={this.props.drawerOpen}
-                      user={this.props.user}
-                      loggedIn={this.props.loggedIn}
-                    />
-                  ) : null}
-
-                  <NavBar
-                    logout={this.handleLogout}
-                    toggleDrawer={this.props.toggleDrawer}
-                  />
                   <h3>Landing Page</h3>
                 </>
               )}
             />
 
-            {/* need to figure out a more dry way to route with nav and sidebar to have them render changes */}
             <Route
               path="/login"
               render={props => (
                 <>
-                  {this.props.loggedIn ? (
-                    <Sidebar
-                      toggleDrawer={this.props.toggleDrawer}
-                      drawerOpen={this.props.drawerOpen}
-                      user={this.props.user}
-                      loggedIn={this.props.loggedIn}
-                    />
-                  ) : null}
-
-                  <NavBar
-                    logout={this.handleLogout}
-                    toggleDrawer={this.props.toggleDrawer}
-                  />
                   <FormsContainer type="login" />
                 </>
               )}
@@ -101,19 +92,6 @@ class App extends React.Component {
               path="/register"
               render={props => (
                 <>
-                  {this.props.loggedIn ? (
-                    <Sidebar
-                      toggleDrawer={this.props.toggleDrawer}
-                      drawerOpen={this.props.drawerOpen}
-                      user={this.props.user}
-                      loggedIn={this.props.loggedIn}
-                    />
-                  ) : null}
-
-                  <NavBar
-                    logout={this.handleLogout}
-                    toggleDrawer={this.props.toggleDrawer}
-                  />
                   <FormsContainer type="register" loggedIn={props.loggedIn} />
                 </>
               )}
@@ -122,19 +100,6 @@ class App extends React.Component {
               path="/users"
               render={props => (
                 <>
-                  {this.props.loggedIn ? (
-                    <Sidebar
-                      toggleDrawer={this.props.toggleDrawer}
-                      drawerOpen={this.props.drawerOpen}
-                      user={this.props.user}
-                      loggedIn={this.props.loggedIn}
-                    />
-                  ) : null}
-
-                  <NavBar
-                    logout={this.handleLogout}
-                    toggleDrawer={this.props.toggleDrawer}
-                  />
                   <UserContainer />
                 </>
               )}

@@ -13,14 +13,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const mapStateToProps = state => {
   return {
-    username: state.authForms.username,
-    password: state.authForms.password,
-    position: state.authForms.position,
-    admin: state.authForms.admin,
-    master: state.authForms.master,
-    email: state.authForms.email,
-    status: state.modals.status,
-    user: state.modals.user
+    formType: state.authForms.formType
   };
 };
 
@@ -28,24 +21,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addUsername: event =>
       dispatch({ type: "ADD_USERNAME", payload: event.target.value }),
-    addPassword: event => {
-      dispatch({ type: "ADD_PASSWORD", payload: event.target.value });
-    },
-    addEmail: event => {
-      dispatch({ type: "ADD_EMAIL", payload: event.target.value });
-    },
-    addPosition: event => {
-      dispatch({ type: "ADD_POSITION", payload: event.target.value });
-    },
-    isAdmin: event => {
-      dispatch({ type: "IS_ADMIN", payload: event.target.value });
-    },
-    isMaster: event => {
-      dispatch({ type: "IS_MASTER", payload: event.target.value });
-    },
-    autoSetMaster: () => {
-      dispatch({ type: "IS_MASTER", payload: true });
-    }
+      
   };
 };
 
@@ -78,19 +54,7 @@ const CompanyForm = props => {
   const classes = useStyles();
 
   const handleSubmit = event => {
-    const newUser = {
-      username: props.username,
-      password: props.password,
-      email: props.email,
-      position: props.position,
-      company: props.user.company.id,
-      admin: props.admin,
-      master: props.master
-    };
     event.preventDefault();
-    if (props.type === "create") {
-      props.createUser(newUser);
-    }
   };
 
   return (
@@ -102,12 +66,12 @@ const CompanyForm = props => {
             color="textPrimary"
             gutterBottom
           >
-            Create {props.form !== "register" ? "Master" : null} User
+            {prop.formType === "create" ? "Create" : "Edit"} Room
           </Typography>
           <TextField
             id="standard-basic"
             onChange={props.addEmail}
-            label="Email"
+            label="Room Name"
           />
 
           <TextField
