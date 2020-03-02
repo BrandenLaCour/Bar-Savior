@@ -85,13 +85,18 @@ class FormsContainer extends React.Component {
           }
         }
       );
+
       const createJson = await createResponse.json();
       if (createJson.status !== 401) {
         if (this.state.form === "initRegister") {
+          //if the user is coming from the inital signup of their company, log them in,
+          //otherwise it means the admin is adding someone, so dont log that admin created user in
           this.props.loginUser(true);
           this.props.addUserInfo(createJson.data);
         }
 
+        const users = [...this.props.users, createJson.data];
+        this.props.addUsers(users);
         this.setState({ redirect: true });
       } else {
         this.props.addStatus(createJson.message);

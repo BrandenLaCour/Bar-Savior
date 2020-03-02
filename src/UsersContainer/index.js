@@ -10,48 +10,59 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    removeUser: users =>
+    addUsers: users =>
       dispatch({
-        type: "REMOVE_USER",
+        type: "ADD_USERS",
         payload: users
       })
   };
 };
 
-async function deleteUser(userId) {
-  try {
-    const deleteResponse = await fetch(
-      process.env.REACT_APP_API_URL + `/api/v1/users/${userId}`,
-      {
-        credentials: "include",
-        method: "DELETE"
-      }
+class UsersContainer extends React.Component {
+  constructor() {
+    super();
+  }
+
+  deleteUser = async userId => {
+    try {
+      const deleteResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/users/${userId}`,
+        {
+          credentials: "include",
+          method: "DELETE"
+        }
+      );
+      const deleteJson = await deleteResponse.json();
+      const users = [...this.props.users];
+      const userIndex = users.findIndex(e => e.id === userId);
+      users.splice(userIndex, 1);
+      this.props.addUsers(users);
+      console.log(deleteJson);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  render() {
+    console.log(this.props.users);
+    return (
+      <>
+        {this.props.users.map(user => {
+          return (
+            <UserCard
+              key={user.id}
+              email={user.email}
+              username={user.username}
+              admin={user.admin ? "Yes" : "No"}
+              master={user.master ? "Yes" : "No"}
+              id={user.id}
+              delete={this.deleteUser}
+            />
+          );
+        })}
+      </>
     );
-    const deleteJson = await deleteResponse.json();
-    return <Redirect to="/users" />;
-  } catch (err) {
-    console.error(err);
   }
 }
-
-const UsersContainer = props => {
-  return (
-    <>
-      {props.users.map(user => {
-        return (
-          <UserCard
-            key={user.id}
-            email={user.email}
-            username={user.username}
-            admin={user.admin ? "Yes" : "No"}
-            master={user.master ? "Yes" : "No"}
-            id={user.id}
-            delete={deleteUser}
-          />
-        );
-      })}
-    </>
-  );
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
