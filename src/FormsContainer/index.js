@@ -65,6 +65,7 @@ class FormsContainer extends React.Component {
         }
       );
       const { data } = await companyResponse.json();
+      console.log(data);
       this.setState({ form: "initRegister", companyId: data.id });
       //initial register lets the app know that the first user will be "master" user
     } catch (err) {

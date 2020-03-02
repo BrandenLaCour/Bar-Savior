@@ -60,7 +60,7 @@ export default function Sidebar(props) {
           <Link
             key={text}
             className={classes.sidebarText}
-            // onClick={() => props.changeFormType("create")}
+            onClick={() => props.changeFormType("create")}
             to={
               text === "Add User"
                 ? "register"

@@ -78,17 +78,19 @@ const CompanyForm = props => {
   const classes = useStyles();
 
   const handleSubmit = event => {
+    event.preventDefault();
     const newUser = {
       username: props.username,
       password: props.password,
       email: props.email,
       position: props.position,
-      company: props.user.company.id,
+      company: props.companyId,
       admin: props.admin,
       master: props.master
     };
-    event.preventDefault();
+
     if (props.type === "create") {
+      console.log("hit create");
       props.createUser(newUser);
     }
   };

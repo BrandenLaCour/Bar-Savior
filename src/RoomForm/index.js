@@ -13,15 +13,28 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const mapStateToProps = state => {
   return {
-    formType: state.authForms.formType
+    formType: state.authForms.formType,
+    roomName: state.taskForm.roomName,
+    taskName: state.taskForm.taskName,
+    shift: state.taskForm.shift,
+    active: state.taskForm.active,
+    imgUrl: state.taskForm.imgUrl,
+    imgReq: state.taskForm.imgReq
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addUsername: event =>
-      dispatch({ type: "ADD_USERNAME", payload: event.target.value }),
-      
+    addRoomName: event =>
+      dispatch({ type: "ADD_ROOM_NAME", payload: event.target.value }),
+    addTaskName: event =>
+      dispatch({ type: "ADD_TASK_NAME", payload: event.target.value }),
+    addShift: event =>
+      dispatch({ type: "ADD_SHIFT", payload: event.target.value }),
+    addImgUrl: event =>
+      dispatch({ type: "ADD_IMAGE", payload: event.target.value }),
+    setImgReq: event =>
+      dispatch({ type: "SET_IMG_REQ", payload: event.target.value })
   };
 };
 
@@ -66,38 +79,49 @@ const CompanyForm = props => {
             color="textPrimary"
             gutterBottom
           >
-            {prop.formType === "create" ? "Create" : "Edit"} Room
+            {props.formType === "create" ? "Create" : "Edit"} Room
           </Typography>
           <TextField
             id="standard-basic"
             onChange={props.addEmail}
             label="Room Name"
           />
-
-          <TextField
-            id="standard-basic"
-            onChange={props.addPassword}
-            label="Password"
-          />
           <TextField
             onChange={props.addUsername}
             id="standard-basic"
-            label="Username"
+            label="Task Description"
           />
-          <TextField
-            id="standard-basic"
-            onChange={props.addPosition}
-            label="Position"
-          />
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Shift"
+            value={props.shift}
+            onChange={props.addShift}
+            className={classes.button}
+          >
+            <MenuItem value="day">Morning</MenuItem>
+            <MenuItem value="night">Night</MenuItem>
+          </Select>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Shift"
+            value={props.shift}
+            onChange={props.addShift}
+            className={classes.button}
+          >
+            <MenuItem value="day">Morning</MenuItem>
+            <MenuItem value="night">Night</MenuItem>
+          </Select>
         </CardContent>
         <CardContent>
           <InputLabel>Admin?</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="admin"
-            value={props.admin}
-            onChange={props.isAdmin}
+            label="Image Required?"
+            value={props.imgReq}
+            onChange={props.setImgReq}
             className={classes.button}
           >
             <MenuItem value={true}>Yes</MenuItem>

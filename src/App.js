@@ -7,6 +7,7 @@ import FormsContainer from "./FormsContainer";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
 import UserContainer from "./UsersContainer";
+import RoomForm from "./RoomForm";
 
 const mapStateToProps = state => {
   return {
@@ -48,7 +49,6 @@ class App extends React.Component {
   };
 
   changeFormType = formType => {
-    console.log("changeformtype");
     this.props.addFormType(formType);
   };
 
@@ -97,6 +97,14 @@ class App extends React.Component {
               )}
             />
             <Route
+              path="/users"
+              render={props => (
+                <>
+                  <UserContainer />
+                </>
+              )}
+            />
+              <Route
               path="/users"
               render={props => (
                 <>

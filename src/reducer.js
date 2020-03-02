@@ -78,3 +78,29 @@ export const companyData = (state = companyState, action) => {
       return state;
   }
 };
+
+const taskFormState = {
+  roomName: "",
+  taskName: "",
+  shift: "",
+  active: true,
+  imgUrl: "",
+  imgReq: false
+};
+
+export const taskForm = (state = taskFormState, action) => {
+  switch (action.type) {
+    case "ADD_ROOM_NAME":
+      return { ...state, roomName: action.payload };
+    case "ADD_TASK_NAME":
+      return { ...state, taskName: action.payload };
+    case "ADD_SHIFT":
+      return { ...state, shift: action.payload };
+    case "ADD_IMAGE":
+      return { ...state, imgUrl: action.payload };
+    case "SET_IMG_REQ":
+      return { ...state, imgReq: action.payload };
+    default:
+      return state;
+  }
+};
