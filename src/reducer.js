@@ -68,6 +68,7 @@ const companyState = {
   users: [],
   tasks: [],
   rooms: [],
+  logs: [],
   room: ""
 };
 
@@ -79,6 +80,8 @@ export const companyData = (state = companyState, action) => {
       return { ...state, rooms: action.payload };
     case "ADD_ROOM":
       return { ...state, room: action.payload };
+    case "ADD_LOGS":
+      return { ...state, logs: action.payload };
     case "REMOVE_USER":
       return { ...state, users: action.payload };
     case "ADD_TASKS":

@@ -4,7 +4,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import TaskForm from "../TaskForm";
+import TaskRow from "../TaskRow";
 import { Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 
@@ -114,14 +114,14 @@ class CompanyForm extends React.Component {
               label="Room"
             />
 
-            <TaskForm
+            <TaskRow
               name={this.state.task1.name}
               shift={this.state.task1.shift}
               imgReq={this.state.task1.imgReq}
               handleChange={this.handleChange}
               taskNum="task1"
             />
-            <TaskForm
+            <TaskRow
               name={this.state.task2.name}
               shift={this.state.task2.shift}
               imgReq={this.state.task2.imgReq}
@@ -129,28 +129,28 @@ class CompanyForm extends React.Component {
               taskNum="task2"
             />
 
-            <TaskForm
+            <TaskRow
               name={this.state.task3.name}
               shift={this.state.task3.shift}
               imgReq={this.state.task3.imgReq}
               handleChange={this.handleChange}
               taskNum="task3"
             />
-            <TaskForm
+            <TaskRow
               name={this.state.task4.name}
               shift={this.state.task4.shift}
               imgReq={this.state.task4.imgReq}
               handleChange={this.handleChange}
               taskNum="task4"
             />
-            <TaskForm
+            <TaskRow
               name={this.state.task5.name}
               shift={this.state.task5.shift}
               imgReq={this.state.task5.imgReq}
               handleChange={this.handleChange}
               taskNum="task5"
             />
-            <TaskForm
+            <TaskRow
               name={this.state.task6.name}
               shift={this.state.task6.shift}
               imgReq={this.state.task6.imgReq}

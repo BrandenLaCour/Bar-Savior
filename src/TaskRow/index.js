@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   }
 });
 
-const TaskForm = props => {
+const TaskRow = props => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -77,4 +77,4 @@ const TaskForm = props => {
   );
 };
 
-export default TaskForm;
+export default TaskRow;

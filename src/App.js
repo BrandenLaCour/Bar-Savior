@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import UserContainer from "./UsersContainer";
 import RoomForm from "./RoomForm";
 import RoomsContainer from "./RoomsContainer";
+import RoomChecklist from "./RoomChecklist";
 
 const mapStateToProps = state => {
   return {
@@ -248,6 +249,15 @@ class App extends React.Component {
                     createRoom={this.createRoom}
                     updateRoom={this.updateRoom}
                   />
+                </>
+              )}
+            />
+            <Route
+              path="/roomShow"
+              render={props => (
+                <>
+                  {console.log("ran")}
+                  <RoomChecklist />
                 </>
               )}
             />
