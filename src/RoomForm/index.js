@@ -1,40 +1,23 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import Select from "@material-ui/core/Select";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
 import { connect } from "react-redux";
 import TaskForm from "../TaskForm";
+import TextField from "@material-ui/core/TextField";
 
 const mapStateToProps = state => {
   return {
-    formType: state.authForms.formType,
-    roomName: state.taskForm.roomName,
-    taskName: state.taskForm.taskName,
-    shift: state.taskForm.shift,
-    active: state.taskForm.active,
-    imgUrl: state.taskForm.imgUrl,
-    imgReq: state.taskForm.imgReq
+    formType: state.modals.formType,
+    roomName: state.taskForm.roomName
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addRoomName: event =>
-      dispatch({ type: "ADD_ROOM_NAME", payload: event.target.value }),
-    addTaskName: event =>
-      dispatch({ type: "ADD_TASK_NAME", payload: event.target.value }),
-    addShift: event =>
-      dispatch({ type: "ADD_SHIFT", payload: event.target.value }),
-    addImgUrl: event =>
-      dispatch({ type: "ADD_IMAGE", payload: event.target.value }),
-    setImgReq: event =>
-      dispatch({ type: "SET_IMG_REQ", payload: event.target.value })
+      dispatch({ type: "ADD_ROOM_NAME", payload: event.target.value })
   };
 };
 
@@ -42,58 +25,71 @@ class CompanyForm extends React.Component {
   constructor() {
     super();
     this.state = {
+      room: "",
       task1: {
         taskName: "",
-        shift: "",
+        shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task2: {
         taskName: "",
-        shift: "",
+        shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task3: {
         taskName: "",
-        shift: "",
+        shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task4: {
         taskName: "",
-        shift: "",
+        shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task5: {
         taskName: "",
-        shift: "",
+        shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task6: {
         taskName: "",
-        shift: "",
+        shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       }
     };
   }
+
   handleSubmit = event => {
+    //submit all rows, maybe have to map
     event.preventDefault();
+    if (this.props.formType === "create") {
+      this.props.createRoom(this.state);
+    } else {
+      this.props.updateRoom(this.state);
+    }
   };
 
   handleChange = (e, taskNum) => {
-    console.log(e.target.value);
-    console.log(e.target.name);
-    console.log(taskNum);
+    //change each row one at a time
+    const task = this.state[taskNum];
+    task[e.target.name] = e.target.value;
+    this.setState({ [taskNum]: task });
+  };
+
+  handleRoomChange = e => {
+    this.setState({ room: e.target.value });
   };
   render() {
     return (
@@ -101,41 +97,59 @@ class CompanyForm extends React.Component {
         <form noValidate onSubmit={this.handleSubmit}>
           <CardContent>
             <Typography color="textPrimary" gutterBottom>
-              {this.formType === "create" ? "Create" : "Edit"} Room
+              {this.props.formType === "create" ? "Create" : "Edit"} Room
             </Typography>
-            <TaskForm handleChange={this.handleChange} />
             <TextField
+              onChange={e => this.handleRoomChange(e)}
+              name="room"
+              value={this.state.room}
               id="standard-basic"
-              onChange={this.addRoomName}
-              value={this.roomName}
-              label="Room Name"
+              label="Room"
             />
-            <TextField
-              onChange={this.addTaskName}
-              value={this.taskName}
-              id="standard-basic"
-              label="Task Description"
+
+            <TaskForm
+              taskName={this.state.task1.taskName}
+              shift={this.state.task1.shift}
+              active={this.state.task1.active}
+              handleChange={this.handleChange}
+              taskNum="task1"
             />
-            <InputLabel>Shift</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={this.shift}
-              onChange={this.addShift}
-            >
-              <MenuItem value="day">Morning</MenuItem>
-              <MenuItem value="night">Night</MenuItem>
-            </Select>
-            <InputLabel>Image Required?</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={this.props.imgReq}
-              onChange={this.props.setImgReq}
-            >
-              <MenuItem value={true}>Yes</MenuItem>
-              <MenuItem value={false}>No</MenuItem>
-            </Select>
+            <TaskForm
+              taskName={this.state.task2.taskName}
+              shift={this.state.task2.shift}
+              active={this.state.task2.active}
+              handleChange={this.handleChange}
+              taskNum="task2"
+            />
+
+            <TaskForm
+              taskName={this.state.task3.taskName}
+              shift={this.state.task3.shift}
+              active={this.state.task3.active}
+              handleChange={this.handleChange}
+              taskNum="task3"
+            />
+            <TaskForm
+              taskName={this.state.task4.taskName}
+              shift={this.state.task4.shift}
+              active={this.state.task4.active}
+              handleChange={this.handleChange}
+              taskNum="task4"
+            />
+            <TaskForm
+              taskName={this.state.task5.taskName}
+              shift={this.state.task5.shift}
+              active={this.state.task5.active}
+              handleChange={this.handleChange}
+              taskNum="task5"
+            />
+            <TaskForm
+              taskName={this.state.task6.taskName}
+              shift={this.state.task6.shift}
+              active={this.state.task6.active}
+              handleChange={this.handleChange}
+              taskNum="task6"
+            />
           </CardContent>
 
           <Button type="submit" variant="contained" color="primary">

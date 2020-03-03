@@ -52,6 +52,16 @@ class App extends React.Component {
     this.props.addFormType(formType);
   };
 
+  createRoom = roomInfo => {
+    try {
+    } catch (err) {}
+  };
+
+  updateRoom = roomInfo => {
+    try {
+    } catch (err) {}
+  };
+
   render() {
     return (
       <div className="App">
@@ -109,7 +119,10 @@ class App extends React.Component {
               path="/addroom"
               render={props => (
                 <>
-                  <RoomForm />
+                  <RoomForm
+                    createRoom={this.createRoom}
+                    updateRoom={this.updateRoom}
+                  />
                 </>
               )}
             />

@@ -20,7 +20,7 @@ export const modals = (state = defaultState, action) => {
     case "ADD_USER_INFO":
       return { ...state, user: action.payload };
     case "ADD_FORM_TYPE":
-      return { ...state, user: action.payload };
+      return { ...state, formType: action.payload };
     default:
       return state;
   }
@@ -87,6 +87,7 @@ const taskFormState = {
   task4: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
   task5: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
   task6: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
+  task: {},
   tasks: []
 };
 
@@ -96,6 +97,16 @@ export const taskForm = (state = taskFormState, action) => {
       return { ...state, roomName: action.payload };
     case "ADD_TASK_1":
       return { ...state, task1: action.payload };
+    case "ADD_TASK_2":
+      return { ...state, task2: action.payload };
+    case "ADD_TASK_3":
+      return { ...state, task3: action.payload };
+    case "ADD_TASK_4":
+      return { ...state, task4: action.payload };
+    case "ADD_TASK_5":
+      return { ...state, task5: action.payload };
+    case "ADD_TASK_6":
+      return { ...state, task6: action.payload };
 
     default:
       return state;

@@ -1,11 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { modals, authForms, companyData, taskForm } from "./reducer";
+import { createLogger } from "redux-logger";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+
+const logger = createLogger();
 
 const rootReducer = combineReducers({
   modals,
@@ -13,7 +16,7 @@ const rootReducer = combineReducers({
   companyData,
   taskForm
 });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 
 ReactDOM.render(
   <Provider store={store}>
