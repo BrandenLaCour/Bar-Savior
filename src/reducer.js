@@ -66,13 +66,19 @@ export const authForms = (state = formState, action) => {
 
 const companyState = {
   users: [],
-  tasks: []
+  tasks: [],
+  rooms: [],
+  room: ""
 };
 
 export const companyData = (state = companyState, action) => {
   switch (action.type) {
     case "ADD_USERS":
       return { ...state, users: action.payload };
+    case "ADD_ROOMS":
+      return { ...state, rooms: action.payload };
+    case "ADD_ROOM":
+      return { ...state, room: action.payload };
     case "REMOVE_USER":
       return { ...state, users: action.payload };
     case "ADD_TASKS":

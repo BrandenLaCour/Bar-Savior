@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
 import UserContainer from "./UsersContainer";
 import RoomForm from "./RoomForm";
+import RoomsContainer from "./RoomsContainer";
 
 const mapStateToProps = state => {
   return {
@@ -33,7 +34,17 @@ const mapDispatchToProps = dispatch => {
     isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool }),
     addUsers: users => dispatch({ type: "ADD_USERS", payload: users }),
     addUserInfo: userInfo =>
-      dispatch({ type: "ADD_USER_INFO", payload: userInfo })
+      dispatch({ type: "ADD_USER_INFO", payload: userInfo }),
+    addRooms: rooms =>
+      dispatch({
+        type: "ADD_ROOMS",
+        payload: rooms
+      }),
+    addTasks: tasks =>
+      dispatch({
+        type: "ADD_TASKS",
+        payload: tasks
+      })
   };
 };
 
@@ -46,11 +57,66 @@ class App extends React.Component {
           credentials: "include"
         }
       );
-
+      const logoutJson = await logoutResponse.json();
+      console.log(logoutJson);
       this.props.logout();
       this.props.addUsers([]);
       this.props.addUserInfo({});
       //reset state after logout
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  getUsers = async companyId => {
+    //get users by company id, see if i have a way to do that in backend.
+    if (this.props.user.admin === true || this.props.user.master === true) {
+      // only get them if admin or master
+      try {
+        const usersResponse = await fetch(
+          process.env.REACT_APP_API_URL + `/api/v1/users/all/${companyId}`,
+          {
+            credentials: "include"
+          }
+        );
+        const { data } = await usersResponse.json();
+        this.props.addUsers(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  getRooms = async companyId => {
+    //get users by company id, see if i have a way to do that in backend.
+
+    try {
+      const roomsResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/rooms/all/${companyId}`,
+        {
+          credentials: "include"
+        }
+      );
+      const { data } = await roomsResponse.json();
+      console.log(data);
+      this.props.addRooms(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  getTasks = async roomId => {
+    //get users by company id, see if i have a way to do that in backend.
+
+    try {
+      const tasksResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/tasks/all/${roomId}`,
+        {
+          credentials: "include"
+        }
+      );
+      const { data } = await tasksResponse.json();
+      this.props.addTasks(data);
     } catch (err) {
       console.error(err);
     }
@@ -127,18 +193,29 @@ class App extends React.Component {
             <Route
               exact
               path="/"
-              render={props => (
-                <>
-                  <h3>Landing Page</h3>
-                </>
-              )}
+              render={props =>
+                this.props.loggedIn ? (
+                  <>
+                    <RoomsContainer getTasks={this.getTasks} />
+                  </>
+                ) : (
+                  <div>
+                    {" "}
+                    <h3>Landing Page</h3> <p>Thiis is how you use this app</p>{" "}
+                  </div>
+                )
+              }
             />
 
             <Route
               path="/login"
               render={props => (
                 <>
-                  <FormsContainer type="login" />
+                  <FormsContainer
+                    getRooms={this.getRooms}
+                    getUsers={this.getUsers}
+                    type="login"
+                  />
                 </>
               )}
             />
@@ -146,7 +223,12 @@ class App extends React.Component {
               path="/register"
               render={props => (
                 <>
-                  <FormsContainer type="register" loggedIn={props.loggedIn} />
+                  <FormsContainer
+                    getRooms={this.getRooms}
+                    getUsers={this.getUsers}
+                    type="register"
+                    loggedIn={props.loggedIn}
+                  />
                 </>
               )}
             />

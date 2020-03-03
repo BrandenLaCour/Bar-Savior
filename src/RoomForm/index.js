@@ -117,14 +117,14 @@ class CompanyForm extends React.Component {
             <TaskForm
               name={this.state.task1.name}
               shift={this.state.task1.shift}
-              active={this.state.task1.active}
+              imgReq={this.state.task1.imgReq}
               handleChange={this.handleChange}
               taskNum="task1"
             />
             <TaskForm
               name={this.state.task2.name}
               shift={this.state.task2.shift}
-              active={this.state.task2.active}
+              imgReq={this.state.task2.imgReq}
               handleChange={this.handleChange}
               taskNum="task2"
             />
@@ -132,28 +132,28 @@ class CompanyForm extends React.Component {
             <TaskForm
               name={this.state.task3.name}
               shift={this.state.task3.shift}
-              active={this.state.task3.active}
+              imgReq={this.state.task3.imgReq}
               handleChange={this.handleChange}
               taskNum="task3"
             />
             <TaskForm
               name={this.state.task4.name}
               shift={this.state.task4.shift}
-              active={this.state.task4.active}
+              imgReq={this.state.task4.imgReq}
               handleChange={this.handleChange}
               taskNum="task4"
             />
             <TaskForm
               name={this.state.task5.name}
               shift={this.state.task5.shift}
-              active={this.state.task5.active}
+              imgReq={this.state.task5.imgReq}
               handleChange={this.handleChange}
               taskNum="task5"
             />
             <TaskForm
               name={this.state.task6.name}
               shift={this.state.task6.shift}
-              active={this.state.task6.active}
+              imgReq={this.state.task6.imgReq}
               handleChange={this.handleChange}
               taskNum="task6"
             />

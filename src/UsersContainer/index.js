@@ -19,6 +19,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 class UsersContainer extends React.Component {
+  
   deleteUser = async userId => {
     console.log(this.props.user);
     try {

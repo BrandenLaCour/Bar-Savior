@@ -40,7 +40,7 @@ const TaskForm = props => {
         <TextField
           onChange={e => props.handleChange(e, props.taskNum)}
           name="name"
-          value={props.name ? props.name : ""}
+          value={props.name}
           id="standard-basic"
           label="Task Description"
         />
@@ -51,7 +51,7 @@ const TaskForm = props => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={props.shift ? props.shift : ""}
+          value={props.shift}
           name="shift"
           onChange={e => props.handleChange(e, props.taskNum)}
           className={classes.button}
@@ -65,7 +65,7 @@ const TaskForm = props => {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           name="imgReq"
-          value={props.active ? props.active : ""}
+          value={props.imgReq}
           onChange={e => props.handleChange(e, props.taskNum)}
           className={classes.button}
         >

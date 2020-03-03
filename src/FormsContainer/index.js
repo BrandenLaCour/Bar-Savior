@@ -108,23 +108,6 @@ class FormsContainer extends React.Component {
     }
   };
 
-  getUsers = async companyId => {
-    //get users by company id, see if i have a way to do that in backend.
-
-    try {
-      const usersResponse = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v1/users/all/${companyId}`,
-        {
-          credentials: "include"
-        }
-      );
-      const { data } = await usersResponse.json();
-      this.props.addUsers(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   login = async userInfo => {
     try {
       const loginResponse = await fetch(
@@ -143,7 +126,9 @@ class FormsContainer extends React.Component {
       if (loginJson.status !== 401) {
         this.props.loginUser(true);
         this.props.addUserInfo(loginJson.data);
-        this.getUsers(loginJson.data.company.id);
+        this.props.getUsers(loginJson.data.company.id);
+        this.props.getRooms(loginJson.data.company.id);
+
         this.handleFormType();
         this.setState({ redirect: true });
       } else {
