@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import { modals, authForms, companyData, taskForm } from "./reducer";
+import { modals, authForms, companyData } from "./reducer";
 import { createLogger } from "redux-logger";
 import "./index.css";
 import App from "./App";
@@ -13,8 +13,7 @@ const logger = createLogger();
 const rootReducer = combineReducers({
   modals,
   authForms,
-  companyData,
-  taskForm
+  companyData
 });
 const store = createStore(rootReducer, applyMiddleware(logger));
 

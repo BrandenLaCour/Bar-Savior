@@ -5,19 +5,20 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import TaskForm from "../TaskForm";
+import { Redirect } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 
 const mapStateToProps = state => {
   return {
-    formType: state.modals.formType,
-    roomName: state.taskForm.roomName
+    tasks: state.companyData.tasks,
+    redirect: state.modals.redirect
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addRoomName: event =>
-      dispatch({ type: "ADD_ROOM_NAME", payload: event.target.value })
+    addTask: tasks => dispatch({ type: "ADD_TASKS", payload: tasks }),
+    isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool })
   };
 };
 
@@ -27,42 +28,42 @@ class CompanyForm extends React.Component {
     this.state = {
       room: "",
       task1: {
-        taskName: "",
+        name: "",
         shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task2: {
-        taskName: "",
+        name: "",
         shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task3: {
-        taskName: "",
+        name: "",
         shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task4: {
-        taskName: "",
+        name: "",
         shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task5: {
-        taskName: "",
+        name: "",
         shift: "both",
         active: true,
         imgUrl: "",
         imgReq: false
       },
       task6: {
-        taskName: "",
+        name: "",
         shift: "both",
         active: true,
         imgUrl: "",
@@ -72,13 +73,16 @@ class CompanyForm extends React.Component {
   }
 
   handleSubmit = event => {
-    //submit all rows, maybe have to map
     event.preventDefault();
-    if (this.props.formType === "create") {
-      this.props.createRoom(this.state);
-    } else {
-      this.props.updateRoom(this.state);
-    }
+    const room = this.state.room;
+    let tasks = { ...this.state };
+    delete tasks.room;
+    //after getting the room, delete it from the object and now it leaves all tasks to iterate through to create an array of them
+    tasks = Object.values(tasks);
+    this.props.addTask(tasks);
+    this.props.createRoom(room);
+    this.props.isRedirect(true);
+    //will not have an edit option for now, just editing individual tasks, or delete the whole room
   };
 
   handleChange = (e, taskNum) => {
@@ -92,15 +96,18 @@ class CompanyForm extends React.Component {
     this.setState({ room: e.target.value });
   };
   render() {
+    if (this.props.redirect === true) {
+      return <Redirect to="/" />;
+    }
     return (
       <Card>
         <form noValidate onSubmit={this.handleSubmit}>
           <CardContent>
             <Typography color="textPrimary" gutterBottom>
-              {this.props.formType === "create" ? "Create" : "Edit"} Room
+              Create Room
             </Typography>
             <TextField
-              onChange={e => this.handleRoomChange(e)}
+              onChange={this.handleRoomChange}
               name="room"
               value={this.state.room}
               id="standard-basic"
@@ -108,14 +115,14 @@ class CompanyForm extends React.Component {
             />
 
             <TaskForm
-              taskName={this.state.task1.taskName}
+              name={this.state.task1.name}
               shift={this.state.task1.shift}
               active={this.state.task1.active}
               handleChange={this.handleChange}
               taskNum="task1"
             />
             <TaskForm
-              taskName={this.state.task2.taskName}
+              name={this.state.task2.name}
               shift={this.state.task2.shift}
               active={this.state.task2.active}
               handleChange={this.handleChange}
@@ -123,28 +130,28 @@ class CompanyForm extends React.Component {
             />
 
             <TaskForm
-              taskName={this.state.task3.taskName}
+              name={this.state.task3.name}
               shift={this.state.task3.shift}
               active={this.state.task3.active}
               handleChange={this.handleChange}
               taskNum="task3"
             />
             <TaskForm
-              taskName={this.state.task4.taskName}
+              name={this.state.task4.name}
               shift={this.state.task4.shift}
               active={this.state.task4.active}
               handleChange={this.handleChange}
               taskNum="task4"
             />
             <TaskForm
-              taskName={this.state.task5.taskName}
+              name={this.state.task5.name}
               shift={this.state.task5.shift}
               active={this.state.task5.active}
               handleChange={this.handleChange}
               taskNum="task5"
             />
             <TaskForm
-              taskName={this.state.task6.taskName}
+              name={this.state.task6.name}
               shift={this.state.task6.shift}
               active={this.state.task6.active}
               handleChange={this.handleChange}

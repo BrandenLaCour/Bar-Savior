@@ -39,8 +39,8 @@ const TaskForm = props => {
       <CardContent className={classes.listItem}>
         <TextField
           onChange={e => props.handleChange(e, props.taskNum)}
-          name="taskName"
-          value={props.taskName}
+          name="name"
+          value={props.name ? props.name : ""}
           id="standard-basic"
           label="Task Description"
         />
@@ -51,7 +51,7 @@ const TaskForm = props => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={props.shift}
+          value={props.shift ? props.shift : ""}
           name="shift"
           onChange={e => props.handleChange(e, props.taskNum)}
           className={classes.button}
@@ -65,7 +65,7 @@ const TaskForm = props => {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           name="imgReq"
-          value={props.active}
+          value={props.active ? props.active : ""}
           onChange={e => props.handleChange(e, props.taskNum)}
           className={classes.button}
         >

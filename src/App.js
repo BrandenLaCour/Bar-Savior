@@ -13,7 +13,9 @@ const mapStateToProps = state => {
   return {
     drawerOpen: state.modals.drawerOpen,
     loggedIn: state.modals.loggedIn,
-    user: state.modals.user
+    user: state.modals.user,
+    tasks: state.companyData.tasks,
+    redirect: state.modals.redirect
   };
 };
 
@@ -27,7 +29,8 @@ const mapDispatchToProps = dispatch => {
     },
     addFormType: formType => {
       dispatch({ type: "ADD_FORM_TYPE", payload: formType });
-    }
+    },
+    isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool })
   };
 };
 
@@ -52,14 +55,49 @@ class App extends React.Component {
     this.props.addFormType(formType);
   };
 
-  createRoom = roomInfo => {
-    try {
-    } catch (err) {}
+  createManyTasks = roomId => {
+    this.props.isRedirect(false);
+    this.props.tasks.forEach(async task => {
+      try {
+        const createTskResponse = await fetch(
+          process.env.REACT_APP_API_URL + "/api/v1/tasks/",
+          {
+            credentials: "include",
+            method: "POST",
+            body: JSON.stringify({ ...task, room: roomId }),
+            headers: {
+              "content-type": "application/json"
+            }
+          }
+        );
+        const createTskJson = await createTskResponse.json();
+      } catch (err) {
+        console.error(err);
+      }
+    });
   };
 
-  updateRoom = roomInfo => {
+  createRoom = async room => {
     try {
-    } catch (err) {}
+      const createRmResponse = await fetch(
+        process.env.REACT_APP_API_URL + "/api/v1/rooms/",
+        {
+          credentials: "include",
+          method: "POST",
+          body: JSON.stringify({
+            name: room
+          }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      );
+      const createRmJson = await createRmResponse.json();
+      console.log(createRmJson);
+      this.createManyTasks(createRmJson.data.id);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   render() {

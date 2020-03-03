@@ -1,7 +1,7 @@
 const defaultState = {
   loggedIn: false,
   drawerOpen: false,
-  redirect: true,
+  redirect: false,
   status: "",
   user: "",
   formType: ""
@@ -12,7 +12,7 @@ export const modals = (state = defaultState, action) => {
     case "TOGGLE_DRAWER":
       return { ...state, drawerOpen: !state.drawerOpen };
     case "REDIRECT":
-      return { ...state, redirect: !state.redirect };
+      return { ...state, redirect: action.payload };
     case "TOGGLE_LOGIN":
       return { ...state, loggedIn: action.payload };
     case "ADD_STATUS":
@@ -65,7 +65,8 @@ export const authForms = (state = formState, action) => {
 };
 
 const companyState = {
-  users: []
+  users: [],
+  tasks: []
 };
 
 export const companyData = (state = companyState, action) => {
@@ -74,40 +75,8 @@ export const companyData = (state = companyState, action) => {
       return { ...state, users: action.payload };
     case "REMOVE_USER":
       return { ...state, users: action.payload };
-    default:
-      return state;
-  }
-};
-
-const taskFormState = {
-  roomName: "",
-  task1: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
-  task2: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
-  task3: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
-  task4: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
-  task5: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
-  task6: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
-  task: {},
-  tasks: []
-};
-
-export const taskForm = (state = taskFormState, action) => {
-  switch (action.type) {
-    case "ADD_ROOM_NAME":
-      return { ...state, roomName: action.payload };
-    case "ADD_TASK_1":
-      return { ...state, task1: action.payload };
-    case "ADD_TASK_2":
-      return { ...state, task2: action.payload };
-    case "ADD_TASK_3":
-      return { ...state, task3: action.payload };
-    case "ADD_TASK_4":
-      return { ...state, task4: action.payload };
-    case "ADD_TASK_5":
-      return { ...state, task5: action.payload };
-    case "ADD_TASK_6":
-      return { ...state, task6: action.payload };
-
+    case "ADD_TASKS":
+      return { ...state, tasks: action.payload };
     default:
       return state;
   }
