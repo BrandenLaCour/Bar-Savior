@@ -74,6 +74,7 @@ class FormsContainer extends React.Component {
   };
 
   createUser = async userInfo => {
+    userInfo.company = this.props.user.company.id;
     try {
       const createResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/users/register",

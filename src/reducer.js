@@ -3,7 +3,7 @@ const defaultState = {
   drawerOpen: false,
   redirect: false,
   status: "",
-  user: "",
+  user: {},
   formType: ""
 };
 

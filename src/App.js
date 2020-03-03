@@ -30,7 +30,10 @@ const mapDispatchToProps = dispatch => {
     addFormType: formType => {
       dispatch({ type: "ADD_FORM_TYPE", payload: formType });
     },
-    isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool })
+    isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool }),
+    addUsers: users => dispatch({ type: "ADD_USERS", payload: users }),
+    addUserInfo: userInfo =>
+      dispatch({ type: "ADD_USER_INFO", payload: userInfo })
   };
 };
 
@@ -43,9 +46,11 @@ class App extends React.Component {
           credentials: "include"
         }
       );
-      const logoutJson = await logoutResponse.json();
+
       this.props.logout();
-      console.log(logoutJson);
+      this.props.addUsers([]);
+      this.props.addUserInfo({});
+      //reset state after logout
     } catch (err) {
       console.error(err);
     }
