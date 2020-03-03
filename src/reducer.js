@@ -81,25 +81,22 @@ export const companyData = (state = companyState, action) => {
 
 const taskFormState = {
   roomName: "",
-  taskName: "",
-  shift: "",
-  active: true,
-  imgUrl: "",
-  imgReq: false
+  task1: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
+  task2: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
+  task3: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
+  task4: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
+  task5: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
+  task6: { taskName: "", shift: "", active: true, imgUrl: "", imgReq: false },
+  tasks: []
 };
 
 export const taskForm = (state = taskFormState, action) => {
   switch (action.type) {
     case "ADD_ROOM_NAME":
       return { ...state, roomName: action.payload };
-    case "ADD_TASK_NAME":
-      return { ...state, taskName: action.payload };
-    case "ADD_SHIFT":
-      return { ...state, shift: action.payload };
-    case "ADD_IMAGE":
-      return { ...state, imgUrl: action.payload };
-    case "SET_IMG_REQ":
-      return { ...state, imgReq: action.payload };
+    case "ADD_TASK_1":
+      return { ...state, task1: action.payload };
+
     default:
       return state;
   }

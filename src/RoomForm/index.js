@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import { connect } from "react-redux";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import TaskForm from "../TaskForm";
 
 const mapStateToProps = state => {
   return {
@@ -38,96 +38,113 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const useStyles = makeStyles({
-  root: {
-    width: 400,
-    height: "100%",
-    padding: 10
-  },
-  title: {
-    fontSize: 20
-  },
-  pos: {
-    marginBottom: 12
-  },
-  button: {
-    width: 100,
-    margin: 20
-  },
-  helper: {
-    textAlign: "center"
-  },
-  status: {
-    marginTop: 10,
-    color: "red"
+class CompanyForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      task1: {
+        taskName: "",
+        shift: "",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      },
+      task2: {
+        taskName: "",
+        shift: "",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      },
+      task3: {
+        taskName: "",
+        shift: "",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      },
+      task4: {
+        taskName: "",
+        shift: "",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      },
+      task5: {
+        taskName: "",
+        shift: "",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      },
+      task6: {
+        taskName: "",
+        shift: "",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      }
+    };
   }
-});
-
-const CompanyForm = props => {
-  const classes = useStyles();
-
-  const handleSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
   };
 
-  return (
-    <Card className={classes.root}>
-      <form noValidate onSubmit={handleSubmit}>
-        <CardContent>
-          <Typography
-            className={classes.title}
-            color="textPrimary"
-            gutterBottom
-          >
-            {props.formType === "create" ? "Create" : "Edit"} Room
-          </Typography>
-          <TextField
-            id="standard-basic"
-            onChange={props.addRoomName}
-            value={props.roomName}
-            label="Room Name"
-          />
-          <TextField
-            onChange={props.addTaskName}
-            value={props.taskName}
-            id="standard-basic"
-            label="Task Description"
-          />
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Shift"
-            value={props.shift}
-            onChange={props.addShift}
-            className={classes.button}
-          >
-            <MenuItem value="day">Morning</MenuItem>
-            <MenuItem value="night">Night</MenuItem>
-          </Select>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Shift"
-            value={props.imgReq}
-            onChange={props.setImgReq}
-            className={classes.button}
-          >
-            <MenuItem value={true}>Yes</MenuItem>
-            <MenuItem value={false}>No</MenuItem>
-          </Select>
-        </CardContent>
+  handleChange = (e, taskNum) => {
+    console.log(e.target.value);
+    console.log(e.target.name);
+    console.log(taskNum);
+  };
+  render() {
+    return (
+      <Card>
+        <form noValidate onSubmit={this.handleSubmit}>
+          <CardContent>
+            <Typography color="textPrimary" gutterBottom>
+              {this.formType === "create" ? "Create" : "Edit"} Room
+            </Typography>
+            <TaskForm handleChange={this.handleChange} />
+            <TextField
+              id="standard-basic"
+              onChange={this.addRoomName}
+              value={this.roomName}
+              label="Room Name"
+            />
+            <TextField
+              onChange={this.addTaskName}
+              value={this.taskName}
+              id="standard-basic"
+              label="Task Description"
+            />
+            <InputLabel>Shift</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={this.shift}
+              onChange={this.addShift}
+            >
+              <MenuItem value="day">Morning</MenuItem>
+              <MenuItem value="night">Night</MenuItem>
+            </Select>
+            <InputLabel>Image Required?</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={this.props.imgReq}
+              onChange={this.props.setImgReq}
+            >
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+          </CardContent>
 
-        <Button
-          className={classes.button}
-          type="submit"
-          variant="contained"
-          color="primary"
-        >
-          Submit
-        </Button>
-      </form>
-    </Card>
-  );
-};
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </form>
+      </Card>
+    );
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyForm);
