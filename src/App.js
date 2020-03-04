@@ -193,6 +193,25 @@ class App extends React.Component {
     logs.forEach(async log => {
       log.user = this.props.user.id;
       try {
+        let imageId;
+
+        if (log.picture) {
+          imageId = uniqid();
+          log.imgId = imageId;
+          const storageRef = storage.ref();
+          const pictureRef = storageRef.child(imageId);
+          const image = log.picture;
+          const blob = new Blob(image, { type: "image/jpeg" });
+          pictureRef
+            .put(blob)
+            .then(snapshot => {
+              console.log("uploaded a file", snapshot);
+            })
+            .catch(error => {
+              console.log(error, "image failed to upload");
+            });
+        }
+
         const createLogResponse = await fetch(
           process.env.REACT_APP_API_URL + "/api/v1/logs/",
           {
