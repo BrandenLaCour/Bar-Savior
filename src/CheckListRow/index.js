@@ -8,6 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import ImageUploader from "react-images-upload";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
   root: {
@@ -37,13 +39,27 @@ const CheckListRow = props => {
   const classes = useStyles();
   const [notes, setNotes] = useState("");
   const [status, setStatus] = useState("");
-  const [pictures, onDrop] = useState([]);
-  const [checked, setChecked] = useState(false);
-  console.log(notes, status, pictures, checked);
+  const [picture, onDrop] = useState({});
+  const [active, setActive] = useState(true);
+
+  const log = { notes: notes, status: status, picture: picture };
+
+  const handleSubmit = () => {
+    if (active) props.addLog(log);
+    setActive(false);
+  };
+  // const [checked, setChecked] = useState(false);
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={!active ? { opacity: 0.5 } : null}>
       <CardContent className={classes.listItem}>
-        <Checkbox onClick={() => setChecked(true)} />
+        {active ? <Checkbox onClick={handleSubmit} /> : null}
+        {!active ? (
+          <FormControlLabel
+            disabled
+            control={<Checkbox checked value="checkedE" />}
+            label="logged"
+          />
+        ) : null}
 
         <div>
           <strong>{props.name}</strong>

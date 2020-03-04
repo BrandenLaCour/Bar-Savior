@@ -26,64 +26,43 @@ class RoomChecklist extends React.Component {
   constructor() {
     super();
     this.state = {
-      status: "",
-      notes: "",
-      pictures: []
+      logs: []
     };
   }
-  handleSubmit = event => {
-    event.preventDefault();
-    const room = this.state.room;
-    let tasks = { ...this.state };
-    delete tasks.room;
-    //after getting the room, delete it from the object and now it leaves all tasks to iterate through to create an array of them
-    tasks = Object.values(tasks);
-    this.props.addTask(tasks);
-    this.props.createRoom(room);
-    this.props.isRedirect(true);
-    //will not have an edit option for now, just editing individual tasks, or delete the whole room
+  addLog = log => {
+    console.log(log);
   };
 
-  handleChange = (e, taskNum) => {
-    //change each row one at a time
-    const task = this.state[taskNum];
-    task[e.target.name] = e.target.value;
-    this.setState({ [taskNum]: task });
-  };
-
-  handleRoomChange = e => {
-    this.setState({ room: e.target.value });
-  };
   render() {
     if (this.props.redirect === true) {
       return <Redirect to="/" />;
     }
-    console.log("room checklist show");
+
     return (
       <Card>
-        <form noValidate onSubmit={this.handleSubmit}>
-          <CardContent>
-            <Typography color="textPrimary" gutterBottom>
-              {this.props.room}
-            </Typography>
-            {this.props.tasks.map(task => {
-              return (
-                <>
-                  <ChecklistRow
-                    taskId={task.id}
-                    name={task.name}
-                    shift={task.shift}
-                    imgReq={task.imgReq}
-                  />
-                </>
-              );
-            })}
-          </CardContent>
+        <CardContent>
+          <Typography color="textPrimary" gutterBottom>
+            {this.props.room}
+          </Typography>
+          {this.props.tasks.map(task => {
+            return (
+              <>
+                <ChecklistRow
+                  addLog={this.addLog}
+                  taskId={task.id}
+                  key={task.id}
+                  name={task.name}
+                  shift={task.shift}
+                  imgReq={task.imgReq}
+                />
+              </>
+            );
+          })}
+        </CardContent>
 
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
-        </form>
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
       </Card>
     );
   }
