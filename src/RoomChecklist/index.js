@@ -35,8 +35,12 @@ class RoomChecklist extends React.Component {
     this.setState({ logs });
   };
 
+  addLogsAndRedirect = () => {
+    this.props.createLogs(this.state.logs);
+    this.props.isRedirect(true);
+  };
+
   render() {
-    console.log(this.state);
     if (this.props.redirect === true) {
       return <Redirect to="/" />;
     }
@@ -64,7 +68,7 @@ class RoomChecklist extends React.Component {
         </CardContent>
 
         <Button
-          onClick={() => this.props.createLogs(this.state.logs)}
+          onClick={this.addLogsAndRedirect}
           type="submit"
           variant="contained"
           color="primary"

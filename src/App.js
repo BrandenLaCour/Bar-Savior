@@ -189,11 +189,27 @@ class App extends React.Component {
   };
 
   createLogs = logs => {
-    try {
-      console.log(logs, "are the loggs");
-    } catch (err) {
-      console.error(err);
-    }
+    this.props.isRedirect(false);
+    logs.forEach(async log => {
+      log.user = this.props.user.id;
+      try {
+        const createLogResponse = await fetch(
+          process.env.REACT_APP_API_URL + "/api/v1/logs/",
+          {
+            credentials: "include",
+            method: "POST",
+            body: JSON.stringify(log),
+            headers: {
+              "content-type": "application/json"
+            }
+          }
+        );
+        const createLogJson = await createLogResponse.json();
+        console.log(createLogJson);
+      } catch (err) {
+        console.error(err);
+      }
+    });
   };
 
   render() {
