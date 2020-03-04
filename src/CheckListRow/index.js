@@ -31,7 +31,11 @@ const useStyles = makeStyles({
   },
   listItem: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginBottom: -10
+  },
+  urgent: {
+    color: "red"
   }
 });
 
@@ -39,20 +43,49 @@ const CheckListRow = props => {
   const classes = useStyles();
   const [notes, setNotes] = useState("");
   const [status, setStatus] = useState("");
-  const [picture, onDrop] = useState({});
+  const [picture, onDrop] = useState(null);
   const [active, setActive] = useState(true);
+  const [message, setMessage] = useState(null);
+  const [attempted, setAttempted] = useState(false);
 
-  const log = { notes: notes, status: status, picture: picture };
+  const log = {
+    notes: notes,
+    status: status,
+    picture: picture,
+    task: props.taskId
+  };
 
   const handleSubmit = () => {
-    if (active) props.addLog(log);
-    setActive(false);
+    if ((props.imgReq && picture !== null) || props.imgReq === false) {
+      if (active) props.addLog(log);
+      setActive(false);
+    } else {
+      setAttempted(true);
+      setMessage("You must upload a picture for the above task");
+    }
   };
+  console.log(attempted);
   // const [checked, setChecked] = useState(false);
   return (
     <Card className={classes.root} style={!active ? { opacity: 0.5 } : null}>
       <CardContent className={classes.listItem}>
-        {active ? <Checkbox onClick={handleSubmit} /> : null}
+        {active ? (
+          <>
+            <FormControlLabel
+              control={
+                props.imgReq && picture === null ? (
+                  attempted ? (
+                    <Checkbox disabled checked={"true"} />
+                  ) : (
+                    <Checkbox onClick={handleSubmit} />
+                  )
+                ) : (
+                  <Checkbox onClick={handleSubmit} />
+                )
+              }
+            />
+          </>
+        ) : null}
         {!active ? (
           <FormControlLabel
             disabled
@@ -100,6 +133,9 @@ const CheckListRow = props => {
           <MenuItem value="okay">Okay</MenuItem>
         </Select>
       </CardContent>
+      <small className={classes.urgent}>
+        {message !== null ? message : null}
+      </small>
     </Card>
   );
 };

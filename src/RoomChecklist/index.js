@@ -30,10 +30,13 @@ class RoomChecklist extends React.Component {
     };
   }
   addLog = log => {
-    console.log(log);
+    const logs = this.state.logs;
+    logs.push(log);
+    this.setState({ logs });
   };
 
   render() {
+    console.log(this.state);
     if (this.props.redirect === true) {
       return <Redirect to="/" />;
     }
