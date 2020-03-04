@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 const CheckListRow = props => {
   const classes = useStyles();
   const [notes, setNotes] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("okay");
   const [picture, onDrop] = useState(null);
   const [active, setActive] = useState(true);
   const [message, setMessage] = useState(null);
@@ -58,13 +58,14 @@ const CheckListRow = props => {
   const handleSubmit = () => {
     if ((props.imgReq && picture !== null) || props.imgReq === false) {
       if (active) props.addLog(log);
+      setMessage(null);
       setActive(false);
     } else {
       setAttempted(true);
       setMessage("You must upload a picture for the above task");
     }
   };
-  console.log(attempted);
+
   // const [checked, setChecked] = useState(false);
   return (
     <Card className={classes.root} style={!active ? { opacity: 0.5 } : null}>
@@ -75,7 +76,7 @@ const CheckListRow = props => {
               control={
                 props.imgReq && picture === null ? (
                   attempted ? (
-                    <Checkbox disabled checked={"true"} />
+                    <Checkbox disabled />
                   ) : (
                     <Checkbox onClick={handleSubmit} />
                   )

@@ -63,7 +63,12 @@ class RoomChecklist extends React.Component {
           })}
         </CardContent>
 
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          onClick={() => this.props.createLogs(this.state.logs)}
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
           Submit
         </Button>
       </Card>

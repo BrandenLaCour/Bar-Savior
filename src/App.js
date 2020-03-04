@@ -188,6 +188,14 @@ class App extends React.Component {
     }
   };
 
+  createLogs = logs => {
+    try {
+      console.log(logs, "are the loggs");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
     return (
       <div className="App">
@@ -272,7 +280,7 @@ class App extends React.Component {
               path="/roomShow"
               render={props => (
                 <>
-                  <RoomChecklist />
+                  <RoomChecklist createLogs={this.createLogs} />
                 </>
               )}
             />
