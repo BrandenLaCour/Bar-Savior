@@ -49,22 +49,27 @@ class RoomChecklist extends React.Component {
       <Card>
         <CardContent>
           <Typography color="textPrimary" gutterBottom>
-            {this.props.room}
+            {this.props.type === "checklist" ? this.props.room : "Logs"}
           </Typography>
-          {this.props.tasks.map(task => {
-            return (
-              <>
-                <ChecklistRow
-                  addLog={this.addLog}
-                  taskId={task.id}
-                  key={task.id}
-                  name={task.name}
-                  shift={task.shift}
-                  imgReq={task.imgReq}
-                />
-              </>
-            );
-          })}
+
+          {this.props.type === "checklist" ? (
+            this.props.tasks.map(task => {
+              return (
+                <>
+                  <ChecklistRow
+                    addLog={this.addLog}
+                    taskId={task.id}
+                    key={task.id}
+                    name={task.name}
+                    shift={task.shift}
+                    imgReq={task.imgReq}
+                  />
+                </>
+              );
+            })
+          ) : (
+            <ChecklistRow />
+          )}
         </CardContent>
 
         <Button

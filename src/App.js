@@ -33,7 +33,8 @@ const mapStateToProps = state => {
     loggedIn: state.modals.loggedIn,
     user: state.modals.user,
     tasks: state.companyData.tasks,
-    redirect: state.modals.redirect
+    redirect: state.modals.redirect,
+    logs: state.companyData.logs
   };
 };
 console.log(storage);
@@ -61,6 +62,11 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: "ADD_TASKS",
         payload: tasks
+      }),
+    addLogs: logs =>
+      dispatch({
+        type: "ADD_LOGS",
+        payload: logs
       })
   };
 };
@@ -134,6 +140,23 @@ class App extends React.Component {
       );
       const { data } = await tasksResponse.json();
       this.props.addTasks(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  getLogs = async () => {
+    //get users by company id, see if i have a way to do that in backend.
+    const companyId = this.props.user.company.id;
+    try {
+      const logsResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/logs/all/${companyId}`,
+        {
+          credentials: "include"
+        }
+      );
+      const { data } = await logsResponse.json();
+      this.props.addLogs(data);
     } catch (err) {
       console.error(err);
     }
@@ -238,6 +261,7 @@ class App extends React.Component {
           <NavBar
             user={this.props.user}
             logout={this.handleLogout}
+            loggedIn={this.props.loggedIn}
             toggleDrawer={this.props.toggleDrawer}
           />
           {this.props.loggedIn ? (
@@ -256,7 +280,10 @@ class App extends React.Component {
               render={props =>
                 this.props.loggedIn ? (
                   <>
-                    <RoomsContainer getTasks={this.getTasks} />
+                    <RoomsContainer
+                      getLogs={this.getLogs}
+                      getTasks={this.getTasks}
+                    />
                   </>
                 ) : (
                   <div>
@@ -315,7 +342,18 @@ class App extends React.Component {
               path="/roomShow"
               render={props => (
                 <>
-                  <RoomChecklist createLogs={this.createLogs} />
+                  <RoomChecklist
+                    type="checklist"
+                    createLogs={this.createLogs}
+                  />
+                </>
+              )}
+            />
+            <Route
+              path="/urgent"
+              render={props => (
+                <>
+                  <RoomChecklist type="logs" createLogs={this.createLogs} />
                 </>
               )}
             />

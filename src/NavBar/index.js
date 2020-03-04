@@ -50,6 +50,14 @@ const NavBar = props => {
             </Link>
           </Typography>
           <Button color="inherit">About</Button>
+          {props.loggedIn ? (
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/urgent"
+            >
+              <Button color="inherit">Urgent</Button>
+            </Link>
+          ) : null}
           {!props.loggedIn ? (
             <Link
               style={{ textDecoration: "none", color: "white" }}
