@@ -52,6 +52,7 @@ class FormsContainer extends React.Component {
   };
 
   createCompany = async companyInfo => {
+    console.log(companyInfo, "is the company info");
     try {
       const companyResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/companys/",
@@ -74,7 +75,9 @@ class FormsContainer extends React.Component {
   };
 
   createUser = async userInfo => {
-    userInfo.company = this.props.user.company.id;
+    if (this.props.user !== "") {
+      userInfo.company = this.props.user.company.id;
+    } else userInfo.company = this.state.companyId;
     try {
       const createResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/users/register",

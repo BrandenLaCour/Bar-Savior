@@ -10,6 +10,22 @@ import UserContainer from "./UsersContainer";
 import RoomForm from "./RoomForm";
 import RoomsContainer from "./RoomsContainer";
 import RoomChecklist from "./RoomChecklist";
+import * as firebase from "firebase/app";
+import uniqid from "uniqid";
+import "firebase/auth";
+import "firebase/storage";
+
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_KEY,
+  authDomain: "bar-savior.firebaseapp.com",
+  databaseURL: "https://bar-savior.firebaseio.com",
+  projectId: "bar-savior",
+  storageBucket: "bar-savior.appspot.com",
+  messagingSenderId: "511577259066"
+};
+
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
 
 const mapStateToProps = state => {
   return {
@@ -20,7 +36,7 @@ const mapStateToProps = state => {
     redirect: state.modals.redirect
   };
 };
-
+console.log(storage);
 const mapDispatchToProps = dispatch => {
   return {
     toggleDrawer: () => {
@@ -256,7 +272,6 @@ class App extends React.Component {
               path="/roomShow"
               render={props => (
                 <>
-                  {console.log("ran")}
                   <RoomChecklist />
                 </>
               )}
