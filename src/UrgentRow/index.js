@@ -140,16 +140,11 @@ const CheckListRow = props => {
         <div>Status: {props.status}</div>
         {/* <CardContent>Shift: {props.shift}</CardContent> */}
         {props.imageUrl !== null ? (
-          <Card className={classes.imageContainer}>
-            <CardContent className={classes.listItem}>
-              Issue Image:{" "}
-              <img
-                className={classes.image}
-                onClick={() => props.enlargedImage(props.imageUrl)}
-                src={props.imageUrl}
-              />
-            </CardContent>
-          </Card>
+          <img
+            className={classes.image}
+            onClick={() => props.enlargedImage(props.imageUrl)}
+            src={props.imageUrl}
+          />
         ) : null}
         <InputLabel>Status</InputLabel>
         <Select

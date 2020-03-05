@@ -72,6 +72,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.isRedirect(false);
+  }
   handleLogout = async () => {
     try {
       const logoutResponse = await fetch(
@@ -154,7 +157,7 @@ class App extends React.Component {
         }
       );
       const { data } = await logsResponse.json();
-      console.log(data);
+
       const logs = data.map(log => {
         if (log.imageId) {
           const pathReference = storage.ref(log.imageId);
@@ -170,7 +173,7 @@ class App extends React.Component {
         }
         return log;
       });
-
+      this.props.isRedirect(false);
       this.props.addLogs(logs);
       // console.log("got logs");
     } catch (err) {
@@ -259,7 +262,7 @@ class App extends React.Component {
                 }
               );
               const createLogJson = await createLogResponse.json();
-
+              console.log(createLogJson);
               this.props.isRedirect(false);
               this.getLogs(this.props.user.company.id);
             })

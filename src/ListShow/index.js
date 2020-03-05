@@ -35,7 +35,6 @@ class ListShow extends React.Component {
     };
   }
   addLog = log => {
-    console.log(log);
     const logs = this.state.logs;
     logs.push(log);
     this.setState({ logs });
