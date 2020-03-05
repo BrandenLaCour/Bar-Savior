@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import Select from "@material-ui/core/Select";
 import CardContent from "@material-ui/core/CardContent";
-import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import ImageUploader from "react-images-upload";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
   root: {
@@ -37,7 +29,7 @@ const useStyles = makeStyles({
 
 const CheckListRow = props => {
   const classes = useStyles();
-  console.log(props.imageUrl);
+
   return (
     <div className={classes.container}>
       <Card className={classes.root}>

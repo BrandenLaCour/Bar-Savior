@@ -35,6 +35,20 @@ const useStyles = makeStyles({
   },
   urgent: {
     color: "red"
+  },
+  urgentStatus: {
+    backgroundColor: "rgba(236, 33, 33, .5)"
+  },
+  attention: {
+    backgroundColor: "rgba(255, 153, 51, .5)"
+  },
+  imageContainer: {
+    width: 150,
+    height: 100,
+    margin: 20
+  },
+  image: {
+    width: 100
   }
 });
 
@@ -45,7 +59,9 @@ const CheckListRow = props => {
   const [picture, onDrop] = useState(null);
   const [active, setActive] = useState(true);
   const [message, setMessage] = useState(null);
+  const [picMessage, setPicMessage] = useState(null);
   const [attempted, setAttempted] = useState(false);
+  const [rendered, setRendered] = useState(false);
 
   const log = {
     notes: notes,
@@ -54,10 +70,16 @@ const CheckListRow = props => {
     task: props.taskId
   };
 
+  if (rendered === false) {
+    setStatus(props.status);
+    setRendered(true);
+  }
+
   const handleSubmit = () => {
     if ((props.imgReq && picture !== null) || props.imgReq === false) {
       if (active) props.addLog(log);
       setMessage(null);
+      setPicMessage(null);
       setActive(false);
     } else {
       setAttempted(true);
@@ -65,8 +87,22 @@ const CheckListRow = props => {
     }
   };
 
+  const uploadPic = picture => {
+    onDrop(picture);
+    setPicMessage("Picture uploaded successfully");
+  };
+
   return (
-    <Card className={classes.root} style={!active ? { opacity: 0.5 } : null}>
+    <Card
+      className={
+        props.status === "urgent"
+          ? classes.urgentStatus
+          : props.status === "attention"
+          ? classes.attention
+          : ""
+      }
+      style={!active ? { opacity: 0.5 } : null}
+    >
       <CardContent className={classes.listItem}>
         {active ? (
           <>
@@ -97,15 +133,37 @@ const CheckListRow = props => {
           <strong>{props.name}</strong>
         </div>
 
-        <TextField
-          id="outlined-basic"
-          label="Notes"
-          value={notes}
-          onChange={e => setNotes(e.target.value)}
-          variant="outlined"
-        />
-
+        {props.notes ? <div>Notes: {props.notes}</div> : null}
+        <div>
+          <small>{props.date}</small>
+        </div>
+        <div>Status: {props.status}</div>
         {/* <CardContent>Shift: {props.shift}</CardContent> */}
+        {props.imageUrl !== null ? (
+          <Card className={classes.imageContainer}>
+            <CardContent className={classes.listItem}>
+              Issue Image:{" "}
+              <img
+                className={classes.image}
+                onClick={() => props.enlargedImage(props.imageUrl)}
+                src={props.imageUrl}
+              />
+            </CardContent>
+          </Card>
+        ) : null}
+        <InputLabel>Status</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={status}
+          name="New Status"
+          onChange={e => setStatus(e.target.value)}
+          className={classes.button}
+        >
+          <MenuItem value="urgent">Urgent</MenuItem>
+          <MenuItem value="attention">Needs Attention</MenuItem>
+          <MenuItem value="okay">Resolved</MenuItem>
+        </Select>
         <ImageUploader
           fileContainerStyle={{
             height: "14px",
@@ -114,26 +172,21 @@ const CheckListRow = props => {
           }}
           style={{ width: "100px", marginLeft: "20px" }}
           buttonText="Upload"
-          onChange={picture => onDrop(picture)}
+          onChange={picture => uploadPic(picture)}
           withLabel={false}
           withIcon={false}
         />
-        <InputLabel>Status</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={status}
-          name="status"
-          onChange={e => setStatus(e.target.value)}
-          className={classes.button}
-        >
-          <MenuItem value="urgent">Urgent</MenuItem>
-          <MenuItem value="attention">Needs Attention</MenuItem>
-          <MenuItem value="okay">Okay</MenuItem>
-        </Select>
+        <TextField
+          id="outlined-basic"
+          label="New Notes"
+          value={notes}
+          onChange={e => setNotes(e.target.value)}
+          variant="outlined"
+        />
       </CardContent>
       <small className={classes.urgent}>
         {message !== null ? message : null}
+        {picMessage !== null ? picMessage : null}
       </small>
     </Card>
   );

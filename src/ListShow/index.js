@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import ChecklistRow from "../CheckListRow";
 import { Redirect } from "react-router-dom";
 import LogRow from "../LogRow";
+import UrgentRow from "../UrgentRow";
 import "./index.css";
 
 const mapStateToProps = state => {
@@ -34,6 +35,7 @@ class ListShow extends React.Component {
     };
   }
   addLog = log => {
+    console.log(log);
     const logs = this.state.logs;
     logs.push(log);
     this.setState({ logs });
@@ -57,7 +59,10 @@ class ListShow extends React.Component {
     if (this.props.redirect === true) {
       return <Redirect to="/" />;
     }
-
+    const logsFiltered = this.props.logs.filter(log => {
+      return log.status !== "okay";
+    });
+    console.log(logsFiltered);
     return (
       <Card>
         <CardContent>
@@ -77,6 +82,7 @@ class ListShow extends React.Component {
                       addLog={this.addLog}
                       taskId={task.id}
                       key={task.id}
+                      type={this.props.type}
                       name={task.name}
                       shift={task.shift}
                       imgReq={task.imgReq}
@@ -85,25 +91,33 @@ class ListShow extends React.Component {
                 );
               })
             : this.props.type === "urgent"
-            ? this.props.logs
+            ? logsFiltered
                 .map(log => {
-                  return (
-                    <div key={log.id}>
-                      <ChecklistRow
-                        resolvedId={
-                          log.resolvedId !== null
-                            ? this.getResolvedUser(log.resolvedId)
-                            : null
-                        }
-                        room={log.task.room.name}
-                        addLog={this.addLog}
-                        taskId={log.task.id}
-                        imageUrl={log.imageUrl}
-                        name={log.task.name}
-                        shift={log.task.shift}
-                      />
-                    </div>
-                  );
+                  if (log.status !== "okay") {
+                    return (
+                      <div key={log.id}>
+                        <UrgentRow
+                          resolvedId={
+                            log.resolvedId !== null
+                              ? this.getResolvedUser(log.resolvedId)
+                              : null
+                          }
+                          room={log.task.room.name}
+                          notes={log.notes}
+                          addLog={this.addLog}
+                          taskId={log.task.id}
+                          imgReq={log.task.imgReq}
+                          enlargedImage={this.enlargedImage}
+                          imageUrl={log.imageUrl}
+                          type={this.props.type}
+                          name={log.task.name}
+                          date={log.dateAdded}
+                          shift={log.task.shift}
+                          status={log.status}
+                        />
+                      </div>
+                    );
+                  }
                 })
                 .reverse()
             : this.props.logs
@@ -131,6 +145,7 @@ class ListShow extends React.Component {
                   );
                 })
                 .reverse()}
+          {logsFiltered.length === 0 ? <h2>No Urgent Tasks</h2> : null}
         </CardContent>
 
         {this.props.type === ("checklist" || "urgent") ? (

@@ -81,7 +81,7 @@ class App extends React.Component {
         }
       );
       const logoutJson = await logoutResponse.json();
-      console.log(logoutJson);
+
       this.props.logout();
       this.props.addUsers([]);
       this.props.addUserInfo({});
@@ -121,7 +121,7 @@ class App extends React.Component {
         }
       );
       const { data } = await roomsResponse.json();
-      console.log(data);
+      // console.log(data);
       this.props.addRooms(data);
     } catch (err) {
       console.error(err);
@@ -154,6 +154,7 @@ class App extends React.Component {
         }
       );
       const { data } = await logsResponse.json();
+      console.log(data);
       const logs = data.map(log => {
         if (log.imageId) {
           const pathReference = storage.ref(log.imageId);
@@ -167,10 +168,11 @@ class App extends React.Component {
             });
           return log;
         }
+        return log;
       });
 
       this.props.addLogs(logs);
-      console.log("got logs");
+      // console.log("got logs");
     } catch (err) {
       console.error(err);
     }
@@ -229,6 +231,7 @@ class App extends React.Component {
     this.props.isRedirect(false);
     logs.forEach(async log => {
       log.user = this.props.user.id;
+
       try {
         let imageId;
 
@@ -241,28 +244,29 @@ class App extends React.Component {
           const blob = new Blob(image, { type: "image/jpeg" });
           pictureRef
             .put(blob)
-            .then(snapshot => {
-              console.log("uploaded a file", snapshot);
+            .then(async snapshot => {
+              //now run the code to get the logs once the picture is done uploading.
+              // console.log("uploaded a file", snapshot);
+              const createLogResponse = await fetch(
+                process.env.REACT_APP_API_URL + "/api/v1/logs/",
+                {
+                  credentials: "include",
+                  method: "POST",
+                  body: JSON.stringify(log),
+                  headers: {
+                    "content-type": "application/json"
+                  }
+                }
+              );
+              const createLogJson = await createLogResponse.json();
+
+              this.props.isRedirect(false);
+              this.getLogs(this.props.user.company.id);
             })
             .catch(error => {
               console.log(error, "image failed to upload");
             });
         }
-
-        const createLogResponse = await fetch(
-          process.env.REACT_APP_API_URL + "/api/v1/logs/",
-          {
-            credentials: "include",
-            method: "POST",
-            body: JSON.stringify(log),
-            headers: {
-              "content-type": "application/json"
-            }
-          }
-        );
-        const createLogJson = await createLogResponse.json();
-        this.props.isRedirect(false);
-        this.getLogs(this.props.user.company.id);
       } catch (err) {
         console.error(err);
       }
