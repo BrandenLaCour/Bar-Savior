@@ -66,7 +66,6 @@ const CheckListRow = props => {
     }
   };
 
-  // const [checked, setChecked] = useState(false);
   return (
     <Card className={classes.root} style={!active ? { opacity: 0.5 } : null}>
       <CardContent className={classes.listItem}>

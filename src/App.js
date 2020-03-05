@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import UserContainer from "./UsersContainer";
 import RoomForm from "./RoomForm";
 import RoomsContainer from "./RoomsContainer";
-import RoomChecklist from "./RoomChecklist";
+import ListShow from "./ListShow";
 import * as firebase from "firebase/app";
 import uniqid from "uniqid";
 import "firebase/auth";
@@ -154,7 +154,23 @@ class App extends React.Component {
         }
       );
       const { data } = await logsResponse.json();
-      this.props.addLogs(data);
+      const logs = data.map(log => {
+        if (log.imageId) {
+          const pathReference = storage.ref(log.imageId);
+          pathReference
+            .getDownloadURL()
+            .then(url => {
+              log.imageUrl = url;
+            })
+            .catch(error => {
+              console.log(error, "could net get image url");
+            });
+          return log;
+        }
+      });
+
+      this.props.addLogs(logs);
+      console.log("got logs");
     } catch (err) {
       console.error(err);
     }
@@ -203,7 +219,6 @@ class App extends React.Component {
         }
       );
       const createRmJson = await createRmResponse.json();
-      console.log(createRmJson);
       this.createManyTasks(createRmJson.data.id);
     } catch (err) {
       console.error(err);
@@ -219,7 +234,7 @@ class App extends React.Component {
 
         if (log.picture) {
           imageId = uniqid();
-          log.imgId = imageId;
+          log.imageId = imageId;
           const storageRef = storage.ref();
           const pictureRef = storageRef.child(imageId);
           const image = log.picture;
@@ -246,7 +261,8 @@ class App extends React.Component {
           }
         );
         const createLogJson = await createLogResponse.json();
-        this.getLogs(this.props.users.company.id);
+        this.props.isRedirect(false);
+        this.getLogs(this.props.user.company.id);
       } catch (err) {
         console.error(err);
       }
@@ -343,10 +359,7 @@ class App extends React.Component {
               path="/roomShow"
               render={props => (
                 <>
-                  <RoomChecklist
-                    type="checklist"
-                    createLogs={this.createLogs}
-                  />
+                  <ListShow type="checklist" createLogs={this.createLogs} />
                 </>
               )}
             />
@@ -354,7 +367,15 @@ class App extends React.Component {
               path="/urgent"
               render={props => (
                 <>
-                  <RoomChecklist type="logs" createLogs={this.createLogs} />
+                  <ListShow type="urgent" createLogs={this.createLogs} />
+                </>
+              )}
+            />
+            <Route
+              path="/logs"
+              render={props => (
+                <>
+                  <ListShow type="logs" createLogs={this.createLogs} />
                 </>
               )}
             />
