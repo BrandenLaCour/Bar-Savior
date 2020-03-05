@@ -67,7 +67,8 @@ const CheckListRow = props => {
     notes: notes,
     status: status,
     picture: picture,
-    task: props.taskId
+    task: props.taskId,
+    resolvedId: props.user.id
   };
 
   if (rendered === false) {
@@ -77,10 +78,12 @@ const CheckListRow = props => {
 
   const handleSubmit = () => {
     if ((props.imgReq && picture !== null) || props.imgReq === false) {
-      if (active) props.addLog(log);
-      setMessage(null);
+      if (active && status === "okay") {
+        props.addLog(log);
+        setMessage(null);
+        setActive(false);
+      } else setMessage("You must resolve this task before logging");
       setPicMessage(null);
-      setActive(false);
     } else {
       setAttempted(true);
       setMessage("You must upload a picture for the above task");

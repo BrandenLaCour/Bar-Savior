@@ -16,6 +16,7 @@ const mapStateToProps = state => {
     redirect: state.modals.redirect,
     room: state.companyData.room,
     logs: state.companyData.logs,
+    user: state.modals.user,
     users: state.companyData.users
   };
 };
@@ -96,13 +97,10 @@ class ListShow extends React.Component {
                     return (
                       <div key={log.id}>
                         <UrgentRow
-                          resolvedId={
-                            log.resolvedId !== null
-                              ? this.getResolvedUser(log.resolvedId)
-                              : null
-                          }
+                          addLog={this.addLog}
                           room={log.task.room.name}
                           notes={log.notes}
+                          user={this.props.user}
                           addLog={this.addLog}
                           taskId={log.task.id}
                           imgReq={log.task.imgReq}
