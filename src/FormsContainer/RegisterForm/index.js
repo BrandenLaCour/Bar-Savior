@@ -45,6 +45,9 @@ const mapDispatchToProps = dispatch => {
     },
     autoSetMaster: () => {
       dispatch({ type: "IS_MASTER", payload: true });
+    },
+    autoSetAdmin: () => {
+      dispatch({ type: "IS_ADMIN", payload: true });
     }
   };
 };
@@ -128,23 +131,27 @@ const CompanyForm = props => {
             label="Position"
           />
         </CardContent>
-        <CardContent>
-          <InputLabel>Admin?</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="admin"
-            value={props.admin}
-            onChange={props.isAdmin}
-            className={classes.button}
-          >
-            <MenuItem value={true}>Yes</MenuItem>
-            <MenuItem value={false}>No</MenuItem>
-          </Select>
-          <FormHelperText className={classes.helper}>
-            Admins can create, edit, delete users, rooms and tasks
-          </FormHelperText>
-        </CardContent>
+        {props.form === "register" ? (
+          <CardContent>
+            <InputLabel>Admin?</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="admin"
+              value={props.admin}
+              onChange={props.isAdmin}
+              className={classes.button}
+            >
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+            <FormHelperText className={classes.helper}>
+              Admins can create, edit, delete users, rooms and tasks
+            </FormHelperText>
+          </CardContent>
+        ) : (
+          props.autoSetAdmin()
+        )}
         {props.form === "register" ? (
           <CardContent>
             <InputLabel>Master?</InputLabel>

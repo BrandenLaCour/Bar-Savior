@@ -41,7 +41,7 @@ const formState = {
 export const authForms = (state = formState, action) => {
   switch (action.type) {
     case "ADD_COMPANY_NAME":
-      return { ...state, name: action.payload };
+      return { ...state, companyName: action.payload };
     case "ADD_ADDRESS":
       return { ...state, address: action.payload };
     case "ADD_COMPANY_ID":

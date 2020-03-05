@@ -145,9 +145,7 @@ class App extends React.Component {
     }
   };
 
-  getLogs = async () => {
-    //get users by company id, see if i have a way to do that in backend.
-    const companyId = this.props.user.company.id;
+  getLogs = async companyId => {
     try {
       const logsResponse = await fetch(
         process.env.REACT_APP_API_URL + `/api/v1/logs/all/${companyId}`,
@@ -182,6 +180,7 @@ class App extends React.Component {
           }
         );
         const createTskJson = await createTskResponse.json();
+        this.getRooms(this.props.user.company.id);
       } catch (err) {
         console.error(err);
       }
@@ -247,7 +246,7 @@ class App extends React.Component {
           }
         );
         const createLogJson = await createLogResponse.json();
-        console.log(createLogJson);
+        this.getLogs(this.props.users.company.id);
       } catch (err) {
         console.error(err);
       }
@@ -301,6 +300,7 @@ class App extends React.Component {
                   <FormsContainer
                     getRooms={this.getRooms}
                     getUsers={this.getUsers}
+                    getLogs={this.getLogs}
                     type="login"
                   />
                 </>
@@ -313,6 +313,7 @@ class App extends React.Component {
                   <FormsContainer
                     getRooms={this.getRooms}
                     getUsers={this.getUsers}
+                    getLogs={this.getLogs}
                     type="register"
                     loggedIn={props.loggedIn}
                   />

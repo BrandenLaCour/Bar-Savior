@@ -125,12 +125,13 @@ class FormsContainer extends React.Component {
         }
       );
       const loginJson = await loginResponse.json();
-
+      const companyId = loginJson.data.company.id;
       if (loginJson.status !== 401) {
         this.props.loginUser(true);
         this.props.addUserInfo(loginJson.data);
-        this.props.getUsers(loginJson.data.company.id);
-        this.props.getRooms(loginJson.data.company.id);
+        this.props.getUsers(companyId);
+        this.props.getRooms(companyId);
+        this.props.getLogs(companyId);
 
         this.handleFormType();
         this.setState({ redirect: true });

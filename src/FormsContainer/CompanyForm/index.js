@@ -47,7 +47,7 @@ const CompanyForm = props => {
       props.createCompany({ name: props.companyName, address: props.address });
     }
   };
-
+ 
   return (
     <Card className={classes.root}>
       <form noValidate onSubmit={handleSubmit}>
