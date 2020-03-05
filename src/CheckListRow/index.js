@@ -74,12 +74,12 @@ const CheckListRow = props => {
               control={
                 props.imgReq && picture === null ? (
                   attempted ? (
-                    <Checkbox disabled />
+                    <Checkbox checked={false} disabled />
                   ) : (
-                    <Checkbox onClick={handleSubmit} />
+                    <Checkbox checked={false} onClick={handleSubmit} />
                   )
                 ) : (
-                  <Checkbox onClick={handleSubmit} />
+                  <Checkbox checked={false} onClick={handleSubmit} />
                 )
               }
             />
