@@ -37,7 +37,7 @@ const mapStateToProps = state => {
     logs: state.companyData.logs
   };
 };
-console.log(storage);
+
 const mapDispatchToProps = dispatch => {
   return {
     toggleDrawer: () => {
