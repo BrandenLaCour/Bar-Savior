@@ -55,13 +55,13 @@ class FormsContainer extends React.Component {
     console.log(companyInfo, "is the company info");
     try {
       const companyResponse = await fetch(
-        "https://bar-savior-api.herokuapp.com/api/v1/companys/",
+        process.env.REACT_APP_API_URL + "/api/v1/companys/",
         {
           credentials: "include",
           method: "POST",
           body: JSON.stringify(companyInfo),
           headers: {
-            "content-type": "application/json"
+            "Content-Type": "application/json"
           }
         }
       );
@@ -86,7 +86,7 @@ class FormsContainer extends React.Component {
           method: "POST",
           body: JSON.stringify(userInfo),
           headers: {
-            "content-type": "application/json"
+            "Content-Type": "application/json"
           }
         }
       );
@@ -120,7 +120,7 @@ class FormsContainer extends React.Component {
           method: "POST",
           body: JSON.stringify(userInfo),
           headers: {
-            "content-type": "application/json"
+            "Content-Type": "application/json"
           }
         }
       );
