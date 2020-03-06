@@ -53,13 +53,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 const useStyles = makeStyles({
-  root: {
-    width: 400,
-    height: "100%",
-    padding: 10
-  },
   title: {
-    fontSize: 20
+    fontSize: 30,
+    color: "#3f51b5"
   },
   pos: {
     marginBottom: 12
@@ -74,6 +70,22 @@ const useStyles = makeStyles({
   status: {
     marginTop: 10,
     color: "red"
+  },
+  loggedIn: {
+    height: 730,
+    width: 360,
+    boxShadow: "7px 7px 3px grey",
+    border: "1px solid rgba(100, 100, 100, .5)",
+    borderRadius: "5px",
+    padding: 10
+  },
+  notLoggedIn: {
+    height: 420,
+    width: 360,
+    boxShadow: "7px 7px 3px grey",
+    border: "1px solid rgba(100, 100, 100, .5)",
+    borderRadius: "5px",
+    padding: 10
   }
 });
 
@@ -96,9 +108,8 @@ const CompanyForm = props => {
       props.createUser(newUser);
     }
   };
-
   return (
-    <Card className={classes.root}>
+    <Card className={props.loggedIn ? classes.loggedIn : classes.notLoggedIn}>
       <form noValidate onSubmit={handleSubmit}>
         <CardContent>
           <Typography

@@ -8,3 +8,11 @@
   justify-content: center;
   margin-top: 20px;
 }
+
+.title {
+  font-size: 1.1rem;
+}
+
+.list-container {
+  margin-top: 25px;
+}

@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     width: "auto"
   },
   sidebarText: {
-    color: "black",
+    color: "#3f51b5",
     textDecoration: "none"
   }
 });
@@ -45,11 +45,11 @@ export default function Sidebar(props) {
             <ListItem button>
               <ListItemIcon>
                 {text === "Home" ? (
-                  <HomeIcon />
+                  <HomeIcon className={classes.sidebarText} />
                 ) : index % 2 === 0 ? (
-                  <SupervisorAccountIcon />
+                  <SupervisorAccountIcon className={classes.sidebarText} />
                 ) : (
-                  <AssessmentIcon />
+                  <AssessmentIcon className={classes.sidebarText} />
                 )}
               </ListItemIcon>
               <ListItemText primary={text} />
@@ -75,7 +75,11 @@ export default function Sidebar(props) {
           >
             <ListItem button>
               <ListItemIcon>
-                {text === "Add User" ? <PersonAddIcon /> : <MeetingRoomIcon />}
+                {text === "Add User" ? (
+                  <PersonAddIcon className={classes.sidebarText} />
+                ) : (
+                  <MeetingRoomIcon className={classes.sidebarText} />
+                )}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

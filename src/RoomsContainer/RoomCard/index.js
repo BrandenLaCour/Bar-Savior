@@ -10,10 +10,13 @@ const useStyles = makeStyles({
     width: 250,
     height: "100%",
     padding: 10,
-    margin: 20
+    margin: 20,
+    boxShadow: "4px 4px 1px grey",
+    border: "1px solid rgba(100, 100, 100, .5)",
+    borderRadius: "5px"
   },
-  list: {
-    listStyle: "none"
+  link: {
+    color: "#3f51b5"
   }
 });
 
@@ -24,17 +27,14 @@ const RoomCard = props => {
     <>
       <Card className={classes.root}>
         <CardContent>
-          <ul>
-            <li className={classes.list}>
-              <Link
-                onClick={() => props.addRoom(props.name, props.id)}
-                to="/roomShow"
-              >
-                {" "}
-                {props.name}
-              </Link>
-            </li>
-          </ul>
+          <Link
+            onClick={() => props.addRoom(props.name, props.id)}
+            className={classes.link}
+            to="/roomShow"
+          >
+            {" "}
+            {props.name}
+          </Link>
         </CardContent>
         {props.admin ? (
           <CardContent>

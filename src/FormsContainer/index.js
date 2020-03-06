@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
 import { connect } from "react-redux";
+import "./index.css";
 
 const mapStateToProps = state => {
   return {
@@ -151,7 +152,7 @@ class FormsContainer extends React.Component {
     }
 
     return (
-      <>
+      <div className="form-container">
         {this.state.form === "company" && this.props.type === "register" ? (
           <CompanyForm
             type={this.state.type}
@@ -166,6 +167,7 @@ class FormsContainer extends React.Component {
           <RegisterForm
             createUser={this.createUser}
             status={this.props.status}
+            loggedIn={this.props.loggedIn}
             companyId={this.state.companyId}
             type={this.state.type}
             form={this.state.form}
@@ -176,7 +178,7 @@ class FormsContainer extends React.Component {
         {this.props.type === "login" ? (
           <LoginForm status={this.props.status} login={this.login} />
         ) : null}
-      </>
+      </div>
     );
   }
 }

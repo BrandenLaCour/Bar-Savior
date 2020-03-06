@@ -62,14 +62,14 @@ const NavBar = props => {
                   </span>
                 </Button>
               ) : (
-                <Button color="inherit">Bar Savior (company name)</Button>
+                <Button color="inherit">Bar Savior </Button>
               )}
             </Link>
           </Typography>
           <Link style={{ textDecoration: "none", color: "white" }} to="/Home">
             <Button color="inherit">Home</Button>
           </Link>
-          <Button color="inherit">About</Button>
+
           {props.loggedIn ? (
             <Link
               style={{ textDecoration: "none", color: "white" }}

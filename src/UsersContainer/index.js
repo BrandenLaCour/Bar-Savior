@@ -1,6 +1,7 @@
 import React from "react";
 import UserCard from "./UserCard";
 import { connect } from "react-redux";
+import "./index.css";
 
 const mapStateToProps = state => {
   return {
@@ -43,7 +44,7 @@ class UsersContainer extends React.Component {
   render() {
     const activeUsers = this.props.users.filter(user => user.active === true);
     return (
-      <>
+      <div className="user-container">
         {activeUsers.map(user => {
           return (
             <UserCard
@@ -60,7 +61,7 @@ class UsersContainer extends React.Component {
             />
           );
         })}
-      </>
+      </div>
     );
   }
 }

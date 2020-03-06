@@ -123,9 +123,9 @@ class CompanyForm extends React.Component {
     return (
       <>
         <form noValidate onSubmit={this.handleSubmit}>
-          <Typography color="textPrimary" gutterBottom>
-            Create Room
-          </Typography>
+          <div style={{ marginTop: "30px" }}>
+            <span className="title">Create Room</span>
+          </div>
           <TextField
             onChange={this.handleRoomChange}
             name="room"

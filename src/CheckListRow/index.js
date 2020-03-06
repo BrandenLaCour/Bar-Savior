@@ -23,7 +23,8 @@ const useStyles = makeStyles({
   },
   button: {
     width: 100,
-    margin: 20
+    marginBottom: 10,
+    marginLeft: 20
   },
   label: {
     marginTop: 20
@@ -35,6 +36,17 @@ const useStyles = makeStyles({
   },
   urgent: {
     color: "red"
+  },
+  task: {
+    marginTop: "20px"
+  },
+  rowSpace: {
+    marginLeft: "20px",
+    marginRight: "20px"
+  },
+  status: {
+    marginLeft: "50px",
+    marginTop: "15px"
   }
 });
 
@@ -100,7 +112,7 @@ const CheckListRow = props => {
           />
         ) : null}
 
-        <div>
+        <div className={classes.task}>
           <strong>{props.name}</strong>
         </div>
 
@@ -108,6 +120,7 @@ const CheckListRow = props => {
           id="outlined-basic"
           label="Notes"
           value={notes}
+          className={classes.rowSpace}
           onChange={e => setNotes(e.target.value)}
           variant="outlined"
         />
@@ -125,7 +138,7 @@ const CheckListRow = props => {
           withLabel={false}
           withIcon={false}
         />
-        <InputLabel>Status</InputLabel>
+        <InputLabel className={classes.status}>Status</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"

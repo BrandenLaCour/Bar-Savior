@@ -75,14 +75,14 @@ class ListShow extends React.Component {
     });
 
     return (
-      <>
-        <Typography color="textPrimary" gutterBottom>
+      <div className="list-container">
+        <div className="title">
           {this.props.type === "checklist"
             ? this.props.room
             : this.props.type === "logs"
             ? "Logs"
             : "Urgent Tasks"}
-        </Typography>
+        </div>
 
         {this.props.type === "checklist"
           ? activeTasks.map(task => {
@@ -175,7 +175,7 @@ class ListShow extends React.Component {
             </Button>
           ) : null}
         </div>
-      </>
+      </div>
     );
   }
 }

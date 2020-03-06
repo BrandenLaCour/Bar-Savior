@@ -26,11 +26,15 @@ const mapDispatchToProps = dispatch => {
 
 const useStyles = makeStyles({
   root: {
-    width: 400,
-    height: 400
+    width: 300,
+    height: 400,
+    boxShadow: "7px 7px 3px grey",
+    border: "1px solid rgba(100, 100, 100, .5)",
+    borderRadius: "5px"
   },
   title: {
-    fontSize: 20
+    fontSize: 30,
+    color: "#3f51b5"
   },
   pos: {
     marginBottom: 12
@@ -47,7 +51,7 @@ const CompanyForm = props => {
       props.createCompany({ name: props.companyName, address: props.address });
     }
   };
- 
+
   return (
     <Card className={classes.root}>
       <form noValidate onSubmit={handleSubmit}>

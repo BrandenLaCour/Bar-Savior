@@ -11,10 +11,6 @@ import ImageUploader from "react-images-upload";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    height: "100%"
-  },
   title: {
     fontSize: 20
   },
@@ -30,17 +26,18 @@ const useStyles = makeStyles({
   },
   listItem: {
     display: "flex",
-    justifyContent: "center",
-    marginBottom: -10
+    justifyContent: "center"
   },
   urgent: {
     color: "red"
   },
   urgentStatus: {
-    backgroundColor: "rgba(236, 33, 33, .5)"
+    backgroundColor: "rgba(236, 33, 33, .5)",
+    margin: 20
   },
   attention: {
-    backgroundColor: "rgba(255, 153, 51, .5)"
+    backgroundColor: "rgba(255, 153, 51, .5)",
+    margin: 20
   },
   imageContainer: {
     width: 150,
@@ -48,7 +45,17 @@ const useStyles = makeStyles({
     margin: 20
   },
   image: {
-    width: 100
+    width: 100,
+    marginLeft: 20
+  },
+  desc: {
+    marginTop: 30,
+    marginLeft: 30,
+    marginRight: 30
+  },
+  notes: {
+    marginTop: 5,
+    marginLeft: 50
   }
 });
 
@@ -135,24 +142,18 @@ const CheckListRow = props => {
           />
         ) : null}
 
-        <div>
+        <div className={classes.desc}>
           <strong>{props.name}</strong>
         </div>
 
-        {props.notes ? <div>Notes: {props.notes}</div> : null}
-        <div>
+        {props.notes ? (
+          <div className={classes.desc}>Notes: {props.notes}</div>
+        ) : null}
+        <div className={classes.desc}>
           <small>{props.date}</small>
         </div>
-        <div>Status: {props.status}</div>
-        {/* <CardContent>Shift: {props.shift}</CardContent> */}
-        {props.imageUrl !== null ? (
-          <img
-            className={classes.image}
-            onClick={() => props.enlargedImage(props.imageUrl)}
-            src={props.imageUrl}
-          />
-        ) : null}
-        <InputLabel>Status</InputLabel>
+        <div className={classes.desc}>Status: {props.status}</div>
+
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -169,7 +170,8 @@ const CheckListRow = props => {
           fileContainerStyle={{
             height: "14px",
             width: "100px",
-            all: "inherit"
+            all: "inherit",
+            marginTop: "10px"
           }}
           style={{ width: "100px", marginLeft: "20px" }}
           buttonText="Upload"
@@ -181,14 +183,23 @@ const CheckListRow = props => {
           id="outlined-basic"
           label="New Notes"
           value={notes}
+          className={classes.notes}
           onChange={e => setNotes(e.target.value)}
           variant="outlined"
         />
+        {/* <CardContent>Shift: {props.shift}</CardContent> */}
+        {props.imageUrl !== null ? (
+          <img
+            className={classes.image}
+            onClick={() => props.enlargedImage(props.imageUrl)}
+            src={props.imageUrl}
+          />
+        ) : null}
       </CardContent>
-      <small className={classes.urgent}>
+      <strong className={classes.urgent}>
         {message !== null ? message : null}
-      </small>
-      <small>{picMessage !== null ? picMessage : null}</small>
+      </strong>
+      <strong>{picMessage !== null ? picMessage : null}</strong>
     </Card>
   );
 };
