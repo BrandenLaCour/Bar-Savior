@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 const CheckListRow = props => {
   const classes = useStyles();
-  console.log(props.imageUrl);
+
   return (
     <div className={classes.container}>
       <Card className={classes.root}>

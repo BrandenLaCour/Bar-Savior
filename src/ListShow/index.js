@@ -164,7 +164,7 @@ class ListShow extends React.Component {
           {this.props.type === "urgent" && logsFiltered.length === 0 ? (
             <h2>No Urgent Tasks</h2>
           ) : null}{" "}
-          {this.props.type !== "urgent" && this.props.type !== "logs" ? (
+          {this.props.type === "urgent" && this.props.type !== "logs" ? (
             <Button
               onClick={this.addLogsAndRedirect}
               type="submit"
