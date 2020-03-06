@@ -31,7 +31,8 @@ class FormsContainer extends React.Component {
       form: "company",
       type: "create",
       redirect: "false",
-      companyId: ""
+      companyId: "",
+      message: ""
     };
   }
 
@@ -104,7 +105,7 @@ class FormsContainer extends React.Component {
         this.props.addUsers(users);
         this.setState({ redirect: true });
       } else {
-        this.props.addStatus(createJson.message);
+        this.props.addStatus("Email Already Exists");
       }
     } catch (err) {
       console.error(err);

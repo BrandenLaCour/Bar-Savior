@@ -68,6 +68,27 @@ class CompanyForm extends React.Component {
         active: true,
         imgUrl: "",
         imgReq: false
+      },
+      task7: {
+        name: "",
+        shift: "both",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      },
+      task8: {
+        name: "",
+        shift: "both",
+        active: true,
+        imgUrl: "",
+        imgReq: false
+      },
+      task9: {
+        name: "",
+        shift: "both",
+        active: true,
+        imgUrl: "",
+        imgReq: false
       }
     };
   }
@@ -100,70 +121,96 @@ class CompanyForm extends React.Component {
       return <Redirect to="/" />;
     }
     return (
-      <Card>
+      <>
         <form noValidate onSubmit={this.handleSubmit}>
-          <CardContent>
-            <Typography color="textPrimary" gutterBottom>
-              Create Room
-            </Typography>
-            <TextField
-              onChange={this.handleRoomChange}
-              name="room"
-              value={this.state.room}
-              id="standard-basic"
-              label="Room"
-            />
+          <Typography color="textPrimary" gutterBottom>
+            Create Room
+          </Typography>
+          <TextField
+            onChange={this.handleRoomChange}
+            name="room"
+            value={this.state.room}
+            id="standard-basic"
+            label="Room"
+          />
 
-            <TaskRow
-              name={this.state.task1.name}
-              shift={this.state.task1.shift}
-              imgReq={this.state.task1.imgReq}
-              handleChange={this.handleChange}
-              taskNum="task1"
-            />
-            <TaskRow
-              name={this.state.task2.name}
-              shift={this.state.task2.shift}
-              imgReq={this.state.task2.imgReq}
-              handleChange={this.handleChange}
-              taskNum="task2"
-            />
+          <TaskRow
+            name={this.state.task1.name}
+            shift={this.state.task1.shift}
+            imgReq={this.state.task1.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task1"
+          />
+          <TaskRow
+            name={this.state.task2.name}
+            shift={this.state.task2.shift}
+            imgReq={this.state.task2.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task2"
+          />
 
-            <TaskRow
-              name={this.state.task3.name}
-              shift={this.state.task3.shift}
-              imgReq={this.state.task3.imgReq}
-              handleChange={this.handleChange}
-              taskNum="task3"
-            />
-            <TaskRow
-              name={this.state.task4.name}
-              shift={this.state.task4.shift}
-              imgReq={this.state.task4.imgReq}
-              handleChange={this.handleChange}
-              taskNum="task4"
-            />
-            <TaskRow
-              name={this.state.task5.name}
-              shift={this.state.task5.shift}
-              imgReq={this.state.task5.imgReq}
-              handleChange={this.handleChange}
-              taskNum="task5"
-            />
-            <TaskRow
-              name={this.state.task6.name}
-              shift={this.state.task6.shift}
-              imgReq={this.state.task6.imgReq}
-              handleChange={this.handleChange}
-              taskNum="task6"
-            />
-          </CardContent>
+          <TaskRow
+            name={this.state.task3.name}
+            shift={this.state.task3.shift}
+            imgReq={this.state.task3.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task3"
+          />
+          <TaskRow
+            name={this.state.task4.name}
+            shift={this.state.task4.shift}
+            imgReq={this.state.task4.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task4"
+          />
+          <TaskRow
+            name={this.state.task5.name}
+            shift={this.state.task5.shift}
+            imgReq={this.state.task5.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task5"
+          />
+          <TaskRow
+            name={this.state.task6.name}
+            shift={this.state.task6.shift}
+            imgReq={this.state.task6.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task6"
+          />
+          <TaskRow
+            name={this.state.task7.name}
+            shift={this.state.task7.shift}
+            imgReq={this.state.task7.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task7"
+          />
+          <TaskRow
+            name={this.state.task8.name}
+            shift={this.state.task8.shift}
+            imgReq={this.state.task8.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task8"
+          />
+          <TaskRow
+            name={this.state.task9.name}
+            shift={this.state.task9.shift}
+            imgReq={this.state.task9.imgReq}
+            handleChange={this.handleChange}
+            taskNum="task9"
+          />
+        </form>
 
-          <Button type="submit" variant="contained" color="primary">
+        <div className="button-container">
+          <Button
+            style={{ marginBottom: "20px" }}
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
             Submit
           </Button>
-        </form>
-      </Card>
+        </div>
+      </>
     );
   }
 }
