@@ -75,7 +75,7 @@ class FormsContainer extends React.Component {
   };
 
   createUser = async userInfo => {
-    if (this.props.user !== "") {
+    if (this.state.form !== "initRegister") {
       userInfo.company = this.props.user.company.id;
     } else userInfo.company = this.state.companyId;
     try {

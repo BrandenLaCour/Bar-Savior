@@ -19,6 +19,12 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     marginLeft: "100px"
+  },
+  companyName: {
+    marginRight: 10
+  },
+  companyAddress: {
+    marginLeft: 10
   }
 }));
 
@@ -46,7 +52,18 @@ const NavBar = props => {
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             <Link style={{ textDecoration: "none", color: "white" }} to="/">
-              <Button color="inherit">Bar Hero (company name)</Button>
+              {props.company !== undefined ? (
+                <Button color="inherit">
+                  <span className={classes.companyName}>
+                    {props.company.name}
+                  </span>{" "}
+                  <span className={classes.companyAddress}>
+                    {props.company.address}
+                  </span>
+                </Button>
+              ) : (
+                <Button color="inherit">Bar Savior (company name)</Button>
+              )}
             </Link>
           </Typography>
           <Link style={{ textDecoration: "none", color: "white" }} to="/Home">

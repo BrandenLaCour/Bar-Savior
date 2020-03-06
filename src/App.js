@@ -10,6 +10,7 @@ import UserContainer from "./UsersContainer";
 import RoomForm from "./RoomForm";
 import RoomsContainer from "./RoomsContainer";
 import ListShow from "./ListShow";
+import LandingPage from "./LandingPage";
 import * as firebase from "firebase/app";
 import uniqid from "uniqid";
 import "firebase/auth";
@@ -395,6 +396,7 @@ class App extends React.Component {
             user={this.props.user}
             logout={this.handleLogout}
             loggedIn={this.props.loggedIn}
+            company={this.props.user.company}
             toggleDrawer={this.props.toggleDrawer}
           />
           {this.props.loggedIn ? (
@@ -422,7 +424,7 @@ class App extends React.Component {
                 ) : (
                   <div>
                     {" "}
-                    <h3>Landing Page</h3> <p>Thiis is how you use this app</p>{" "}
+                    <LandingPage />
                   </div>
                 )
               }
