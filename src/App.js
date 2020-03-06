@@ -158,7 +158,7 @@ class App extends React.Component {
         }
       );
       const { data } = await logsResponse.json();
-
+      console.log(data, "is the logs response");
       const logs = data.map(log => {
         if (log.imageId) {
           const pathReference = storage.ref(log.imageId);
@@ -240,7 +240,7 @@ class App extends React.Component {
 
       try {
         let imageId;
-
+        console.log("attempting to create a log");
         if (log.picture) {
           imageId = uniqid();
           log.imageId = imageId;
@@ -337,7 +337,7 @@ class App extends React.Component {
         }
       );
       const updateLogJson = await updateLogResponse.json();
-      this.getRooms();
+      this.getRooms(this.props.user.company.id);
     } catch (err) {
       console.error(err);
     }

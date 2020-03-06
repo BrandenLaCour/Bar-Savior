@@ -45,7 +45,6 @@ class FormsContainer extends React.Component {
   //will change whether this is an intial account setup, or just registering new users to your company
   //call this on login
   handleFormType = () => {
-    console.log(this.props);
     if (this.props.loggedIn === false) {
       this.setState({ form: "company" });
     } else {
@@ -129,6 +128,7 @@ class FormsContainer extends React.Component {
       console.log(loginJson.data);
       if (loginJson.status !== 401) {
         const companyId = loginJson.data.company.id;
+
         this.props.loginUser(true);
         this.props.addUserInfo(loginJson.data);
         this.props.getUsers(companyId);
