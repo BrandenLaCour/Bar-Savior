@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import NavBar from "./NavBar";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Redirect } from "react-router-dom";
 import { Route, Switch } from "react-router";
 import FormsContainer from "./FormsContainer";
 import Sidebar from "./Sidebar";
@@ -278,6 +278,31 @@ class App extends React.Component {
     });
   };
 
+  updateLogs = logIds => {
+    this.props.isRedirect(false);
+    logIds.forEach(async logId => {
+      try {
+        const createLogResponse = await fetch(
+          process.env.REACT_APP_API_URL + `/api/v1/logs/${logId}`,
+          {
+            credentials: "include",
+            method: "PUT",
+            body: JSON.stringify({ urgent: "false" }),
+            headers: {
+              "content-type": "application/json"
+            }
+          }
+        );
+        const createLogJson = await createLogResponse.json();
+        console.log(createLogJson);
+        this.props.isRedirect(false);
+        this.getLogs(this.props.user.company.id);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -368,7 +393,11 @@ class App extends React.Component {
               path="/roomShow"
               render={props => (
                 <>
-                  <ListShow type="checklist" createLogs={this.createLogs} />
+                  <ListShow
+                    type="checklist"
+                    updateLogs={this.updateLogs}
+                    createLogs={this.createLogs}
+                  />
                 </>
               )}
             />
@@ -376,7 +405,11 @@ class App extends React.Component {
               path="/urgent"
               render={props => (
                 <>
-                  <ListShow type="urgent" createLogs={this.createLogs} />
+                  <ListShow
+                    type="urgent"
+                    updateLogs={this.updateLogs}
+                    createLogs={this.createLogs}
+                  />
                 </>
               )}
             />
@@ -384,7 +417,19 @@ class App extends React.Component {
               path="/logs"
               render={props => (
                 <>
-                  <ListShow type="logs" createLogs={this.createLogs} />
+                  <ListShow
+                    type="logs"
+                    updateLogs={this.updateLogs}
+                    createLogs={this.createLogs}
+                  />
+                </>
+              )}
+            />
+            <Route
+              path="/Home"
+              render={props => (
+                <>
+                  <Redirect to="/" />
                 </>
               )}
             />

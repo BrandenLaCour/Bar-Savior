@@ -81,6 +81,8 @@ const CheckListRow = props => {
     if ((props.imgReq && picture !== null) || props.imgReq === false) {
       if (active && status === "okay") {
         props.addLog(log);
+        props.addLogIdToUpdate(props.oldLogId);
+        //update the old logs urgent property to false, so it doesnt who anymore
         setMessage(null);
         setActive(false);
       } else setMessage("You must resolve this task before logging");

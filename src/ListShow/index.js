@@ -32,7 +32,8 @@ class ListShow extends React.Component {
   constructor() {
     super();
     this.state = {
-      logs: []
+      logs: [],
+      logsIdsToUpdate: []
     };
   }
   addLog = log => {
@@ -41,12 +42,19 @@ class ListShow extends React.Component {
     this.setState({ logs });
   };
 
+  addLogIdToUpdate = oldLogId => {
+    const logsIdsToUpdate = this.state.logsIdsToUpdate;
+    logsIdsToUpdate.push(oldLogId);
+    this.setState({ logsIdsToUpdate });
+  };
+
   enlargedImage = url => {
     window.open(url);
   };
 
   addLogsAndRedirect = () => {
     this.props.createLogs(this.state.logs);
+    this.props.updateLogs(this.state.logidsToUpdate);
     this.props.isRedirect(true);
   };
 
@@ -65,92 +73,91 @@ class ListShow extends React.Component {
 
     return (
       <>
-        <Card>
-          <Typography color="textPrimary" gutterBottom>
-            {this.props.type === "checklist"
-              ? this.props.room
-              : this.props.type === "logs"
-              ? "Logs"
-              : "Urgent Tasks"}
-          </Typography>
-
+        <Typography color="textPrimary" gutterBottom>
           {this.props.type === "checklist"
-            ? this.props.tasks.map(task => {
-                return (
-                  <>
-                    <ChecklistRow
-                      addLog={this.addLog}
-                      taskId={task.id}
-                      key={task.id}
-                      type={this.props.type}
-                      name={task.name}
-                      shift={task.shift}
-                      imgReq={task.imgReq}
-                    />
-                  </>
-                );
-              })
-            : this.props.type === "urgent"
-            ? logsFiltered
-                .map(log => {
-                  if (log.status !== "okay" && log.resolvedId === null) {
-                    return (
-                      <div key={log.id}>
-                        <UrgentRow
-                          addLog={this.addLog}
-                          room={log.task.room.name}
-                          notes={log.notes}
-                          user={this.props.user}
-                          originalUser={log.user.username}
-                          addLog={this.addLog}
-                          taskId={log.task.id}
-                          logId={log.id}
-                          imgReq={log.task.imgReq}
-                          enlargedImage={this.enlargedImage}
-                          imageUrl={log.imageUrl}
-                          type={this.props.type}
-                          name={log.task.name}
-                          date={log.dateAdded}
-                          shift={log.task.shift}
-                          status={log.status}
-                        />
-                      </div>
-                    );
-                  }
-                })
-                .reverse()
-            : this.props.logs
-                .map(log => {
+            ? this.props.room
+            : this.props.type === "logs"
+            ? "Logs"
+            : "Urgent Tasks"}
+        </Typography>
+
+        {this.props.type === "checklist"
+          ? this.props.tasks.map(task => {
+              return (
+                <>
+                  <ChecklistRow
+                    addLog={this.addLog}
+                    taskId={task.id}
+                    key={task.id}
+                    type={this.props.type}
+                    name={task.name}
+                    shift={task.shift}
+                    imgReq={task.imgReq}
+                  />
+                </>
+              );
+            })
+          : this.props.type === "urgent"
+          ? logsFiltered
+              .map(log => {
+                if (log.status !== "okay" && log.resolvedId === null) {
                   return (
                     <div key={log.id}>
-                      <LogRow
-                        date={log.dateAdded}
-                        name={log.task.name}
-                        key={log.id}
-                        user={log.user.username}
-                        notes={log.notes}
-                        status={log.status}
-                        imageUrl={log.imageUrl}
+                      <UrgentRow
+                        addLog={this.addLog}
                         room={log.task.room.name}
+                        notes={log.notes}
+                        user={this.props.user}
+                        originalUser={log.user.username}
+                        addLog={this.addLog}
+                        addLogIdToUpdate={this.addLogIdToUpdate}
+                        taskId={log.task.id}
+                        oldLogId={log.id}
+                        imgReq={log.task.imgReq}
                         enlargedImage={this.enlargedImage}
-                        resolvedUser={
-                          log.resolvedId !== null
-                            ? this.getResolvedUser(log.resolvedId)
-                            : null
-                        }
+                        imageUrl={log.imageUrl}
+                        type={this.props.type}
+                        name={log.task.name}
+                        date={log.dateAdded}
+                        shift={log.task.shift}
+                        status={log.status}
                       />
-                      {/* need to do a query here for which user resolved, same for image */}
                     </div>
                   );
-                })
-                .reverse()}
+                }
+              })
+              .reverse()
+          : this.props.logs
+              .map(log => {
+                return (
+                  <div key={log.id}>
+                    <LogRow
+                      date={log.dateAdded}
+                      name={log.task.name}
+                      key={log.id}
+                      user={log.user.username}
+                      notes={log.notes}
+                      status={log.status}
+                      imageUrl={log.imageUrl}
+                      room={log.task.room.name}
+                      enlargedImage={this.enlargedImage}
+                      resolvedUser={
+                        log.resolvedId !== null
+                          ? this.getResolvedUser(log.resolvedId)
+                          : null
+                      }
+                    />
+                    {/* need to do a query here for which user resolved, same for image */}
+                  </div>
+                );
+              })
+              .reverse()}
+
+        <div className="button-container">
           {logsFiltered.length === 0 && this.props.type !== "checklist" ? (
             <h2>No Urgent Tasks</h2>
-          ) : null}
-        </Card>
-        <div className="button-container">
-          {" "}
-          {this.props.type === ("checklist" || "urgent") ? (
+          ) : null}{" "}
+          {this.props.type !== "logs" ? (
             <Button
               onClick={this.addLogsAndRedirect}
               type="submit"

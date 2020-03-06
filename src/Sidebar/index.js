@@ -6,11 +6,12 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
-import AssignmentIcon from "@material-ui/icons/Assignment";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 
 const useStyles = makeStyles({
   list: {
@@ -35,7 +36,7 @@ export default function Sidebar(props) {
       onClick={props.toggleDrawer}
     >
       <List>
-        {["Users", "Logs"].map((text, index) => (
+        {["Home", "Logs", "Users"].map((text, index) => (
           <Link
             key={text}
             className={classes.sidebarText}
@@ -43,7 +44,9 @@ export default function Sidebar(props) {
           >
             <ListItem button>
               <ListItemIcon>
-                {index % 2 === 0 ? (
+                {text === "Home" ? (
+                  <HomeIcon />
+                ) : index % 2 === 0 ? (
                   <SupervisorAccountIcon />
                 ) : (
                   <AssessmentIcon />
@@ -56,7 +59,7 @@ export default function Sidebar(props) {
       </List>
       <Divider />
       <List>
-        {["Add Room", "Add Task", "Add User"].map((text, index) => (
+        {["Add User", "Add Room"].map((text, index) => (
           <Link
             key={text}
             className={classes.sidebarText}
@@ -72,7 +75,7 @@ export default function Sidebar(props) {
           >
             <ListItem button>
               <ListItemIcon>
-                {index < 2 ? <AssignmentIcon /> : <AssignmentIndIcon />}
+                {text === "Add User" ? <PersonAddIcon /> : <MeetingRoomIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
