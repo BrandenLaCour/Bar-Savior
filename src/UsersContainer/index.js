@@ -19,7 +19,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 class UsersContainer extends React.Component {
-  
   deleteUser = async userId => {
     console.log(this.props.user);
     try {
@@ -42,9 +41,10 @@ class UsersContainer extends React.Component {
   };
 
   render() {
+    const activeUsers = this.props.users.filter(user => user.active === true);
     return (
       <>
-        {this.props.users.map(user => {
+        {activeUsers.map(user => {
           return (
             <UserCard
               key={user.id}
@@ -53,8 +53,10 @@ class UsersContainer extends React.Component {
               admin={user.admin ? "Yes" : "No"}
               master={user.master ? "Yes" : "No"}
               id={user.id}
+              isAdmin={user.admin}
               position={user.position}
-              delete={this.deleteUser}
+              toggleAdmin={this.props.toggleAdmin}
+              deactivateUser={this.props.deactivateUser}
             />
           );
         })}

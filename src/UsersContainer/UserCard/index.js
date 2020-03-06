@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 const UserCard = props => {
   const classes = useStyles();
-  console.log(props);
+
   return (
     <>
       <Card className={classes.root}>
@@ -32,11 +32,19 @@ const UserCard = props => {
           </ul>
         </CardContent>
         <CardContent>
-          <Button variant="contained" color="secondary">
-            Edit
+          <Button
+            onClick={() => props.toggleAdmin(props.id, props.isAdmin)}
+            variant="contained"
+            color="primary"
+          >
+            Toggle Admin
           </Button>{" "}
-          <Button onClick={() => props.delete(props.id)} variant="contained">
-            Delete
+          <Button
+            onClick={() => props.deactivateUser(props.id)}
+            variant="contained"
+            color="secondary"
+          >
+            Deactivate
           </Button>
         </CardContent>
       </Card>

@@ -36,11 +36,16 @@ const RoomCard = props => {
             </li>
           </ul>
         </CardContent>
-        <CardContent>
-          <Button onClick={() => props.delete(props.id)} variant="contained">
-            Delete
-          </Button>
-        </CardContent>
+        {props.admin ? (
+          <CardContent>
+            <Button
+              onClick={() => props.deactivateRoom(props.id)}
+              variant="contained"
+            >
+              Deactivate
+            </Button>
+          </CardContent>
+        ) : null}
       </Card>
     </>
   );

@@ -321,6 +321,72 @@ class App extends React.Component {
     });
   };
 
+  deactivateRoom = async roomId => {
+    this.props.isRedirect(false);
+    try {
+      const updateLogResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/rooms/deactivate/${roomId}`,
+        {
+          credentials: "include",
+          method: "PUT",
+          body: JSON.stringify({ active: "false" }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      );
+      const updateLogJson = await updateLogResponse.json();
+      this.getRooms();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  deactivateUser = async userId => {
+    this.props.isRedirect(false);
+    try {
+      const updateUserResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/users/deactivate/${userId}`,
+        {
+          credentials: "include",
+          method: "PUT",
+          body: JSON.stringify({ active: "false" }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      );
+      const updateUserJson = await updateUserResponse.json();
+      console.log(updateUserJson);
+      this.getUsers(this.props.user.company.id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  toggleAdmin = async (userId, bool) => {
+    this.props.isRedirect(false);
+
+    try {
+      const updateUserResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/users/${userId}`,
+        {
+          credentials: "include",
+          method: "PUT",
+          body: JSON.stringify({ admin: !bool }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      );
+      const updateUserJson = await updateUserResponse.json();
+      console.log(updateUserJson);
+      this.getUsers(this.props.user.company.id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
     return (
       <div className="App">
@@ -350,6 +416,7 @@ class App extends React.Component {
                     <RoomsContainer
                       getLogs={this.getLogs}
                       getTasks={this.getTasks}
+                      deactivateRoom={this.deactivateRoom}
                     />
                   </>
                 ) : (
@@ -392,7 +459,10 @@ class App extends React.Component {
               path="/users"
               render={props => (
                 <>
-                  <UserContainer />
+                  <UserContainer
+                    toggleAdmin={this.toggleAdmin}
+                    deactivateUser={this.deactivateUser}
+                  />
                 </>
               )}
             />

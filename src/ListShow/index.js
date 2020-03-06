@@ -70,6 +70,9 @@ class ListShow extends React.Component {
     const logsFiltered = this.props.logs.filter(log => {
       return log.urgent === true;
     });
+    const activeTasks = this.props.tasks.filter(task => {
+      return task.active === true;
+    });
 
     return (
       <>
@@ -82,20 +85,22 @@ class ListShow extends React.Component {
         </Typography>
 
         {this.props.type === "checklist"
-          ? this.props.tasks.map(task => {
-              return (
-                <>
-                  <ChecklistRow
-                    addLog={this.addLog}
-                    taskId={task.id}
-                    key={task.id}
-                    type={this.props.type}
-                    name={task.name}
-                    shift={task.shift}
-                    imgReq={task.imgReq}
-                  />
-                </>
-              );
+          ? activeTasks.map(task => {
+              if (task.active === true) {
+                return (
+                  <>
+                    <ChecklistRow
+                      addLog={this.addLog}
+                      taskId={task.id}
+                      key={task.id}
+                      type={this.props.type}
+                      name={task.name}
+                      shift={task.shift}
+                      imgReq={task.imgReq}
+                    />
+                  </>
+                );
+              }
             })
           : this.props.type === "urgent"
           ? logsFiltered

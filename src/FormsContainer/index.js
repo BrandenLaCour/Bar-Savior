@@ -53,7 +53,6 @@ class FormsContainer extends React.Component {
   };
 
   createCompany = async companyInfo => {
-    console.log(companyInfo, "is the company info");
     try {
       const companyResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/companys/",
@@ -126,8 +125,9 @@ class FormsContainer extends React.Component {
         }
       );
       const loginJson = await loginResponse.json();
-      const companyId = loginJson.data.company.id;
+      console.log(loginJson.data);
       if (loginJson.status !== 401) {
+        const companyId = loginJson.data.company.id;
         this.props.loginUser(true);
         this.props.addUserInfo(loginJson.data);
         this.props.getUsers(companyId);

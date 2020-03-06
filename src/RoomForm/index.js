@@ -198,18 +198,17 @@ class CompanyForm extends React.Component {
             handleChange={this.handleChange}
             taskNum="task9"
           />
+          <div className="button-container">
+            <Button
+              style={{ marginBottom: "20px" }}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+          </div>
         </form>
-
-        <div className="button-container">
-          <Button
-            style={{ marginBottom: "20px" }}
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Submit
-          </Button>
-        </div>
       </>
     );
   }

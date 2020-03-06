@@ -93,7 +93,6 @@ const CompanyForm = props => {
     };
 
     if (props.type === "create") {
-      console.log("hit create");
       props.createUser(newUser);
     }
   };

@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 const mapStateToProps = state => {
   return {
     rooms: state.companyData.rooms,
-    room: state.modals.room
+    room: state.modals.room,
+    user: state.modals.user
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -46,9 +47,10 @@ class RoomsContainer extends React.Component {
   };
 
   render() {
+    const activeRooms = this.props.rooms.filter(room => room.active === true);
     return (
       <>
-        {this.props.rooms.map(room => {
+        {activeRooms.map(room => {
           return (
             <RoomCard
               addRoom={this.addRoom}
@@ -56,6 +58,8 @@ class RoomsContainer extends React.Component {
               key={room.id}
               id={room.id}
               name={room.name}
+              deactivateRoom={this.props.deactivateRoom}
+              admin={this.props.user.admin}
             />
           );
         })}
