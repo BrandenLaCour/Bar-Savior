@@ -271,6 +271,23 @@ class App extends React.Component {
             .catch(error => {
               console.log(error, "image failed to upload");
             });
+        } else {
+          //if no picture, create without using firebase
+          const createLogResponse = await fetch(
+            process.env.REACT_APP_API_URL + "/api/v1/logs/",
+            {
+              credentials: "include",
+              method: "POST",
+              body: JSON.stringify(log),
+              headers: {
+                "content-type": "application/json"
+              }
+            }
+          );
+          const createLogJson = await createLogResponse.json();
+          console.log(createLogJson);
+          this.props.isRedirect(false);
+          this.getLogs(this.props.user.company.id);
         }
       } catch (err) {
         console.error(err);
@@ -278,9 +295,10 @@ class App extends React.Component {
     });
   };
 
-  updateLogs = logIds => {
+  updateLogs = ids => {
     this.props.isRedirect(false);
-    logIds.forEach(async logId => {
+    console.log(ids, "are the ids updated");
+    ids.forEach(async logId => {
       try {
         const createLogResponse = await fetch(
           process.env.REACT_APP_API_URL + `/api/v1/logs/${logId}`,

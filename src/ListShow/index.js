@@ -54,7 +54,7 @@ class ListShow extends React.Component {
 
   addLogsAndRedirect = () => {
     this.props.createLogs(this.state.logs);
-    this.props.updateLogs(this.state.logidsToUpdate);
+    this.props.updateLogs(this.state.logsIdsToUpdate);
     this.props.isRedirect(true);
   };
 
@@ -129,6 +129,10 @@ class ListShow extends React.Component {
               .reverse()
           : this.props.logs
               .map(log => {
+                const resolvedUser =
+                  log.resolvedId !== null
+                    ? this.getResolvedUser(log.resolvedId)
+                    : null;
                 return (
                   <div key={log.id}>
                     <LogRow
@@ -142,9 +146,7 @@ class ListShow extends React.Component {
                       room={log.task.room.name}
                       enlargedImage={this.enlargedImage}
                       resolvedUser={
-                        log.resolvedId !== null
-                          ? this.getResolvedUser(log.resolvedId)
-                          : null
+                        resolvedUser !== null ? resolvedUser.username : null
                       }
                     />
                     {/* need to do a query here for which user resolved, same for image */}
@@ -154,10 +156,10 @@ class ListShow extends React.Component {
               .reverse()}
 
         <div className="button-container">
-          {logsFiltered.length === 0 && this.props.type !== "checklist" ? (
+          {this.props.type === "urgent" && logsFiltered.length === 0 ? (
             <h2>No Urgent Tasks</h2>
           ) : null}{" "}
-          {this.props.type !== "logs" ? (
+          {this.props.type !== "urgent" && this.props.type !== "logs" ? (
             <Button
               onClick={this.addLogsAndRedirect}
               type="submit"

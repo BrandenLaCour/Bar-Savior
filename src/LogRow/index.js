@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 const CheckListRow = props => {
   const classes = useStyles();
-
+  console.log(props.imageUrl);
   return (
     <div className={classes.container}>
       <Card className={classes.root}>
@@ -45,16 +45,17 @@ const CheckListRow = props => {
             <li className={classes.list}>Status: {props.status}</li>
 
             {props.resolvedUser !== null ? (
-              <li>Resolved By: {props.resolvedUser}</li>
+              <li className={classes.list}>
+                Resolved By: {props.resolvedUser}
+              </li>
             ) : null}
           </ul>
         </CardContent>
       </Card>
 
-      {props.imageUrl !== null ? (
+      {props.imageUrl !== undefined ? (
         <Card className={classes.imageContainer}>
           <CardContent className={classes.listItem}>
-            Issue Image:{" "}
             <img
               className={classes.image}
               onClick={() => props.enlargedImage(props.imageUrl)}

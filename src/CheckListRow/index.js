@@ -58,11 +58,9 @@ const CheckListRow = props => {
 
   const handleSubmit = () => {
     if ((props.imgReq && picture !== null) || props.imgReq === false) {
-      if (active && status === "okay") {
-        props.addLog(log);
-        setMessage(null);
-        setActive(false);
-      } else setMessage("You must resolve this task before logging");
+      if (active) props.addLog(log);
+      setMessage(null);
+      setActive(false);
       setPicMessage(null);
     } else {
       setAttempted(true);
