@@ -68,7 +68,8 @@ const CheckListRow = props => {
     status: status,
     picture: picture,
     task: props.taskId,
-    resolvedId: props.user.id
+    resolvedId: props.user.id,
+    user: props.originalUser
   };
 
   if (rendered === false) {
@@ -94,7 +95,7 @@ const CheckListRow = props => {
     onDrop(picture);
     setPicMessage("Picture uploaded successfully");
   };
-
+  console.log(log);
   return (
     <Card
       className={
@@ -184,8 +185,8 @@ const CheckListRow = props => {
       </CardContent>
       <small className={classes.urgent}>
         {message !== null ? message : null}
-        {picMessage !== null ? picMessage : null}
       </small>
+      <small>{picMessage !== null ? picMessage : null}</small>
     </Card>
   );
 };

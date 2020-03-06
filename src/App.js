@@ -188,22 +188,24 @@ class App extends React.Component {
   createManyTasks = roomId => {
     this.props.isRedirect(false);
     this.props.tasks.forEach(async task => {
-      try {
-        const createTskResponse = await fetch(
-          process.env.REACT_APP_API_URL + "/api/v1/tasks/",
-          {
-            credentials: "include",
-            method: "POST",
-            body: JSON.stringify({ ...task, room: roomId }),
-            headers: {
-              "content-type": "application/json"
+      if (task.name !== "") {
+        try {
+          const createTskResponse = await fetch(
+            process.env.REACT_APP_API_URL + "/api/v1/tasks/",
+            {
+              credentials: "include",
+              method: "POST",
+              body: JSON.stringify({ ...task, room: roomId }),
+              headers: {
+                "content-type": "application/json"
+              }
             }
-          }
-        );
-        const createTskJson = await createTskResponse.json();
-        this.getRooms(this.props.user.company.id);
-      } catch (err) {
-        console.error(err);
+          );
+          const createTskJson = await createTskResponse.json();
+          this.getRooms(this.props.user.company.id);
+        } catch (err) {
+          console.error(err);
+        }
       }
     });
   };

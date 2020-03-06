@@ -60,12 +60,12 @@ class ListShow extends React.Component {
       return <Redirect to="/" />;
     }
     const logsFiltered = this.props.logs.filter(log => {
-      return log.status !== "okay";
+      return log.urgent === true;
     });
-    console.log(logsFiltered);
+
     return (
-      <Card>
-        <CardContent>
+      <>
+        <Card>
           <Typography color="textPrimary" gutterBottom>
             {this.props.type === "checklist"
               ? this.props.room
@@ -93,7 +93,7 @@ class ListShow extends React.Component {
             : this.props.type === "urgent"
             ? logsFiltered
                 .map(log => {
-                  if (log.status !== "okay") {
+                  if (log.status !== "okay" && log.resolvedId === null) {
                     return (
                       <div key={log.id}>
                         <UrgentRow
@@ -101,8 +101,10 @@ class ListShow extends React.Component {
                           room={log.task.room.name}
                           notes={log.notes}
                           user={this.props.user}
+                          originalUser={log.user.username}
                           addLog={this.addLog}
                           taskId={log.task.id}
+                          logId={log.id}
                           imgReq={log.task.imgReq}
                           enlargedImage={this.enlargedImage}
                           imageUrl={log.imageUrl}
@@ -142,20 +144,24 @@ class ListShow extends React.Component {
                   );
                 })
                 .reverse()}
-          {logsFiltered.length === 0 ? <h2>No Urgent Tasks</h2> : null}
-        </CardContent>
-
-        {this.props.type === ("checklist" || "urgent") ? (
-          <Button
-            onClick={this.addLogsAndRedirect}
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            Submit
-          </Button>
-        ) : null}
-      </Card>
+          {logsFiltered.length === 0 && this.props.type !== "checklist" ? (
+            <h2>No Urgent Tasks</h2>
+          ) : null}
+        </Card>
+        <div className="button-container">
+          {" "}
+          {this.props.type === ("checklist" || "urgent") ? (
+            <Button
+              onClick={this.addLogsAndRedirect}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+          ) : null}
+        </div>
+      </>
     );
   }
 }

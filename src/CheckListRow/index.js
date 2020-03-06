@@ -46,23 +46,32 @@ const CheckListRow = props => {
   const [active, setActive] = useState(true);
   const [message, setMessage] = useState(null);
   const [attempted, setAttempted] = useState(false);
+  const [picMessage, setPicMessage] = useState(null);
 
   const log = {
     notes: notes,
     status: status,
     picture: picture,
-    task: props.taskId
+    task: props.taskId,
+    urgent: status !== "okay" ? true : false
   };
 
   const handleSubmit = () => {
     if ((props.imgReq && picture !== null) || props.imgReq === false) {
-      if (active) props.addLog(log);
-      setMessage(null);
-      setActive(false);
+      if (active && status === "okay") {
+        props.addLog(log);
+        setMessage(null);
+        setActive(false);
+      } else setMessage("You must resolve this task before logging");
+      setPicMessage(null);
     } else {
       setAttempted(true);
       setMessage("You must upload a picture for the above task");
     }
+  };
+  const uploadPic = picture => {
+    onDrop(picture);
+    setPicMessage("Picture uploaded successfully");
   };
 
   return (
@@ -114,7 +123,7 @@ const CheckListRow = props => {
           }}
           style={{ width: "100px", marginLeft: "20px" }}
           buttonText="Upload"
-          onChange={picture => onDrop(picture)}
+          onChange={picture => uploadPic(picture)}
           withLabel={false}
           withIcon={false}
         />
@@ -135,6 +144,7 @@ const CheckListRow = props => {
       <small className={classes.urgent}>
         {message !== null ? message : null}
       </small>
+      <small>{picMessage !== null ? picMessage : null}</small>
     </Card>
   );
 };
