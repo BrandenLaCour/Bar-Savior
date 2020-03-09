@@ -237,7 +237,6 @@ class App extends React.Component {
 
   createLogs = logs => {
     this.props.isRedirect(false);
-    console.log("");
     logs.forEach(async log => {
       log.user = this.props.user.id;
 
