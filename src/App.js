@@ -88,6 +88,8 @@ class App extends React.Component {
 
       this.props.logout();
       this.props.addUsers([]);
+      this.props.addRooms([]);
+
       this.props.addUserInfo({});
       //reset state after logout
     } catch (err) {
@@ -240,7 +242,7 @@ class App extends React.Component {
 
       try {
         let imageId;
-        console.log("attempting to create a log");
+        console.log("attempting to create a lg");
         if (log.picture) {
           imageId = uniqid();
           log.imageId = imageId;
