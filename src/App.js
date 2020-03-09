@@ -240,6 +240,7 @@ class App extends React.Component {
     logs.forEach(async log => {
       log.user = this.props.user.id;
 
+    const test;
       try {
         let imageId;
         console.log("attempting to create a lg");
