@@ -38,6 +38,9 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12
+  },
+  button: {
+    cursor: "pointer"
   }
 });
 
@@ -75,7 +78,12 @@ const CompanyForm = props => {
           />
         </CardContent>
 
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          className={classes.button}
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
           Submit
         </Button>
       </form>

@@ -62,7 +62,8 @@ const useStyles = makeStyles({
   },
   button: {
     width: 100,
-    margin: 20
+    margin: 20,
+    cursor: "pointer"
   },
   helper: {
     textAlign: "center"

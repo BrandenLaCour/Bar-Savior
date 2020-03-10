@@ -43,6 +43,9 @@ const useStyles = makeStyles({
   status: {
     marginTop: 10,
     color: "red"
+  },
+  button: {
+    cursor: "pointer"
   }
 });
 
@@ -82,7 +85,12 @@ const LoginForm = props => {
           />
         </CardContent>
 
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          className={classes.button}
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
           Submit
         </Button>
         {props.status !== "" ? (
