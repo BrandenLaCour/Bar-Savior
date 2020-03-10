@@ -79,7 +79,7 @@ class App extends React.Component {
   handleLogout = async () => {
     try {
       const logoutResponse = await fetch(
-        process.env.REACT_APP_API_URL + "/api/v1/users/logout",
+        process.env.REACT_APP_API_URL + "/api/v1/members/logout",
         {
           credentials: "include"
         }
@@ -103,7 +103,7 @@ class App extends React.Component {
       // only get them if admin or master
       try {
         const usersResponse = await fetch(
-          process.env.REACT_APP_API_URL + `/api/v1/users/all/${companyId}`,
+          process.env.REACT_APP_API_URL + `/api/v1/members/all/${companyId}`,
           {
             credentials: "include"
           }
@@ -350,7 +350,7 @@ class App extends React.Component {
     this.props.isRedirect(false);
     try {
       const updateUserResponse = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v1/users/deactivate/${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v1/members/deactivate/${userId}`,
         {
           credentials: "include",
           method: "PUT",
@@ -373,7 +373,7 @@ class App extends React.Component {
 
     try {
       const updateUserResponse = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v1/users/${userId}`,
+        process.env.REACT_APP_API_URL + `/api/v1/members/${userId}`,
         {
           credentials: "include",
           method: "PUT",

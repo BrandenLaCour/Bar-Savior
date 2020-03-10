@@ -80,7 +80,7 @@ class FormsContainer extends React.Component {
     } else userInfo.company = this.state.companyId;
     try {
       const createResponse = await fetch(
-        process.env.REACT_APP_API_URL + "/api/v1/users/register",
+        process.env.REACT_APP_API_URL + "/api/v1/members/register",
         {
           credentials: "include",
           method: "POST",
@@ -114,7 +114,7 @@ class FormsContainer extends React.Component {
   login = async userInfo => {
     try {
       const loginResponse = await fetch(
-        process.env.REACT_APP_API_URL + "/api/v1/users/login",
+        process.env.REACT_APP_API_URL + "/api/v1/members/login",
         {
           credentials: "include",
           method: "POST",
