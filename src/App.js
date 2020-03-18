@@ -368,6 +368,28 @@ class App extends React.Component {
     }
   };
 
+  deactivateTask = async (taskId, roomId) => {
+    this.props.isRedirect(false);
+    try {
+      const updateTaskResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/tasks/deactivate/${taskId}`,
+        {
+          credentials: "include",
+          method: "PUT",
+          body: JSON.stringify({ active: "false" }),
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      );
+      const updateTaskJson = await updateTaskResponse.json();
+      console.log(updateTaskJson);
+      this.getTasks(roomId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   toggleAdmin = async (userId, bool) => {
     this.props.isRedirect(false);
 
@@ -488,6 +510,7 @@ class App extends React.Component {
                 <>
                   <ListShow
                     type="checklist"
+                    deactivateTask={this.deactivateTask}
                     updateLogs={this.updateLogs}
                     createLogs={this.createLogs}
                   />

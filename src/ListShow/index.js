@@ -97,6 +97,9 @@ class ListShow extends React.Component {
                       name={task.name}
                       shift={task.shift}
                       imgReq={task.imgReq}
+                      isAdmin={this.props.user.admin}
+                      roomId={task.room.id}
+                      deactivateTask={this.props.deactivateTask}
                     />
                   </>
                 );

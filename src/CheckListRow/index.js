@@ -7,6 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
 import ImageUploader from "react-images-upload";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
@@ -47,6 +48,10 @@ const useStyles = makeStyles({
   status: {
     marginLeft: "50px",
     marginTop: "15px"
+  },
+  button: {
+    marginLeft: "20px",
+    height: "40px"
   }
 });
 
@@ -151,6 +156,16 @@ const CheckListRow = props => {
           <MenuItem value="attention">Needs Attention</MenuItem>
           <MenuItem value="okay">Okay</MenuItem>
         </Select>
+        {props.isAdmin ? (
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+            onClick={() => props.deactivateTask(props.taskId, props.roomId)}
+          >
+            Deactivate
+          </Button>
+        ) : null}
       </CardContent>
       <small className={classes.urgent}>
         {message !== null ? message : null}
