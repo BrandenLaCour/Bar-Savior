@@ -109,6 +109,7 @@ class App extends React.Component {
           }
         );
         const { data } = await usersResponse.json();
+        console.log(data);
         this.props.addUsers(data);
       } catch (err) {
         console.error(err);
