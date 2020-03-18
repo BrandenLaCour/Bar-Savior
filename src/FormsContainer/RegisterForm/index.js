@@ -69,8 +69,9 @@ const useStyles = makeStyles({
     textAlign: "center"
   },
   status: {
-    marginTop: 10,
-    color: "red"
+    color: "red",
+    fontSize: ".8rem",
+    marginTop: "15px"
   },
   loggedIn: {
     height: 730,

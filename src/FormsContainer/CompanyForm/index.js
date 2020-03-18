@@ -10,7 +10,8 @@ import { connect } from "react-redux";
 const mapStateToProps = state => {
   return {
     companyName: state.authForms.companyName,
-    address: state.authForms.address
+    address: state.authForms.address,
+    status: state.modals.status
   };
 };
 
@@ -41,6 +42,11 @@ const useStyles = makeStyles({
   },
   button: {
     cursor: "pointer"
+  },
+  status: {
+    color: "red",
+    fontSize: ".8rem",
+    marginTop: "15px"
   }
 });
 
@@ -86,6 +92,9 @@ const CompanyForm = props => {
         >
           Submit
         </Button>
+        {props.status !== "" ? (
+          <div className={classes.status}>{props.status}</div>
+        ) : null}
       </form>
     </Card>
   );

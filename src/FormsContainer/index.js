@@ -45,6 +45,7 @@ class FormsContainer extends React.Component {
   //will change whether this is an intial account setup, or just registering new users to your company
   //call this on login
   handleFormType = () => {
+    console.log("ran");
     if (this.props.loggedIn === false) {
       this.setState({ form: "company" });
     } else {
@@ -65,9 +66,14 @@ class FormsContainer extends React.Component {
           }
         }
       );
-      const { data } = await companyResponse.json();
-      console.log(data);
-      this.setState({ form: "initRegister", companyId: data.id });
+      const companyJson = await companyResponse.json();
+      if (companyJson.status !== 401) {
+        this.setState({ form: "initRegister", companyId: companyJson.data.id });
+        this.props.addStatus("");
+      } else {
+        this.props.addStatus(companyJson.message);
+      }
+
       //initial register lets the app know that the first user will be "master" user
     } catch (err) {
       console.error(err);
