@@ -90,3 +90,25 @@ export const companyData = (state = companyState, action) => {
       return state;
   }
 };
+
+const taskFormState = {
+  name: "",
+  shift: "both",
+  active: true,
+  imgReq: false
+};
+
+export const taskForm = (state = taskFormState, action) => {
+  switch (action.type) {
+    case "ADD_NAME":
+      return { ...state, taskFormState: action.payload };
+    case "ADD_SHIFT":
+      return { ...state, taskFormState: action.payload };
+    case "ADD_IMG_REQ":
+      return { ...state, taskFormState: action.payload };
+    case "ADD_IMG_REQ":
+      return { ...state, taskFormState: action.payload };
+    default:
+      return state;
+  }
+};
