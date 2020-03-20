@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
 import UserContainer from "./UsersContainer";
 import RoomForm from "./RoomForm";
+import TaskForm from "./TaskForm";
 import RoomsContainer from "./RoomsContainer";
 import ListShow from "./ListShow";
 import LandingPage from "./LandingPage";
@@ -547,6 +548,14 @@ class App extends React.Component {
               render={props => (
                 <>
                   <Redirect to="/" />
+                </>
+              )}
+            />
+            <Route
+              path="/editTask"
+              render={props => (
+                <>
+                  <TaskForm />
                 </>
               )}
             />

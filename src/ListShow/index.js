@@ -87,6 +87,7 @@ class ListShow extends React.Component {
         {this.props.type === "checklist"
           ? activeTasks.map(task => {
               if (task.active === true) {
+                console.log(task);
                 return (
                   <>
                     <ChecklistRow

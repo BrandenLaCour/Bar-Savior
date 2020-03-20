@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Select from "@material-ui/core/Select";
+import { Link } from "react-router-dom";
 import CardContent from "@material-ui/core/CardContent";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
@@ -165,6 +166,18 @@ const CheckListRow = props => {
           >
             Deactivate
           </Button>
+        ) : null}
+        {props.isAdmin ? (
+          <Link to="/editTask">
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={() => props.deactivateTask(props.taskId, props.roomId)}
+            >
+              Edit
+            </Button>
+          </Link>
         ) : null}
       </CardContent>
       <small className={classes.urgent}>
