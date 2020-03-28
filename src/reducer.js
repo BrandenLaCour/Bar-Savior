@@ -101,13 +101,11 @@ const taskFormState = {
 export const taskForm = (state = taskFormState, action) => {
   switch (action.type) {
     case "ADD_NAME":
-      return { ...state, taskFormState: action.payload };
+      return { ...state, name: action.payload };
     case "ADD_SHIFT":
-      return { ...state, taskFormState: action.payload };
+      return { ...state, shift: action.payload };
     case "ADD_IMG_REQ":
-      return { ...state, taskFormState: action.payload };
-    case "ADD_IMG_REQ":
-      return { ...state, taskFormState: action.payload };
+      return { ...state, imgReq: action.payload };
     default:
       return state;
   }

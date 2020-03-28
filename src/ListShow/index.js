@@ -24,7 +24,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addLogs: logs => dispatch({ type: "ADD_LOGS", payload: logs }),
-    isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool })
+    isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool }),
+    addName: name => dispatch({ type: "ADD_NAME", payload: name }),
+    addShift: shift => dispatch({ type: "ADD_SHIFT", payload: shift }),
+    addImgReq: bool => dispatch({ type: "ADD_IMG_REQ", payload: bool }),
+    addFormType: formType => {
+      dispatch({ type: "ADD_FORM_TYPE", payload: formType });
+    }
   };
 };
 
@@ -56,11 +62,18 @@ class ListShow extends React.Component {
     this.props.createLogs(this.state.logs);
     this.props.updateLogs(this.state.logsIdsToUpdate);
     this.props.isRedirect(true);
+    this.props.addFormType("edit");
   };
 
   getResolvedUser = userId => {
     const userIndex = this.props.users.findIndex(user => user.id === userId);
     return this.props.users[userIndex];
+  };
+
+  addEditFormFill = (name, shift, imgReq) => {
+    this.props.addName(name);
+    this.props.addShift(shift);
+    this.props.addImgReq(imgReq);
   };
 
   render() {
@@ -101,6 +114,7 @@ class ListShow extends React.Component {
                       isAdmin={this.props.user.admin}
                       roomId={task.room.id}
                       deactivateTask={this.props.deactivateTask}
+                      addEditFormFill={this.addEditFormFill}
                     />
                   </>
                 );

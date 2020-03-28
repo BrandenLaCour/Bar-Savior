@@ -8,18 +8,22 @@ import TaskRow from "../TaskRow";
 
 const mapStateToProps = state => {
   return {
-    companyName: state.authForms.companyName,
-    address: state.authForms.address,
-    status: state.modals.status
+    status: state.modals.status,
+    formType: state.modals.formType,
+    name: state.taskForm.name,
+    shift: state.taskForm.shift,
+    imgReq: state.taskForm.imgReq
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addName: event =>
-      dispatch({ type: "ADD_COMPANY_NAME", payload: event.target.value }),
-    addAddress: event => {
-      dispatch({ type: "ADD_ADDRESS", payload: event.target.value });
+    addName: name => dispatch({ type: "ADD_NAME", payload: name }),
+    addShift: shift => {
+      dispatch({ type: "ADD_SHIFT", payload: shift });
+    },
+    addImgReq: bool => {
+      dispatch({ type: "ADD_IMG_REQ", payload: bool });
     }
   };
 };
@@ -65,12 +69,33 @@ const CompanyForm = props => {
     }
   };
 
+  const handleChange = e => {
+    const type = e.target.name;
+    const value = e.target.value;
+    console.log(value);
+    switch (type) {
+      case "name":
+        props.addName(value);
+        break;
+      case "shift":
+        props.addShift(value);
+        break;
+      default:
+        props.addImgReq(value);
+    }
+  };
+
   return (
     <div className={classes.taskFormContainer}>
       <Card className={classes.root}>
         <form noValidate onSubmit={handleSubmit}>
           <CardContent>
-            <TaskRow />
+            <TaskRow
+              name={props.name}
+              shift={props.shift}
+              imgReq={props.imgReq}
+              handleChange={handleChange}
+            />
           </CardContent>
 
           <Button

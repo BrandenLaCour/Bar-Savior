@@ -173,7 +173,9 @@ const CheckListRow = props => {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={() => props.deactivateTask(props.taskId, props.roomId)}
+              onClick={() =>
+                props.addEditFormFill(props.name, props.shift, props.imgReq)
+              }
             >
               Edit
             </Button>
