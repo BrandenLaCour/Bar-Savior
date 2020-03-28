@@ -104,7 +104,7 @@ const CheckListRow = props => {
     onDrop(picture);
     setPicMessage("Picture uploaded successfully");
   };
-  console.log(props.type);
+
   return (
     <Card
       className={

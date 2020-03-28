@@ -110,7 +110,7 @@ class App extends React.Component {
           }
         );
         const { data } = await usersResponse.json();
-        console.log(data);
+
         this.props.addUsers(data);
       } catch (err) {
         console.error(err);
@@ -392,6 +392,28 @@ class App extends React.Component {
     }
   };
 
+  editTask = async task => {
+    this.props.isRedirect(false);
+    try {
+      const updateTaskResponse = await fetch(
+        process.env.REACT_APP_API_URL + `/api/v1/tasks/${task.taskId}`,
+        {
+          credentials: "include",
+          method: "PUT",
+          body: JSON.stringify(task),
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      );
+      const updateTaskJson = await updateTaskResponse.json();
+      console.log(updateTaskJson);
+      // this.getTasks(roomId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   toggleAdmin = async (userId, bool) => {
     this.props.isRedirect(false);
 
@@ -555,7 +577,7 @@ class App extends React.Component {
               path="/editTask"
               render={props => (
                 <>
-                  <TaskForm />
+                  <TaskForm editTask={this.editTask} />
                 </>
               )}
             />

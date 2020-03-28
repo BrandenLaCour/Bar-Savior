@@ -12,7 +12,8 @@ const mapStateToProps = state => {
     formType: state.modals.formType,
     name: state.taskForm.name,
     shift: state.taskForm.shift,
-    imgReq: state.taskForm.imgReq
+    imgReq: state.taskForm.imgReq,
+    taskId: state.taskForm.taskId
   };
 };
 
@@ -64,15 +65,20 @@ const CompanyForm = props => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (props.type === "create") {
-      props.createCompany({ name: props.companyName, address: props.address });
+    if (props.formType === "edit") {
+      props.editTask({
+        name: props.name,
+        shift: props.shift,
+        imgReq: props.imgReq,
+        taskId: props.taskId
+      });
     }
   };
 
   const handleChange = e => {
     const type = e.target.name;
     const value = e.target.value;
-    console.log(value);
+
     switch (type) {
       case "name":
         props.addName(value);
@@ -84,7 +90,7 @@ const CompanyForm = props => {
         props.addImgReq(value);
     }
   };
-
+  console.log(props.imgReq, "is image required");
   return (
     <div className={classes.taskFormContainer}>
       <Card className={classes.root}>

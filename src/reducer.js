@@ -95,7 +95,8 @@ const taskFormState = {
   name: "",
   shift: "both",
   active: true,
-  imgReq: false
+  imgReq: false,
+  taskId: ""
 };
 
 export const taskForm = (state = taskFormState, action) => {
@@ -105,6 +106,8 @@ export const taskForm = (state = taskFormState, action) => {
     case "ADD_SHIFT":
       return { ...state, shift: action.payload };
     case "ADD_IMG_REQ":
+      return { ...state, imgReq: action.payload };
+    case "ADD_TASK_ID":
       return { ...state, imgReq: action.payload };
     default:
       return state;

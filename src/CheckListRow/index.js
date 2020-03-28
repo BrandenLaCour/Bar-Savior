@@ -174,7 +174,12 @@ const CheckListRow = props => {
               variant="contained"
               color="primary"
               onClick={() =>
-                props.addEditFormFill(props.name, props.shift, props.imgReq)
+                props.addEditFormFill(
+                  props.name,
+                  props.shift,
+                  props.imgReq,
+                  props.taskId
+                )
               }
             >
               Edit

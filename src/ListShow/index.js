@@ -30,6 +30,9 @@ const mapDispatchToProps = dispatch => {
     addImgReq: bool => dispatch({ type: "ADD_IMG_REQ", payload: bool }),
     addFormType: formType => {
       dispatch({ type: "ADD_FORM_TYPE", payload: formType });
+    },
+    addTaskId: taskId => {
+      dispatch({ type: "ADD_TASK_ID", payload: taskId });
     }
   };
 };
@@ -70,10 +73,12 @@ class ListShow extends React.Component {
     return this.props.users[userIndex];
   };
 
-  addEditFormFill = (name, shift, imgReq) => {
+  addEditFormFill = (name, shift, imgReq, taskId) => {
     this.props.addName(name);
     this.props.addShift(shift);
     this.props.addImgReq(imgReq);
+    this.props.addFormType("edit");
+    this.props.addTaskId(taskId);
   };
 
   render() {
@@ -100,7 +105,6 @@ class ListShow extends React.Component {
         {this.props.type === "checklist"
           ? activeTasks.map(task => {
               if (task.active === true) {
-                console.log(task);
                 return (
                   <>
                     <ChecklistRow
