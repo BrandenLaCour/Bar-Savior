@@ -108,7 +108,7 @@ export const taskForm = (state = taskFormState, action) => {
     case "ADD_IMG_REQ":
       return { ...state, imgReq: action.payload };
     case "ADD_TASK_ID":
-      return { ...state, imgReq: action.payload };
+      return { ...state, taskId: action.payload };
     default:
       return state;
   }

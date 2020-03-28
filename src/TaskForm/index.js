@@ -5,6 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import TaskRow from "../TaskRow";
+import { Redirect } from "react-router-dom";
 
 const mapStateToProps = state => {
   return {
@@ -13,7 +14,8 @@ const mapStateToProps = state => {
     name: state.taskForm.name,
     shift: state.taskForm.shift,
     imgReq: state.taskForm.imgReq,
-    taskId: state.taskForm.taskId
+    taskId: state.taskForm.taskId,
+    redirect: state.modals.redirect
   };
 };
 
@@ -66,12 +68,14 @@ const CompanyForm = props => {
     event.preventDefault();
 
     if (props.formType === "edit") {
-      props.editTask({
-        name: props.name,
-        shift: props.shift,
-        imgReq: props.imgReq,
-        taskId: props.taskId
-      });
+      props.editTask(
+        {
+          name: props.name,
+          shift: props.shift,
+          imgReq: props.imgReq
+        },
+        props.taskId
+      );
     }
   };
 
@@ -90,7 +94,9 @@ const CompanyForm = props => {
         props.addImgReq(value);
     }
   };
-  console.log(props.imgReq, "is image required");
+  if (props.redirect) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className={classes.taskFormContainer}>
       <Card className={classes.root}>

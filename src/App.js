@@ -392,11 +392,11 @@ class App extends React.Component {
     }
   };
 
-  editTask = async task => {
+  editTask = async (task, taskId) => {
     this.props.isRedirect(false);
     try {
       const updateTaskResponse = await fetch(
-        process.env.REACT_APP_API_URL + `/api/v1/tasks/${task.taskId}`,
+        process.env.REACT_APP_API_URL + `/api/v1/tasks/${taskId}`,
         {
           credentials: "include",
           method: "PUT",
