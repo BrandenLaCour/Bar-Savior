@@ -392,7 +392,7 @@ class App extends React.Component {
     }
   };
 
-  editTask = async (task, taskId) => {
+  updateTask = async (task, taskId) => {
     this.props.isRedirect(false);
     try {
       const updateTaskResponse = await fetch(
@@ -407,11 +407,21 @@ class App extends React.Component {
         }
       );
       const updateTaskJson = await updateTaskResponse.json();
+
+      const taskIndex = this.props.tasks.findIndex(task => task.id === taskId);
+      // const tasks create new tasks array in place of the old one to show new update
       console.log(updateTaskJson);
+      const tasks = this.props.tasks;
+      tasks.splice(taskIndex, 1, task);
+      this.props.addTasks(tasks);
       // this.getTasks(roomId);
     } catch (err) {
       console.error(err);
     }
+  };
+
+  addTask = () => {
+    console.log("add task function");
   };
 
   toggleAdmin = async (userId, bool) => {
@@ -574,10 +584,18 @@ class App extends React.Component {
               )}
             />
             <Route
-              path="/editTask"
+              path="/updateTask"
               render={props => (
                 <>
-                  <TaskForm editTask={this.editTask} />
+                  <TaskForm updateTask={this.updateTask} />
+                </>
+              )}
+            />
+            <Route
+              path="/addTask"
+              render={props => (
+                <>
+                  <TaskForm addTask={this.addTask} />
                 </>
               )}
             />

@@ -168,7 +168,7 @@ const CheckListRow = props => {
           </Button>
         ) : null}
         {props.isAdmin ? (
-          <Link to="/editTask">
+          <Link to="/updateTask">
             <Button
               className={classes.button}
               variant="contained"

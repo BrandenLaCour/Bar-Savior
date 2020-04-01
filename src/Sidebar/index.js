@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import Description from "@material-ui/icons/Description";
 import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
 import AssessmentIcon from "@material-ui/icons/Assessment";
@@ -59,7 +60,7 @@ export default function Sidebar(props) {
       </List>
       <Divider />
       <List>
-        {["Add User", "Add Room"].map((text, index) => (
+        {["Add User", "Add Room", "Add Task"].map((text, index) => (
           <Link
             key={text}
             className={classes.sidebarText}
@@ -77,8 +78,10 @@ export default function Sidebar(props) {
               <ListItemIcon>
                 {text === "Add User" ? (
                   <PersonAddIcon className={classes.sidebarText} />
-                ) : (
+                ) : index % 2 === 1 ? (
                   <MeetingRoomIcon className={classes.sidebarText} />
+                ) : (
+                  <Description className={classes.sidebarText} />
                 )}
               </ListItemIcon>
               <ListItemText primary={text} />

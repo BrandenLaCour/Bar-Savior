@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import TaskRow from "../TaskRow";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const mapStateToProps = state => {
   return {
@@ -27,6 +27,9 @@ const mapDispatchToProps = dispatch => {
     },
     addImgReq: bool => {
       dispatch({ type: "ADD_IMG_REQ", payload: bool });
+    },
+    addRedirect: bool => {
+      dispatch({ type: "REDIRECT", payload: bool });
     }
   };
 };
@@ -68,7 +71,7 @@ const CompanyForm = props => {
     event.preventDefault();
 
     if (props.formType === "edit") {
-      props.editTask(
+      props.updateTask(
         {
           name: props.name,
           shift: props.shift,
@@ -76,6 +79,7 @@ const CompanyForm = props => {
         },
         props.taskId
       );
+      props.addRedirect(true);
     }
   };
 
@@ -95,6 +99,7 @@ const CompanyForm = props => {
     }
   };
   if (props.redirect) {
+    props.addRedirect(false);
     return <Redirect to="/" />;
   }
   return (
