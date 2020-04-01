@@ -66,20 +66,23 @@ const useStyles = makeStyles({
 
 const CompanyForm = props => {
   const classes = useStyles();
-
+  const task = {
+    name: props.name,
+    shift: props.shift,
+    imgReq: props.imgReq
+  };
   const handleSubmit = event => {
     event.preventDefault();
 
     if (props.formType === "edit") {
-      props.updateTask(
-        {
-          name: props.name,
-          shift: props.shift,
-          imgReq: props.imgReq
-        },
-        props.taskId
-      );
+      props.updateTask(task, props.taskId);
+      //clean up
+      props.addImgReq("");
+      props.addName("");
+      props.addShift("");
       props.addRedirect(true);
+    } else {
+      this.props.addTask(task);
     }
   };
 

@@ -414,6 +414,7 @@ class App extends React.Component {
       const tasks = this.props.tasks;
       tasks.splice(taskIndex, 1, task);
       this.props.addTasks(tasks);
+      this.props.addFormType("");
       // this.getTasks(roomId);
     } catch (err) {
       console.error(err);
@@ -592,7 +593,7 @@ class App extends React.Component {
               )}
             />
             <Route
-              path="/addTask"
+              path="/addtask"
               render={props => (
                 <>
                   <TaskForm addTask={this.addTask} />
