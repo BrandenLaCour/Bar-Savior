@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import TaskRow from "../TaskRow";
 import { Redirect, Link } from "react-router-dom";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     status: state.modals.status,
     formType: state.modals.formType,
@@ -15,22 +15,27 @@ const mapStateToProps = state => {
     shift: state.taskForm.shift,
     imgReq: state.taskForm.imgReq,
     taskId: state.taskForm.taskId,
-    redirect: state.modals.redirect
+    redirect: state.modals.redirect,
+    rooms: state.companyData.rooms,
+    room: state.taskForm.room,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addName: name => dispatch({ type: "ADD_NAME", payload: name }),
-    addShift: shift => {
+    addName: (name) => dispatch({ type: "ADD_NAME", payload: name }),
+    addShift: (shift) => {
       dispatch({ type: "ADD_SHIFT", payload: shift });
     },
-    addImgReq: bool => {
+    addImgReq: (bool) => {
       dispatch({ type: "ADD_IMG_REQ", payload: bool });
     },
-    addRedirect: bool => {
+    addRedirect: (bool) => {
       dispatch({ type: "REDIRECT", payload: bool });
-    }
+    },
+    addRoomId: (id) => {
+      dispatch({ type: "ADD_ROOM_ID", payload: id });
+    },
   };
 };
 
@@ -40,43 +45,47 @@ const useStyles = makeStyles({
     height: 200,
     boxShadow: "7px 7px 3px grey",
     border: "1px solid rgba(100, 100, 100, .5)",
-    borderRadius: "5px"
+    borderRadius: "5px",
   },
   taskFormContainer: {
     display: "flex",
     marginTop: "50px",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   title: {
     fontSize: 30,
-    color: "#3f51b5"
+    color: "#3f51b5",
   },
   pos: {
-    marginBottom: 12
+    marginBottom: 12,
   },
   button: {
-    cursor: "pointer"
+    cursor: "pointer",
   },
   status: {
     color: "red",
     fontSize: ".8rem",
-    marginTop: "15px"
-  }
+    marginTop: "15px",
+  },
 });
 
-const CompanyForm = props => {
+const CompanyForm = (props) => {
   const classes = useStyles();
   const task = {
     name: props.name,
     shift: props.shift,
-    imgReq: props.imgReq
+    imgReq: props.imgReq,
   };
-  const handleSubmit = event => {
+
+  const rooms = props.type === "create" ? [...props.rooms] : null;
+
+  //iterate through to put into drop down
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     if (props.formType === "edit") {
       props.updateTask(task, props.taskId);
-      //clean up
+      //clean up, reset each field
       props.addImgReq("");
       props.addName("");
       props.addShift("");
@@ -86,7 +95,7 @@ const CompanyForm = props => {
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const type = e.target.name;
     const value = e.target.value;
 
@@ -96,6 +105,9 @@ const CompanyForm = props => {
         break;
       case "shift":
         props.addShift(value);
+        break;
+      case "room":
+        props.addRoomId(value);
         break;
       default:
         props.addImgReq(value);
@@ -115,6 +127,9 @@ const CompanyForm = props => {
               shift={props.shift}
               imgReq={props.imgReq}
               handleChange={handleChange}
+              rooms={rooms}
+              room={props.room}
+              type={props.type}
             />
           </CardContent>
 

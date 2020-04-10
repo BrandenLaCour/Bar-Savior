@@ -23,24 +23,24 @@ const firebaseConfig = {
   databaseURL: "https://bar-savior.firebaseio.com",
   projectId: "bar-savior",
   storageBucket: "bar-savior.appspot.com",
-  messagingSenderId: "511577259066"
+  messagingSenderId: "511577259066",
 };
 
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     drawerOpen: state.modals.drawerOpen,
     loggedIn: state.modals.loggedIn,
     user: state.modals.user,
     tasks: state.companyData.tasks,
     redirect: state.modals.redirect,
-    logs: state.companyData.logs
+    logs: state.companyData.logs,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     toggleDrawer: () => {
       dispatch({ type: "TOGGLE_DRAWER" });
@@ -48,28 +48,28 @@ const mapDispatchToProps = dispatch => {
     logout: () => {
       dispatch({ type: "TOGGLE_LOGIN", payload: false });
     },
-    addFormType: formType => {
+    addFormType: (formType) => {
       dispatch({ type: "ADD_FORM_TYPE", payload: formType });
     },
-    isRedirect: bool => dispatch({ type: "REDIRECT", payload: bool }),
-    addUsers: users => dispatch({ type: "ADD_USERS", payload: users }),
-    addUserInfo: userInfo =>
+    isRedirect: (bool) => dispatch({ type: "REDIRECT", payload: bool }),
+    addUsers: (users) => dispatch({ type: "ADD_USERS", payload: users }),
+    addUserInfo: (userInfo) =>
       dispatch({ type: "ADD_USER_INFO", payload: userInfo }),
-    addRooms: rooms =>
+    addRooms: (rooms) =>
       dispatch({
         type: "ADD_ROOMS",
-        payload: rooms
+        payload: rooms,
       }),
-    addTasks: tasks =>
+    addTasks: (tasks) =>
       dispatch({
         type: "ADD_TASKS",
-        payload: tasks
+        payload: tasks,
       }),
-    addLogs: logs =>
+    addLogs: (logs) =>
       dispatch({
         type: "ADD_LOGS",
-        payload: logs
-      })
+        payload: logs,
+      }),
   };
 };
 
@@ -82,7 +82,7 @@ class App extends React.Component {
       const logoutResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/members/logout",
         {
-          credentials: "include"
+          credentials: "include",
         }
       );
       const logoutJson = await logoutResponse.json();
@@ -98,7 +98,7 @@ class App extends React.Component {
     }
   };
 
-  getUsers = async companyId => {
+  getUsers = async (companyId) => {
     //get users by company id, see if i have a way to do that in backend.
     if (this.props.user.admin === true || this.props.user.master === true) {
       // only get them if admin or master
@@ -106,7 +106,7 @@ class App extends React.Component {
         const usersResponse = await fetch(
           process.env.REACT_APP_API_URL + `/api/v1/members/all/${companyId}`,
           {
-            credentials: "include"
+            credentials: "include",
           }
         );
         const { data } = await usersResponse.json();
@@ -118,14 +118,14 @@ class App extends React.Component {
     }
   };
 
-  getRooms = async companyId => {
+  getRooms = async (companyId) => {
     //get users by company id, see if i have a way to do that in backend.
 
     try {
       const roomsResponse = await fetch(
         process.env.REACT_APP_API_URL + `/api/v1/rooms/all/${companyId}`,
         {
-          credentials: "include"
+          credentials: "include",
         }
       );
       const { data } = await roomsResponse.json();
@@ -136,14 +136,14 @@ class App extends React.Component {
     }
   };
 
-  getTasks = async roomId => {
+  getTasks = async (roomId) => {
     //get users by company id, see if i have a way to do that in backend.
 
     try {
       const tasksResponse = await fetch(
         process.env.REACT_APP_API_URL + `/api/v1/tasks/all/${roomId}`,
         {
-          credentials: "include"
+          credentials: "include",
         }
       );
       const { data } = await tasksResponse.json();
@@ -153,25 +153,25 @@ class App extends React.Component {
     }
   };
 
-  getLogs = async companyId => {
+  getLogs = async (companyId) => {
     try {
       const logsResponse = await fetch(
         process.env.REACT_APP_API_URL + `/api/v1/logs/all/${companyId}`,
         {
-          credentials: "include"
+          credentials: "include",
         }
       );
       const { data } = await logsResponse.json();
       console.log(data, "is the logs response");
-      const logs = data.map(log => {
+      const logs = data.map((log) => {
         if (log.imageId) {
           const pathReference = storage.ref(log.imageId);
           pathReference
             .getDownloadURL()
-            .then(url => {
+            .then((url) => {
               log.imageUrl = url;
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error, "could net get image url");
             });
           return log;
@@ -186,13 +186,13 @@ class App extends React.Component {
     }
   };
 
-  changeFormType = formType => {
+  changeFormType = (formType) => {
     this.props.addFormType(formType);
   };
 
-  createManyTasks = roomId => {
+  createManyTasks = (roomId) => {
     this.props.isRedirect(false);
-    this.props.tasks.forEach(async task => {
+    this.props.tasks.forEach(async (task) => {
       if (task.name !== "") {
         try {
           const createTskResponse = await fetch(
@@ -202,8 +202,8 @@ class App extends React.Component {
               method: "POST",
               body: JSON.stringify({ ...task, room: roomId }),
               headers: {
-                "content-type": "application/json"
-              }
+                "content-type": "application/json",
+              },
             }
           );
           const createTskJson = await createTskResponse.json();
@@ -215,7 +215,7 @@ class App extends React.Component {
     });
   };
 
-  createRoom = async room => {
+  createRoom = async (room) => {
     try {
       const createRmResponse = await fetch(
         process.env.REACT_APP_API_URL + "/api/v1/rooms/",
@@ -223,11 +223,11 @@ class App extends React.Component {
           credentials: "include",
           method: "POST",
           body: JSON.stringify({
-            name: room
+            name: room,
           }),
           headers: {
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         }
       );
       const createRmJson = await createRmResponse.json();
@@ -237,10 +237,10 @@ class App extends React.Component {
     }
   };
 
-  createLogs = logs => {
+  createLogs = (logs) => {
     this.props.isRedirect(false);
     console.log("");
-    logs.forEach(async log => {
+    logs.forEach(async (log) => {
       log.user = this.props.user.id;
 
       try {
@@ -255,7 +255,7 @@ class App extends React.Component {
           const blob = new Blob(image, { type: "image/jpeg" });
           pictureRef
             .put(blob)
-            .then(async snapshot => {
+            .then(async (snapshot) => {
               //now run the code to get the logs once the picture is done uploading.
               // console.log("uploaded a file", snapshot);
               const createLogResponse = await fetch(
@@ -265,8 +265,8 @@ class App extends React.Component {
                   method: "POST",
                   body: JSON.stringify(log),
                   headers: {
-                    "content-type": "application/json"
-                  }
+                    "content-type": "application/json",
+                  },
                 }
               );
               const createLogJson = await createLogResponse.json();
@@ -274,7 +274,7 @@ class App extends React.Component {
               this.props.isRedirect(false);
               this.getLogs(this.props.user.company.id);
             })
-            .catch(error => {
+            .catch((error) => {
               console.log(error, "image failed to upload");
             });
         } else {
@@ -286,8 +286,8 @@ class App extends React.Component {
               method: "POST",
               body: JSON.stringify(log),
               headers: {
-                "content-type": "application/json"
-              }
+                "content-type": "application/json",
+              },
             }
           );
           const createLogJson = await createLogResponse.json();
@@ -301,10 +301,10 @@ class App extends React.Component {
     });
   };
 
-  updateLogs = ids => {
+  updateLogs = (ids) => {
     this.props.isRedirect(false);
     console.log(ids, "are the ids updated");
-    ids.forEach(async logId => {
+    ids.forEach(async (logId) => {
       try {
         const createLogResponse = await fetch(
           process.env.REACT_APP_API_URL + `/api/v1/logs/${logId}`,
@@ -313,8 +313,8 @@ class App extends React.Component {
             method: "PUT",
             body: JSON.stringify({ urgent: "false" }),
             headers: {
-              "content-type": "application/json"
-            }
+              "content-type": "application/json",
+            },
           }
         );
         const createLogJson = await createLogResponse.json();
@@ -327,7 +327,7 @@ class App extends React.Component {
     });
   };
 
-  deactivateRoom = async roomId => {
+  deactivateRoom = async (roomId) => {
     this.props.isRedirect(false);
     try {
       const updateLogResponse = await fetch(
@@ -337,8 +337,8 @@ class App extends React.Component {
           method: "PUT",
           body: JSON.stringify({ active: "false" }),
           headers: {
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         }
       );
       const updateLogJson = await updateLogResponse.json();
@@ -348,7 +348,7 @@ class App extends React.Component {
     }
   };
 
-  deactivateUser = async userId => {
+  deactivateUser = async (userId) => {
     this.props.isRedirect(false);
     try {
       const updateUserResponse = await fetch(
@@ -358,8 +358,8 @@ class App extends React.Component {
           method: "PUT",
           body: JSON.stringify({ active: "false" }),
           headers: {
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         }
       );
       const updateUserJson = await updateUserResponse.json();
@@ -380,8 +380,8 @@ class App extends React.Component {
           method: "PUT",
           body: JSON.stringify({ active: "false" }),
           headers: {
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         }
       );
       const updateTaskJson = await updateTaskResponse.json();
@@ -402,13 +402,15 @@ class App extends React.Component {
           method: "PUT",
           body: JSON.stringify(task),
           headers: {
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         }
       );
       const updateTaskJson = await updateTaskResponse.json();
 
-      const taskIndex = this.props.tasks.findIndex(task => task.id === taskId);
+      const taskIndex = this.props.tasks.findIndex(
+        (task) => task.id === taskId
+      );
       // const tasks create new tasks array in place of the old one to show new update
       console.log(updateTaskJson);
       const tasks = this.props.tasks;
@@ -436,8 +438,8 @@ class App extends React.Component {
           method: "PUT",
           body: JSON.stringify({ admin: !bool }),
           headers: {
-            "content-type": "application/json"
-          }
+            "content-type": "application/json",
+          },
         }
       );
       const updateUserJson = await updateUserResponse.json();
@@ -472,7 +474,7 @@ class App extends React.Component {
             <Route
               exact
               path="/"
-              render={props =>
+              render={(props) =>
                 this.props.loggedIn ? (
                   <>
                     <RoomsContainer
@@ -492,7 +494,7 @@ class App extends React.Component {
 
             <Route
               path="/login"
-              render={props => (
+              render={(props) => (
                 <>
                   <FormsContainer
                     getRooms={this.getRooms}
@@ -505,7 +507,7 @@ class App extends React.Component {
             />
             <Route
               path="/register"
-              render={props => (
+              render={(props) => (
                 <>
                   <FormsContainer
                     getRooms={this.getRooms}
@@ -519,7 +521,7 @@ class App extends React.Component {
             />
             <Route
               path="/users"
-              render={props => (
+              render={(props) => (
                 <>
                   <UserContainer
                     toggleAdmin={this.toggleAdmin}
@@ -530,7 +532,7 @@ class App extends React.Component {
             />
             <Route
               path="/addroom"
-              render={props => (
+              render={(props) => (
                 <>
                   <RoomForm
                     createRoom={this.createRoom}
@@ -541,7 +543,7 @@ class App extends React.Component {
             />
             <Route
               path="/roomShow"
-              render={props => (
+              render={(props) => (
                 <>
                   <ListShow
                     type="checklist"
@@ -554,7 +556,7 @@ class App extends React.Component {
             />
             <Route
               path="/urgent"
-              render={props => (
+              render={(props) => (
                 <>
                   <ListShow
                     type="urgent"
@@ -566,7 +568,7 @@ class App extends React.Component {
             />
             <Route
               path="/logs"
-              render={props => (
+              render={(props) => (
                 <>
                   <ListShow
                     type="logs"
@@ -578,7 +580,7 @@ class App extends React.Component {
             />
             <Route
               path="/Home"
-              render={props => (
+              render={(props) => (
                 <>
                   <Redirect to="/" />
                 </>
@@ -586,17 +588,17 @@ class App extends React.Component {
             />
             <Route
               path="/updateTask"
-              render={props => (
+              render={(props) => (
                 <>
-                  <TaskForm updateTask={this.updateTask} />
+                  <TaskForm updateTask={this.updateTask} type="update" />
                 </>
               )}
             />
             <Route
               path="/addtask"
-              render={props => (
+              render={(props) => (
                 <>
-                  <TaskForm addTask={this.addTask} />
+                  <TaskForm addTask={this.addTask} type="create" />
                 </>
               )}
             />

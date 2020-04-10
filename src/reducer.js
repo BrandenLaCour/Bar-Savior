@@ -4,7 +4,7 @@ const defaultState = {
   redirect: false,
   status: "",
   user: "",
-  formType: ""
+  formType: "",
 };
 
 export const modals = (state = defaultState, action) => {
@@ -35,7 +35,7 @@ const formState = {
   position: "",
   admin: false,
   master: false,
-  email: ""
+  email: "",
 };
 
 export const authForms = (state = formState, action) => {
@@ -69,7 +69,7 @@ const companyState = {
   tasks: [],
   rooms: [],
   logs: [],
-  room: ""
+  room: "",
 };
 
 export const companyData = (state = companyState, action) => {
@@ -96,7 +96,8 @@ const taskFormState = {
   shift: "both",
   active: true,
   imgReq: false,
-  taskId: ""
+  taskId: "",
+  roomId: "",
 };
 
 export const taskForm = (state = taskFormState, action) => {
@@ -109,6 +110,8 @@ export const taskForm = (state = taskFormState, action) => {
       return { ...state, imgReq: action.payload };
     case "ADD_TASK_ID":
       return { ...state, taskId: action.payload };
+    case "ADD_ROOM_ID":
+      return { ...state, roomId: action.payload };
     default:
       return state;
   }
