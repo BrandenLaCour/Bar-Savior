@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     taskId: state.taskForm.taskId,
     redirect: state.modals.redirect,
     rooms: state.companyData.rooms,
-    room: state.taskForm.room,
+    roomId: state.taskForm.roomId,
   };
 };
 
@@ -75,6 +75,7 @@ const CompanyForm = (props) => {
     name: props.name,
     shift: props.shift,
     imgReq: props.imgReq,
+    room: props.roomId,
   };
 
   const rooms = props.type === "create" ? [...props.rooms] : null;
@@ -84,21 +85,24 @@ const CompanyForm = (props) => {
     event.preventDefault();
 
     if (props.formType === "edit") {
-      props.updateTask(task, props.taskId);
-      //clean up, reset each field
-      props.addImgReq("");
-      props.addName("");
-      props.addShift("");
+      // props.updateTask(task, props.taskId);
+
       props.addRedirect(true);
     } else {
-      this.props.addTask(task);
+      // props.createTask(task);
+      props.addRedirect(true);
     }
+    //clean up, reset each field
+    props.addImgReq(false);
+    props.addName("");
+    props.addShift("both");
+    props.addRoomId("");
   };
 
   const handleChange = (e) => {
     const type = e.target.name;
     const value = e.target.value;
-
+    console.log(e.target);
     switch (type) {
       case "name":
         props.addName(value);
@@ -114,7 +118,6 @@ const CompanyForm = (props) => {
     }
   };
   if (props.redirect) {
-    props.addRedirect(false);
     return <Redirect to="/" />;
   }
   return (
@@ -128,7 +131,7 @@ const CompanyForm = (props) => {
               imgReq={props.imgReq}
               handleChange={handleChange}
               rooms={rooms}
-              room={props.room}
+              roomId={props.roomId}
               type={props.type}
             />
           </CardContent>

@@ -392,6 +392,29 @@ class App extends React.Component {
     }
   };
 
+  createTask = async (task) => {
+    this.props.isRedirect(false);
+    if (task.name !== "") {
+      try {
+        const createTskResponse = await fetch(
+          process.env.REACT_APP_API_URL + "/api/v1/tasks/",
+          {
+            credentials: "include",
+            method: "POST",
+            body: JSON.stringify({ ...task }),
+            headers: {
+              "content-type": "application/json",
+            },
+          }
+        );
+        const createTskJson = await createTskResponse.json();
+        this.getRooms(this.props.user.company.id);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   updateTask = async (task, taskId) => {
     this.props.isRedirect(false);
     try {
@@ -598,7 +621,7 @@ class App extends React.Component {
               path="/addtask"
               render={(props) => (
                 <>
-                  <TaskForm addTask={this.addTask} type="create" />
+                  <TaskForm createTask={this.createTask} type="create" />
                 </>
               )}
             />

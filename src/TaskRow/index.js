@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 
 const TaskRow = (props) => {
   const classes = useStyles();
-  console.log(props.room);
+
   return (
     <Card className={classes.root}>
       <CardContent className={classes.listItem}>
@@ -68,13 +68,15 @@ const TaskRow = (props) => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={props.room}
+              value={props.roomId}
               name="room"
               onChange={(e) => props.handleChange(e, props.taskNum)}
               className={classes.button}
             >
-              {props.rooms.map((room) => (
-                <MenuItem value={room.id}>{room.name}</MenuItem>
+              {props.rooms.map((room, i) => (
+                <MenuItem key={i} value={room.id}>
+                  {room.name}
+                </MenuItem>
               ))}
             </Select>
           </>
